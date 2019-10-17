@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_focused"
+    android:orientation="vertical"
+    tools:context="com.wows.status.ShipsDetails">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonShipName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:maxWidth="170dp"
+                    android:maxLines="1"
+                    android:minWidth="170dp"
+                    android:text="@string/ship_name"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipTier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxWidth="50dp"
+                    android:maxLines="1"
+                    android:minWidth="50dp"
+                    android:text="Tier"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxWidth="100dp"
+                    android:maxLines="1"
+                    android:minWidth="100dp"
+                    android:text="Type"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipNation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxWidth="125dp"
+                    android:maxLines="1"
+                    android:minWidth="125dp"
+                    android:text="Nation"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+
+                <Button
+                    android:id="@+id/buttonShipBattle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:maxWidth="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Battles"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipPorcent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxWidth="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="%"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipWins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:maxWidth="90dp"
+                    android:maxLines="1"
+                    android:minWidth="90dp"
+                    android:text="Wins"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipWinRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="WinRate"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipKills"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxWidth="90dp"
+                    android:maxLines="1"
+                    android:minWidth="90dp"
+                    android:text="Kills"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipMaxXp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Max Xp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipTotalXp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Tatal Xp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipMaxDamage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Max Damage"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipMaxPlanes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Max Planes"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipTotalPlanes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Total Planes"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipTorpHits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Torps Hits"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonShipTorpKill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:maxHeight="80dp"
+                    android:maxLines="1"
+                    android:minWidth="80dp"
+                    android:text="Torps Kill"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listOfShips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:clickable="true"
+                android:saveEnabled="false" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

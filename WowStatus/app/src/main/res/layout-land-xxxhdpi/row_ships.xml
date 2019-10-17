@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_focused">
+
+    <TextView
+        android:id="@+id/textViewShipName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:maxWidth="170dp"
+        android:maxLines="1"
+        android:minWidth="170dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipTier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:maxWidth="50dp"
+        android:maxLines="1"
+        android:minWidth="50dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="left"
+        android:maxWidth="100dp"
+        android:maxLines="1"
+        android:minWidth="100dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipNation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:maxWidth="125dp"
+        android:maxLines="1"
+        android:minWidth="125dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipBattle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:maxWidth="75dp"
+        android:maxLines="1"
+        android:minWidth="75dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipPorcent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:minWidth="90dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipWins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:minWidth="90dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewShipWinRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="right"
+        android:maxWidth="80dp"
+        android:maxLines="1"
+        android:minWidth="80dp"
+        android:text="not found"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="18sp" />
+</LinearLayout>

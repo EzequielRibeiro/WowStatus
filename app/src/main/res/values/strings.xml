@@ -1,0 +1,43 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">World of Warships Stats</string>
+    <string name="action_settings" tools:ignore="MissingTranslation">Settings</string>
+    <string name="action_privacy_policy">Privacy Policy</string>
+    <string name="action_contact">Contact me</string>
+    <string name="action_help">Help</string>
+    <string name="url_privacy_policy">https://ezequielportfolio.wordpress.com/privacy-policy</string>
+    <string name="url_contact">https://ezequielportfolio.wordpress.com/contato/</string>
+    <string name="player_clan_not_belong">this player does not belong to any clan</string>
+    <string name="short_name_app" tools:ignore="MissingTranslation">WoWs Stats</string>
+    <string name="banner_ad_unit_id" tools:ignore="MissingTranslation">ca-app-pub-0822808376839371/6121594957</string>
+    <string name="created">Created:</string>
+    <string name="last_battle">Last Battle:</string>
+    <string name="high_caliber">HIGH CALIBER</string>
+    <string name="devasting_strike">DEVASTATING STRIKE</string>
+    <string name="battles">Battles:</string>
+    <string name="wins">Wins:</string>
+    <string name="defeat">Defeat:</string>
+    <string name="draws">Draws:</string>
+    <string name="max_planes_kill">Max Planes Destroyed:</string>
+    <string name="max_planes_kill_ship_name">Max Planes Destroyed with:</string>
+    <string name="planes_kill">Planes Kill:</string>
+    <string name="max_xp">Max XP:</string>
+    <string name="max_xp_ship_name">Max XP with:</string>
+    <string name="max_damage">Max Damage:</string>
+    <string name="max_damage_with">Max Damage with:</string>
+    <string name="total_damage">Total Damage:</string>
+    <string name="average_damage">Average Damage:</string>
+    <string name="max_destroyed">Max ship Destroyed:</string>
+    <string name="destroyed_ships">Destroyed Ships:</string>
+    <string name="average_destroyed_ships">Average Destroyed Ships:</string>
+    <string name="survived_battles">Survived Battles:</string>
+    <string name="survived_with_wins">Survived with Wins:</string>
+    <string name="progress_dialog_mensagem">" Downloading ..."</string>
+    <string name="no_connection">No internet connection</string>
+    <string name="url_web" tools:ignore="MissingTranslation">https://playtogether.worldofwarships.com/invite/wm2LE6k</string>
+    <string name="enter_text">Enter a text</string>
+    <string name="nickname">Search:</string>
+    <string name="ship_name" tools:ignore="MissingTranslation">Ship Name</string>
+    <string name="title_activity_clan">ClanActivity</string>
+    <string name="max_ships_destroyed_by">Max ships destroyed by:</string>
+
+</resources>

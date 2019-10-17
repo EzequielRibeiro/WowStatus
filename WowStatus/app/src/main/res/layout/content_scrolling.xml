@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ScrollingActivity"
+    tools:showIn="@layout/activity_scrolling">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/nickname"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:soundEffectsEnabled="false"
+        android:textColor="@android:color/background_light"
+        android:textColorLink="@color/colorPrimaryDark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/common_google_signin_btn_text_light_focused"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1dp"
+            android:text="NA:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewServerNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:minWidth="30dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1dp"
+            android:text="EU:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textviewServerEU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:minWidth="30dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1dp"
+            android:text="RU:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewServerRU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:minWidth="30dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="1dp"
+            android:text="ASIA:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewServerAsia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:minWidth="30dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroupCountry"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/radio_group"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonNa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:tag=".com"
+            android:text="NA" />
+
+        <RadioButton
+            android:id="@+id/radioButtonEu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".eu"
+            android:text="EU" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".ru"
+            android:text="RU" />
+
+        <RadioButton
+            android:id="@+id/radioButtonAsia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".asia"
+            android:text="ASIA" />
+    </RadioGroup>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:minWidth="90dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBarContent"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/list_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="@dimen/text_margin"
+            android:padding="15dp" />
+
+        <WebView
+            android:id="@+id/webViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@color/common_google_signin_btn_text_dark_focused"
+            android:visibility="visible" />
+
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,154 @@
+<html>
+  <head>
+	  <style>
+	body{
+	background-color:#000000;
+	height: 100%;
+	width: 100%;
+
+	}
+		</style>
+  
+  
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Draw the pie chart for Sarah's pizza when Charts is loaded.
+      google.charts.setOnLoadCallback(drawChartType);
+
+      // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+      google.charts.setOnLoadCallback(drawChartNation);
+
+       google.charts.setOnLoadCallback(drawChartTier);
+
+      function drawChartType() {
+    
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Type');
+            data.addColumn('number', 'Value');
+            data.addRows([
+              ['Cruiser',WebInterface.getCruiser()],
+              ['Battleship',WebInterface.getBattleship()],
+              ['Destroyer',WebInterface.getDestroyer()],
+              ['Carrier', WebInterface.getCarrier()]
+            ]);
+    
+            // Set chart options
+            var options = {'title':'Battle for Types',
+                           'width':600,
+                           'height':300,
+						   fontSize: 18,
+						   backgroundColor: '#000000',
+						   titleTextStyle: {color: '#fff'},
+						   legendTextStyle: {color:'#fff'},
+						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+						   };
+    
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div_type'));
+            chart.draw(data, options);
+          }
+
+       function drawChartNation() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'NATION');
+            data.addColumn('number', 'VALUE');
+            data.addRows([
+              ['Usa',WebInterface.getUsa()],
+              ['German',WebInterface.getGerman()],
+              ['Italy',WebInterface.getItaly()],
+              ['Ussr', WebInterface.getUssr()],
+              ['Uk',WebInterface.getUk()],
+			  ['Japan',WebInterface.getJapan()],
+			  ['France',WebInterface.getFrance()],
+			  ['Pan Asia',WebInterface.getAsia()],
+			  ['Pan America',WebInterface.getPanAmerica()],
+			  ['Common Wealth',WebInterface.getCommon()],
+			  ['Poland',WebInterface.getPoland()]
+
+            ]);
+
+			// Set chart options
+            var options = {'title':'Battles for Nation',
+                           'width':600,
+                           'height':300,
+						   fontSize: 18,
+						   backgroundColor: '#000000',
+						   titleTextStyle: {color: '#fff'},
+						   legendTextStyle: {color:'#fff'},
+						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+						   };
+
+        // Instantiate and draw the chart for Anthony's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div_nation'));
+        chart.draw(data, options);
+  }
+
+    function drawChartTier() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Battles", { role: "style" } ],
+
+        ["I",WebInterface.getTier1(), "#b87333"],
+        ["II", WebInterface.getTier2(), "silver"],
+        ["III",WebInterface.getTier3(), "gold"],
+        ["IV",WebInterface.getTier4(), "color: #e5e4e2"],
+        ["V",WebInterface.getTier5(), "#b87333"],
+        ["VI",WebInterface.getTier6(), "pink"],
+        ["VII",WebInterface.getTier7(), "blue"],
+        ["VIII",WebInterface.getTier8(), "yellow"],
+        ["IX", WebInterface.getTier9(), "red"],
+        ["X", WebInterface.getTier10(), "green"]
+
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Battle for Tier",
+        width: 600,
+        height: 400,
+        fontSize: 18,
+		backgroundColor: '#000000',
+		titleTextStyle: {color: '#fff'},
+		legendTextStyle: {color:'#fff'},
+        bar: {groupWidth: "65%"},
+        legend: { position: "none" },
+        chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("draw_chart_tier"));
+      chart.draw(view, options);
+
+      }
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns" >
+      <tr>
+        <th><div id="chart_div_type" style="border: 1px solid #ccc"></div></th>
+      </tr>
+      <tr>
+        <th><div id="chart_div_nation" style="border: 1px solid #ccc"></div></th>
+
+      </tr>
+
+      <tr>
+        <th><div id="draw_chart_tier" style="border: 1px solid #ccc"></div></th>
+
+      </tr>
+
+    </table>
+  </body>
+</html>
