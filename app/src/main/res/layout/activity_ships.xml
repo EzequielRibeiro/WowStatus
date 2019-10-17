@@ -166,7 +166,7 @@
                     android:maxHeight="80dp"
                     android:maxLines="1"
                     android:minWidth="80dp"
-                    android:text="Tatal Xp"
+                    android:text="Total Xp"
                     android:textColor="@color/colorAccent"
                     android:textSize="14sp" />
 
