@@ -3,12 +3,14 @@ package com.wows.status;
 //https://api.worldofwarships.com/wows/clans/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=br
 //https://developer.android.com/training/data-storage/shared-preferences#java
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -30,23 +32,25 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.crashlytics.android.Crashlytics;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 
 
 public class ScrollingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RadioButton radioButtonCountry, radioButtonSearch;
-    RadioButton radioButtonNa,radioButtonEu,radioButtonRu,radioButtonAsia,radioButtonClan,radioButtonPlayer;
+    RadioButton radioButtonNa, radioButtonEu, radioButtonRu, radioButtonAsia, radioButtonClan, radioButtonPlayer;
     private String countrySelected, searchSelected;
     private ListView listView;
     private AdView mAdView;
@@ -54,30 +58,23 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private UserAdapter userAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
     private boolean multipleNick = false;
-    private String [] listNicks;
+    private String[] listNicks;
     private HttpGetRequest getRequest;
     private ProgressBar progressBar;
     private EditText editText;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
 
-       // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        // force crash
-       // Crashlytics.getInstance().crash();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarTab);
-    /*    CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams)toolbar.getLayoutParams();
-        params.height =  getResources().getInteger(R.integer.maximum);
-        toolbar.setLayoutParams(params);
-
-        if(android.os.Build.VERSION.SDK_INT  >= Build.VERSION_CODES.LOLLIPOP)
-             toolbar.setBackground(getDrawable(R.drawable.button));*/
 
         toolbar.setTitle("");
 
@@ -90,67 +87,13 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view) {
 
-                if(progressBar.getVisibility() == View.VISIBLE) {
+                if (progressBar.getVisibility() == View.VISIBLE) {
                     progressBar.setVisibility(View.GONE);
                     getRequest.cancel(true);
                 }
 
             }
         });
-
-            /*
-             webViewContent.setWebViewClient(new WebViewClient() {
-
-
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                if(url.contains("mobile-privacy-policy.html")) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(i);
-                }else{
-
-                    view.loadUrl(url);
-                }
-
-                return true;
-            }
-
-
-
-         public  void onPageFinished(WebView view, String url){
-
-             if(progressBar.getVisibility() == View.VISIBLE){
-
-                 progressBar.setVisibility(View.GONE);
-
-             }
-
-         }
-
-          public void onPageStarted(WebView view, String url, Bitmap favicon){
-
-              if(progressBar.getVisibility() == View.GONE || progressBar.getVisibility() == View.INVISIBLE){
-
-                  progressBar.setVisibility(View.VISIBLE);
-
-              }
-
-          }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-               // Toast.makeText(getApplicationContext(), description, Toast.LENGTH_SHORT).show();
-                view.loadUrl("file:///android_asset/error.html");
-            }
-            @TargetApi(Build.VERSION_CODES.M)
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError rerr) {
-                // Redirect to deprecated method, so you can use it in all SDK versions
-                onReceivedError(view, rerr.getErrorCode(), rerr.getDescription().toString(), req.getUrl().toString());
-            }
-        });
-            */
 
 
         radioButtonNa = (RadioButton) findViewById(R.id.radioButtonNa);
@@ -178,52 +121,49 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         editText.requestFocus();
         editText.setBackgroundColor(getResources().getColor(R.color.bar_background));
 
-
-
         fab.setOnClickListener(new View.OnClickListener() {
 
-        int maxLength;
+                                   int maxLength;
 
                                    @Override
-            public void onClick(View view) {
+                                   public void onClick(View view) {
 
-                radioButtonSelected();
+                                       radioButtonSelected();
 
-                if(searchSelected.equals("clan"))
-                    maxLength = 2;
-                else
-                    maxLength = 3;
-
-
-                if (checkNetworkConnection())
-                    if (editText.getText().length() >= maxLength) {
-
-                        if(editText.getText().toString().contains(",")){
-                              multipleNick = true;
-                              listNicks = editText.getText().toString().replaceAll("\\s+","").split(",");
-                          }
-
-                          if(checkNetworkConnection()) {
-
-                              listView.setFocusableInTouchMode(true);
-                              listView.requestFocus();
-                              hideKeyboard();
-                              request(editText.getText().toString(), countrySelected);
+                                       if (searchSelected.equals("clan"))
+                                           maxLength = 2;
+                                       else
+                                           maxLength = 3;
 
 
+                                       if (checkNetworkConnection())
+                                           if (editText.getText().length() >= maxLength) {
 
-                          }
+                                               if (editText.getText().toString().contains(",")) {
+                                                   multipleNick = true;
+                                                   listNicks = editText.getText().toString().replaceAll("\\s+", "").split(",");
+                                               }
+
+                                               if (checkNetworkConnection()) {
+
+                                                   listView.setFocusableInTouchMode(true);
+                                                   listView.requestFocus();
+                                                   hideKeyboard();
+                                                   request(editText.getText().toString(), countrySelected);
 
 
-                    } else {
+                                               }
 
-                        Snackbar.make(view, R.string.enter_text, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
 
-                    }
+                                           } else {
 
-                           }
-        }
+                                               Snackbar.make(view, R.string.enter_text, Snackbar.LENGTH_LONG)
+                                                       .setAction("Action", null).show();
+
+                                           }
+
+                                   }
+                               }
 
 
         );
@@ -232,12 +172,12 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        mAdView.setAdListener(new AdListener(){
+        mAdView.setAdListener(new AdListener() {
 
 
             @Override
             public void onAdLoaded() {
-               if(mAdView.getVisibility() == View.GONE)
+                if (mAdView.getVisibility() == View.GONE)
                     mAdView.setVisibility(View.VISIBLE);
 
             }
@@ -246,15 +186,15 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             public void onAdFailedToLoad(int errorCode) {
                 // Code to be executed when an ad request fails.
 
-                if(errorCode == AdRequest.ERROR_CODE_NO_FILL) {
+                if (errorCode == AdRequest.ERROR_CODE_NO_FILL) {
                     Log.i("admob", String.valueOf(errorCode));
 
                     mAdView.setVisibility(View.GONE);
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("ERROR",String.valueOf(errorCode));
-                    bundle.putString("COUNTRY",getResources().getConfiguration().locale.getDisplayCountry());
-                    mFirebaseAnalytics.logEvent("ADMOB",bundle);
+                    bundle.putString("ERROR", String.valueOf(errorCode));
+                    bundle.putString("COUNTRY", getResources().getConfiguration().locale.getDisplayCountry());
+                    mFirebaseAnalytics.logEvent("ADMOB", bundle);
                 }
 
 
@@ -268,12 +208,12 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
 
-                if(throwable.getCause() != null)
-                Crashlytics.log(throwable.getCause().toString());
+                if (throwable.getCause() != null)
+                    Crashlytics.log(throwable.getCause().toString());
             }
         });
 
-                             }
+    }
 
 
     private void serverStatus() {
@@ -308,8 +248,6 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         }).start();
 
 
-
-
     }
 
     private void hideKeyboard() {
@@ -326,7 +264,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void progressDialogShow(){
+    private void progressDialogShow() {
 
         ProgressDialog progressDialog;
 
@@ -342,8 +280,8 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onCancel(DialogInterface dialog) {
 
-                if(getRequest != null)
-                getRequest.cancel(true);
+                if (getRequest != null)
+                    getRequest.cancel(true);
 
             }
         });
@@ -359,13 +297,13 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.radioGroupSearch);
 
         int selectedIdCountry = radioGroup1.getCheckedRadioButtonId();
-        int selectedIdSearch  = radioGroup2.getCheckedRadioButtonId();
+        int selectedIdSearch = radioGroup2.getCheckedRadioButtonId();
 
         radioButtonCountry = (RadioButton) findViewById(selectedIdCountry);
-        radioButtonSearch  = (RadioButton) findViewById(selectedIdSearch);
+        radioButtonSearch = (RadioButton) findViewById(selectedIdSearch);
 
         countrySelected = radioButtonCountry.getTag().toString();
-        searchSelected  = radioButtonSearch.getTag().toString();
+        searchSelected = radioButtonSearch.getTag().toString();
 
 
     }
@@ -373,9 +311,9 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private void request(String name, String country) {
 
         //Some url endpoint that you may have
-        String myUrl = "https://api.worldofwarships"+country+"/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name;
-        String myUrlMultipleNick = "https://api.worldofwarships"+country+"/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=";
-        String myUrlClan = "https://api.worldofwarships"+country+"/wows/clans/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search="+name+"&fields=clan_id%2Ctag";
+        String myUrl = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name;
+        String myUrlMultipleNick = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=";
+        String myUrlClan = "https://api.worldofwarships" + country + "/wows/clans/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name + "&fields=clan_id%2Ctag";
 
         String result;
         String temp = "";
@@ -383,35 +321,35 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         String account_id = "account_id";
 
 
-            if(multipleNick){
+        if (multipleNick) {
 
-                for(int i = 0; i < listNicks.length;i++){
+            for (int i = 0; i < listNicks.length; i++) {
 
-                    if(i != (listNicks.length - 1))
+                if (i != (listNicks.length - 1))
                     temp += listNicks[i] + "%2C";
 
-                 }
-
-              temp += listNicks[listNicks.length-1];
-
-              myUrl = myUrlMultipleNick + temp + "&type=exact";
-
-              multipleNick = false;
-
             }
+
+            temp += listNicks[listNicks.length - 1];
+
+            myUrl = myUrlMultipleNick + temp + "&type=exact";
+
+            multipleNick = false;
+
+        }
 
         getRequest = new HttpGetRequest(progressBar);
         //Perform the doInBackground method, passing in our url
 
         try {
 
-            if(searchSelected.equals("clan")){
+            if (searchSelected.equals("clan")) {
 
                 result = getRequest.execute(myUrlClan).get();
                 name_ = "tag";
                 account_id = "clan_id";
 
-            }else{
+            } else {
 
                 result = getRequest.execute(myUrl).get();
 
@@ -437,7 +375,6 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                 listView.setAdapter(userAdapter);
 
 
-
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -445,7 +382,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                         User user = (User) parent.getItemAtPosition(position);
                         Bundle b = new Bundle();
 
-                        if(searchSelected.equals("clan")){
+                        if (searchSelected.equals("clan")) {
 
                             b.putString("clanId", user.getUserId());
                             b.putString("country", countrySelected);
@@ -455,8 +392,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                             startActivity(intent);
 
 
-
-                        }else{
+                        } else {
 
                             b.putString("id", user.getUserId());
                             b.putString("country", countrySelected);
@@ -465,12 +401,6 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                             intent.putExtras(b);
                             startActivity(intent);
                         }
-
-
-
-
-
-
 
 
                     }
@@ -547,7 +477,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         getMenuInflater().inflate(R.menu.menu_scrolling, menu);
 
         MenuItem menuItem = menu.findItem(R.id.action_version);
-        menuItem.setTitle("v"+ BuildConfig.VERSION_NAME);
+        menuItem.setTitle("v" + BuildConfig.VERSION_NAME);
 
         return true;
     }
@@ -579,9 +509,9 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         if (id == R.id.action_help) {
 
             Bundle bundle = new Bundle();
-            bundle.putString("help","yes");
+            bundle.putString("help", "yes");
             Intent i = new Intent(getBaseContext(), PrivacyPolicyHelp.class);
-            i.putExtra("helpB",bundle);
+            i.putExtra("helpB", bundle);
             i.putExtras(bundle);
             startActivity(i);
             return true;
@@ -596,57 +526,51 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    private void restorePrefs(){
+    private void restorePrefs() {
 
 
-      SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs",MODE_PRIVATE);
-      searchSelected = preferences.getString("searchSelected","player");
-      countrySelected = preferences.getString("countrySelected",".com");
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
+        searchSelected = preferences.getString("searchSelected", "player");
+        countrySelected = preferences.getString("countrySelected", ".com");
 
-      editText.setText(preferences.getString("text",""));
-
-
-
-      if(searchSelected.equals("player"))
-          radioButtonPlayer.setChecked(true);
-      else
-          radioButtonClan.setChecked(true);
+        editText.setText(preferences.getString("text", ""));
 
 
-      switch (countrySelected){
-
-          case ".com":
-            radioButtonNa.setChecked(true);
-            break;
-          case ".eu":
-              radioButtonEu.setChecked(true);
-              break;
-          case ".ru":
-              radioButtonRu.setChecked(true);
-              break;
-          case ".asia":
-              radioButtonAsia.setChecked(true);
-              break;
+        if (searchSelected.equals("player"))
+            radioButtonPlayer.setChecked(true);
+        else
+            radioButtonClan.setChecked(true);
 
 
-      }
+        switch (countrySelected) {
+
+            case ".com":
+                radioButtonNa.setChecked(true);
+                break;
+            case ".eu":
+                radioButtonEu.setChecked(true);
+                break;
+            case ".ru":
+                radioButtonRu.setChecked(true);
+                break;
+            case ".asia":
+                radioButtonAsia.setChecked(true);
+                break;
 
 
-
-
-
+        }
 
 
     }
 
-    private void savePrefs(){
+    private void savePrefs() {
 
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs",MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putString("text",editText.getText().toString());
-        editor.putString("searchSelected",searchSelected);
-        editor.putString("countrySelected",countrySelected);
+        editor.putString("text", editText.getText().toString());
+        editor.putString("searchSelected", searchSelected);
+        editor.putString("countrySelected", countrySelected);
         editor.apply();
 
 
@@ -655,7 +579,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        if(userAdapter != null){
+        if (userAdapter != null) {
 
             userAdapter.clear();
             userAdapter.notifyDataSetChanged();
@@ -676,7 +600,9 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    /** Called before the activity is destroyed */
+    /**
+     * Called before the activity is destroyed
+     */
     @Override
     public void onDestroy() {
         if (mAdView != null) {

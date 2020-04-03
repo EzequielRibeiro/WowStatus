@@ -12,7 +12,8 @@
         android:maxWidth="170dp"
         android:maxLines="1"
         android:minWidth="170dp"
-        android:text="not found"
+        android:paddingLeft="5dp"
+        android:text="SHIP NAME"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -23,10 +24,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="50dp"
+        android:maxWidth="70dp"
         android:maxLines="1"
-        android:minWidth="50dp"
-        android:text="not found"
+        android:minWidth="70dp"
+        android:text="TIER"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -39,7 +40,7 @@
         android:maxWidth="100dp"
         android:maxLines="1"
         android:minWidth="100dp"
-        android:text="not found"
+        android:text="TYPE"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -50,10 +51,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="125dp"
+        android:maxWidth="100dp"
         android:maxLines="1"
-        android:minWidth="125dp"
-        android:text="not found"
+        android:minWidth="100dp"
+        android:text="NATION"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -64,10 +65,10 @@
 
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="75dp"
+        android:maxWidth="70dp"
         android:maxLines="1"
-        android:minWidth="75dp"
-        android:text="not found"
+        android:minWidth="70dp"
+        android:text="BATTLES"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -78,10 +79,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="80dp"
+        android:maxWidth="60dp"
         android:maxLines="1"
-        android:minWidth="80dp"
-        android:text="not found"
+        android:minWidth="60dp"
+        android:text="%"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -91,9 +92,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="90dp"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="WINS"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -107,7 +108,7 @@
         android:maxWidth="80dp"
         android:maxLines="1"
         android:minWidth="80dp"
-        android:text="not found"
+        android:text="WINRATE"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -118,10 +119,10 @@
 
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="70dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="70dp"
+        android:text="KILLS"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -132,10 +133,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="70dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="70dp"
+        android:text="MAX XP"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -146,10 +147,10 @@
 
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="85dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="85dp"
+        android:text="TOTAL XP"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -160,10 +161,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="115dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="115dp"
+        android:text="MAX DAMAGE"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -174,10 +175,10 @@
 
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="115dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="115dp"
+        android:text="MAX PLANES KILL"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -188,10 +189,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="120dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="120dp"
+        android:text="TOTAL PLANES KILL"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -202,10 +203,10 @@
 
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="100dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="100dp"
+        android:text="TORPS HITS"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 
@@ -216,10 +217,10 @@
 
         android:background="@null"
         android:gravity="center"
-        android:maxWidth="90dp"
+        android:maxWidth="170dp"
         android:maxLines="1"
-        android:minWidth="90dp"
-        android:text="not found"
+        android:minWidth="100dp"
+        android:text="TORPS KILL"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="14sp" />
 

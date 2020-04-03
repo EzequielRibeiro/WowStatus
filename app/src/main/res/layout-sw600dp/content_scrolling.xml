@@ -14,7 +14,7 @@
     android:paddingLeft="@dimen/radio_group"
     android:paddingRight="@dimen/radio_group"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wows.stats.ScrollingActivity"
+    tools:context="com.wows.status.ScrollingActivity"
     tools:showIn="@layout/activity_scrolling">
 
 
