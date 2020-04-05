@@ -12,7 +12,7 @@
     <string name="created">Created:</string>
     <string name="last_battle">Last Battle:</string>
     <string name="high_caliber">HIGH CALIBER</string>
-    <string name="devasting_strike">DEVASTATING STRIKE</string>
+    <string name="devasting_strike">DEVASTATING</string>
     <string name="battles">Battles:</string>
     <string name="wins">Wins:</string>
     <string name="defeat">Defeat:</string>
@@ -39,5 +39,18 @@
     <string name="ship_name" tools:ignore="MissingTranslation">Ship Name</string>
     <string name="title_activity_clan">ClanActivity</string>
     <string name="max_ships_destroyed_by">Max ships destroyed by:</string>
+    <string name="double_kill">DOUBLE KILL</string>
+    <string name="detonation">DETONATION</string>
+    <string name="confederate">CONFEDERATE</string>
+    <string name="secondary_kill">SECONDARY KILL</string>
+    <string name="withering">WITHERING</string>
+    <string name="dreadnought">DREADNOUGHT</string>
+    <string name="liquidator">LIQUIDATOR</string>
+    <string name="fireproof">FIREPROOF</string>
+    <string name="arsionist">ARSIONIST</string>
+    <string name="retribution">RETRIBUTION</string>
+    <string name="first_blood">FIRST BLOOD</string>
+    <string name="die_hard">DIE HARD</string>
+    <string name="air_defense">Air Defense</string>
 
 </resources>

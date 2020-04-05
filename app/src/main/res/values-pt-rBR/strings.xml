@@ -2,7 +2,7 @@
 <resources>
     <string name="last_battle">Última batalha:</string>
     <string name="high_caliber">Calibre Grosso</string>
-    <string name="devasting_strike">Ataque Devastador</string>
+    <string name="devasting_strike">Devastador</string>
     <string name="battles">Batalha:</string>
     <string name="wins">Vitória:</string>
     <string name="defeat">Derrota:</string>
@@ -31,5 +31,18 @@
     <string name="max_planes_kill_ship_name">"Máximo de aviões destruídos com: "</string>
     <string name="max_xp">"Máximo de XP: "</string>
     <string name="max_xp_ship_name">"Máximo de XP com: "</string>
+    <string name="double_kill">DUPLO KILL</string>
+    <string name="detonation">DETONAÇÃO</string>
+    <string name="confederate">CONFEDERADO</string>
+    <string name="secondary_kill">SECUNDÁRIA KILL</string>
+    <string name="withering">SECADOR</string>
+    <string name="dreadnought">DREADNOUGHT</string>
+    <string name="liquidator">LIQUIDATOR</string>
+    <string name="fireproof">PROVA DE FOGO</string>
+    <string name="arsionist">ARSIONISTA</string>
+    <string name="retribution">FERIMENTO LEVE</string>
+    <string name="first_blood">PRIMEIRA MORTE</string>
+    <string name="die_hard">DURO DE MATAR</string>
+    <string name="air_defense">Defesa AA</string>
 
 </resources>

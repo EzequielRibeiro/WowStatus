@@ -1,8 +1,0 @@
-<resources>
-    <dimen name="app_bar_height">180dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
-    <dimen name="radio_group">18dp</dimen>
-    <dimen name="text_margin_layout">140dp</dimen>
-    <dimen name="banner_top">300dp</dimen>
-</resources>

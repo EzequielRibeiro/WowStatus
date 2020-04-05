@@ -7,14 +7,17 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -47,6 +50,19 @@ public class Details extends Fragment {
     TextView textViewKraken;
     TextView textViewStrike;
     TextView textViewHigh;
+    TextView textViewDoubleKill;
+    TextView textViewLiquidator;
+    TextView textViewFireProof;
+    TextView textViewWithering;
+    TextView textViewConfederator;
+    TextView textViewClosedShoot;
+    TextView textViewArsionist;
+    TextView textViewDetonated;
+    TextView textViewDreadnought;
+    TextView textViewRetribution;
+    TextView textViewFirstBlood;
+    TextView textViewHeadButt;
+    TextView textViewAirDefense;
     TextView textViewMaxDestroyedShipName;
     TextView textViewMaxPlanesKillShipName;
     TextView textViewMaxXp;
@@ -63,7 +79,7 @@ public class Details extends Fragment {
 
         setRetainInstance(true);
 
-        View view = inflater.inflate(R.layout.activity_details, container, false);
+        final View view = inflater.inflate(R.layout.activity_details, container, false);
 
         final String id = getArguments().getString("id");
         final String country = getArguments().getString("country");
@@ -89,14 +105,30 @@ public class Details extends Fragment {
         averageDamageView = (TextView) view.findViewById(R.id.textViewAverageDamageV);
         killDeath = (TextView) view.findViewById(R.id.textViewKillDeath);
         maxDamageShipView = (TextView) view.findViewById(R.id.textViewMaxDamageShipV);
-        textViewKraken = (TextView) view.findViewById(R.id.textViewKraken);
-        textViewStrike = (TextView) view.findViewById(R.id.textViewDevasting);
-        textViewHigh = (TextView) view.findViewById(R.id.textViewHighCaliber);
         textViewClan = (TextView) view.findViewById(R.id.textViewClan);
         textViewMaxDestroyedShipName = (TextView) view.findViewById(R.id.textViewMaxDestroyedShipNameV);
         textViewMaxPlanesKillShipName = (TextView) view.findViewById(R.id.textViewMaxPlanesKillShipNameV);
         textViewMaxXp = (TextView) view.findViewById(R.id.textViewMaxXpV);
         textViewMaxXpShipName = (TextView) view.findViewById(R.id.textViewMaxXpShipNameV) ;
+
+        //achieves
+        textViewKraken = (TextView) view.findViewById(R.id.textViewKraken);
+        textViewStrike = (TextView) view.findViewById(R.id.textViewDevasting);
+        textViewHigh = (TextView) view.findViewById(R.id.textViewHighCaliber);
+        textViewDoubleKill = (TextView) view.findViewById(R.id.textViewDoubleKill);
+        textViewLiquidator = (TextView) view.findViewById(R.id.textViewLiquidator);
+        textViewFireProof = (TextView) view.findViewById(R.id.textViewFireProof);
+        textViewWithering = (TextView) view.findViewById(R.id.textViewWitheringSecador);
+        textViewConfederator = (TextView) view.findViewById(R.id.textViewSupportConfederado);
+        textViewClosedShoot = (TextView) view.findViewById(R.id.textViewCloserShoot);
+        textViewArsionist = (TextView) view.findViewById(R.id.textViewArsionist);
+        textViewDetonated = (TextView) view.findViewById(R.id.textViewDetonated);
+        textViewDreadnought = (TextView) view.findViewById(R.id.textViewDreadnought);
+        textViewRetribution = (TextView) view.findViewById(R.id.textViewRetribution);
+        textViewFirstBlood = (TextView) view.findViewById(R.id.textViewFirstBlood);
+        textViewHeadButt = (TextView) view.findViewById(R.id.textViewHeadButt);
+        textViewAirDefense = (TextView) view.findViewById(R.id.textViewAirDefense);
+
 
 
         textViewClan.setOnClickListener(new View.OnClickListener() {
@@ -296,6 +328,31 @@ public class Details extends Fragment {
                             textViewKraken.setText(objAchievements.optString("WARRIOR"));
                             textViewStrike.setText(objAchievements.optString("INSTANT_KILL"));
                             textViewHigh.setText(objAchievements.optString("MAIN_CALIBER"));
+                            textViewDoubleKill.setText(objAchievements.optString("DOUBLE_KILL"));
+                            ;
+                            textViewLiquidator.setText(objAchievements.optString("LIQUIDATOR"));
+                            ;
+                            textViewFireProof.setText(objAchievements.optString("FIREPROOF"));
+                            textViewWithering.setText(objAchievements.optString("WITHERING"));
+                            ;
+                            textViewConfederator.setText(objAchievements.optString("SUPPORT"));
+                            ;
+                            textViewClosedShoot.setText(objAchievements.optString("ATBA_CALIBER"));
+                            ;
+                            textViewArsionist.setText(objAchievements.optString("ARSONIST"));
+                            ;
+                            textViewDetonated.setText(objAchievements.optString("DETONATED"));
+                            ;
+                            textViewDreadnought.setText(objAchievements.optString("DREADNOUGHT"));
+                            ;
+                            textViewRetribution.setText(objAchievements.optString("RETRIBUTION"));
+                            ;
+                            textViewFirstBlood.setText(objAchievements.optString("FIRST_BLOOD"));
+                            ;
+                            textViewHeadButt.setText(objAchievements.optString("HEADBUTT"));
+                            ;
+                            textViewAirDefense.setText(objAchievements.optString("AIRDEFENSEEXPERT"));
+                            ;
 
 
                         }

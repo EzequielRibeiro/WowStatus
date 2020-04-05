@@ -164,7 +164,7 @@
                     android:maxLines="1"
                     android:minWidth="70dp"
                     android:padding="5dp"
-                    android:text="MAX XP"
+                    android:text="Max Xp"
                     android:textColor="@color/colorAccent"
                     android:textSize="14sp" />
 
@@ -178,7 +178,7 @@
                     android:maxLines="1"
                     android:minWidth="85dp"
                     android:padding="5dp"
-                    android:text="Total XP"
+                    android:text="Total Xp"
                     android:textColor="@color/colorAccent"
                     android:textSize="14sp" />
 

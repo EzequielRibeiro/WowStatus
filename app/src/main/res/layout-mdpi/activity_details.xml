@@ -1,297 +1,767 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
     android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     tools:context="com.wows.status.Details">
 
-    <ScrollView
+
+    <LinearLayout
+        android:id="@+id/linearLayout01"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewClan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="[]"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewNick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="NickName"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout01">
+
+        <TextView
+            android:id="@+id/textViewCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/created"
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewCreatedV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:paddingLeft="1sp"
+            android:text="..."
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout02">
+
+        <TextView
+            android:id="@+id/textViewLastBattle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:text="@string/last_battle"
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewLastBattleV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingLeft="1sp"
+            android:text="..."
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@null"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout03">
+
+        <LinearLayout
+            android:id="@+id/layoutRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="25dp">
+
+            <TextView
+                android:id="@+id/textViewWinRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="0%"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="WinRate"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="25dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:id="@+id/textViewKillDeath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="Kill/Death"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:id="@+id/scrollViewLayout05"
+        style="@android:style/Widget.DeviceDefault.Light.ScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
+        android:verticalScrollbarPosition="left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout04">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewCaliber"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_main_caliber" />
+
+                <TextView
+                    android:id="@+id/textViewLabelCaliber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@string/high_caliber"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewHighCaliber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewKraken"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_kraken" />
+
+                <TextView
+                    android:id="@+id/textViewLabelKraken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="KRAKEN"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewKraken"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDevasting"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_instant_kill" />
+
+                <TextView
+                    android:id="@+id/textViewLaberDevasting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/devasting_strike"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDevasting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDoubleKill"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_double_kill" />
+
+                <TextView
+                    android:id="@+id/textViewLabelDoubleKill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/double_kill"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDoubleKill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDetonated"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_detonation" />
+
+                <TextView
+                    android:id="@+id/textViewLabelDetonation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/detonation"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDetonated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewConfederate"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_confederate_support" />
+
+                <TextView
+                    android:id="@+id/textViewLaberSupportConfederado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/confederate"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewSupportConfederado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewCloseShoot"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ocon_achievement_atba_close_secundary" />
+
+                <TextView
+                    android:id="@+id/textViewLabelCloseShoot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/secondary_kill"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewCloserShoot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewWitheringSecador"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_withering" />
+
+                <TextView
+                    android:id="@+id/textViewLaberWitheringSecador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/withering"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewWitheringSecador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewDreadnought"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_dreadnought" />
+
+                <TextView
+                    android:id="@+id/textViewLabelDreadnought"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/dreadnought"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDreadnought"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewLiquidator"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_liquidator" />
+
+                <TextView
+                    android:id="@+id/textViewLabelLiquidator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/liquidator"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewLiquidator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewFireProof"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_fireproof" />
+
+                <TextView
+                    android:id="@+id/textViewLabelFireProof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/fireproof"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewFireProof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewArsionist"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_arsonist" />
+
+                <TextView
+                    android:id="@+id/textViewLabelArsionist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/arsionist"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewArsionist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewRetribution"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_retribution" />
+
+                <TextView
+                    android:id="@+id/textViewLabelRetribution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/retribution"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewRetribution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewFirstBlood"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_first_blood" />
+
+                <TextView
+                    android:id="@+id/textViewLabelFirstBlood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/first_blood"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewFirstBlood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewHeadButt"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_headbutt" />
+
+                <TextView
+                    android:id="@+id/textViewLabelHeadButt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/die_hard"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewHeadButt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/imageViewAirDefense"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/icon_achievement_airdefenseexpert" />
+
+                <TextView
+                    android:id="@+id/textViewLabelAirDefense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/air_defense"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewAirDefense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="x0"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <android.widget.ScrollView
+        android:id="@+id/scrollViewLayout06"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewLayout05">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/linearLayout06"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewClan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:text="[]"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewNick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="NickName"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewCreated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/created"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/textViewCreatedV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:paddingLeft="1sp"
-                    android:text="..."
-                    android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textViewLastBattle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:text="@string/last_battle"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/textViewLastBattleV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingLeft="1sp"
-                    android:text="..."
-                    android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@null"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
-
-                        <LinearLayout
-                            android:id="@+id/layoutRate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="30dp"
-                            android:paddingRight="25dp">
-
-                            <TextView
-                                android:id="@+id/textViewWinRate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:gravity="center"
-                                android:text="0%"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:gravity="center"
-                                android:text="WinRate"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="25dp"
-                            android:paddingRight="30dp">
-
-                            <TextView
-                                android:id="@+id/textViewKillDeath"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:gravity="center"
-                                android:text="0"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:gravity="center"
-                                android:text="Kill/Death"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                app:srcCompat="@drawable/icon_achievement_main_caliber" />
-
-                            <TextView
-                                android:id="@+id/textView2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/high_caliber"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/textViewHighCaliber"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="x0"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp">
-
-                            <ImageView
-                                android:id="@+id/imageView2"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                app:srcCompat="@drawable/icon_achievement_warrior" />
-
-                            <TextView
-                                android:id="@+id/textView3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="KRAKEN"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/textViewKraken"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="x0"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView3"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                app:srcCompat="@drawable/icon_achievement_instant_kill" />
-
-                            <TextView
-                                android:id="@+id/textView4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="@string/devasting_strike"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/textViewDevasting"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="x0"
-                                android:textColor="@android:color/holo_orange_light"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </TableRow>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -301,7 +771,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/battles"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewBattleV"
@@ -309,15 +779,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout07"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -327,7 +802,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/wins"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewWinsV"
@@ -335,16 +810,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout08"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -354,7 +834,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/defeat"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewDefeatV"
@@ -362,16 +842,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout09"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -381,7 +866,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/draws"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewDrawsV"
@@ -390,15 +875,21 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -408,7 +899,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_xp"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxXpV"
@@ -417,15 +908,20 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout11"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -436,7 +932,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_xp_ship_name"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxXpShipNameV"
@@ -445,14 +941,20 @@
                     android:layout_gravity="bottom|right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/holo_green_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout12"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -462,7 +964,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_planes_kill"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxPlaneKillV"
@@ -470,15 +972,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -489,7 +997,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_planes_kill_ship_name"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxPlanesKillShipNameV"
@@ -498,16 +1006,21 @@
                     android:layout_gravity="bottom|right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@color/colorAccent"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout14"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -517,7 +1030,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/planes_kill"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewPlaneKillV"
@@ -525,16 +1038,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout15"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -544,7 +1062,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_damage"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxDamageV"
@@ -553,15 +1071,20 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout16"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp">
 
                 <TextView
                     android:id="@+id/textViewMaxDamageShip"
@@ -570,7 +1093,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_damage_with"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxDamageShipV"
@@ -578,15 +1101,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/holo_green_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout17"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -596,7 +1124,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/total_damage"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewTotalDamageV"
@@ -605,16 +1133,21 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout18"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -624,7 +1157,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/average_damage"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewAverageDamageV"
@@ -633,15 +1166,20 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout19"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -651,7 +1189,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/max_destroyed"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxDestroyedV"
@@ -659,24 +1197,31 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout20"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewMaxDestroyedShipName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
                     android:text="@string/max_ships_destroyed_by"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxDestroyedShipNameV"
@@ -685,15 +1230,20 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout21"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -703,7 +1253,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/destroyed_ships"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewDestroyedShipsV"
@@ -711,15 +1261,20 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout22"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -729,7 +1284,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/average_destroyed_ships"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewAverageDestroyedV"
@@ -738,15 +1293,20 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout23"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -756,7 +1316,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/survived_battles"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewSurvivedBattlesV"
@@ -765,17 +1325,21 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
+                android:id="@+id/linearLayout24"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewSurvivedWins"
@@ -784,7 +1348,7 @@
                     android:gravity="left|center_vertical"
                     android:text="@string/survived_with_wins"
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewSurvivedWinsV"
@@ -793,18 +1357,16 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:maxLines="1"
                     android:text="..."
                     android:textColor="@android:color/background_light"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
-
-
         </LinearLayout>
+    </android.widget.ScrollView>
 
-    </ScrollView>
 
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>
 
 
