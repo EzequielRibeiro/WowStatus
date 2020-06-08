@@ -41,12 +41,10 @@ public class StatusServer {
                 }else if(t.equals("eu")){
 
                     eu = objArray.getJSONObject(0).get("players_online").toString();
-                }
-                 else if(t.equals("ru")){
+                } else if(t.equals("ru")){
 
                     ru = objArray.getJSONObject(0).get("players_online").toString();
-                }
-                 else if(t.equals("asia")){
+                } else if(t.equals("asia")){
 
                     asia = objArray.getJSONObject(0).get("players_online").toString();
                 }
@@ -63,13 +61,30 @@ public class StatusServer {
             }
 
         }
+    }
+
+    public String getServeVersion() {
+        String result = "0.0.0.0";
+        String url = "https://api.worldofwarships.com/wows/encyclopedia/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&fields=game_version";
 
 
+        httpGetRequest = new HttpGetRequest(null);
+        try {
+            result = httpGetRequest.execute(url).get();
+            JSONObject object = new JSONObject(result);
+            JSONObject objectData = object.getJSONObject("data");
+            result = objectData.get("game_version").toString();
 
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
 
 
     }
-
 
     public String getNa() {
 

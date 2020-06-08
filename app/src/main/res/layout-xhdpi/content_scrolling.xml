@@ -220,6 +220,15 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
 
+    <TextView
+        android:id="@+id/textViewServerVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="right"
+        android:text="Game version: 0.0.0.0"
+        android:textColor="@android:color/white" />
+
     <FrameLayout
         android:id="@+id/frameLayoutContent"
         android:layout_width="match_parent"

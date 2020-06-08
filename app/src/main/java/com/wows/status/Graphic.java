@@ -3,7 +3,6 @@ package com.wows.status;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +33,7 @@ public class Graphic extends Fragment {
     private WebView webViewIndex;
     private ProgressBar progressBarChart;
     int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
-    int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0;
+    int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0, submarine = 0;
     int[] tier = new int[10];
     SingletonsClass singletonsClass = SingletonsClass.getInstance();
     Map<String, Ship> shipMap;
@@ -271,8 +271,9 @@ public class Graphic extends Fragment {
                 case "AirCarrier":
                     carrier = carrier + Integer.valueOf(entry.getValue().getBattles());
                     break;
-
-
+                case "Submarine":
+                    submarine = submarine + Integer.valueOf(entry.getValue().getBattles());
+                    break;
             }
 
 
@@ -422,9 +423,6 @@ public class Graphic extends Fragment {
                     //Log.e("ship",ship.toString());
                     shipMap.put(id,ship);
                     singletonsClass.setAddShipsList(ship);
-
-
-
                 }
 
             }
@@ -466,6 +464,10 @@ public class Graphic extends Fragment {
             return carrier;
         }
 
+        @JavascriptInterface
+        public int getSubmarine() {
+            return submarine;
+        }
 
         @JavascriptInterface
         public int getUsa() {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="last_battle">Última batalha:</string>
-    <string name="high_caliber">Calibre Grosso</string>
-    <string name="devasting_strike">Devastador</string>
+    <string name="high_caliber">CALIBRE GROSSO</string>
+    <string name="devasting_strike">DEVASTADOR</string>
     <string name="battles">Batalha:</string>
     <string name="wins">Vitória:</string>
     <string name="defeat">Derrota:</string>
@@ -43,6 +43,6 @@
     <string name="retribution">FERIMENTO LEVE</string>
     <string name="first_blood">PRIMEIRA MORTE</string>
     <string name="die_hard">DURO DE MATAR</string>
-    <string name="air_defense">Defesa AA</string>
+    <string name="air_defense">DEFESA AA</string>
 
 </resources>

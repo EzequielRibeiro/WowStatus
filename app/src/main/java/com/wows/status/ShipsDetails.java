@@ -1,9 +1,7 @@
 package com.wows.status;
 
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+
+import androidx.fragment.app.Fragment;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -86,6 +86,7 @@ public class ShipsDetails extends Fragment implements View.OnClickListener {
         });
 
 
+        loadList();
         return v;
     }
 
@@ -318,9 +319,6 @@ public class ShipsDetails extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
       super.onResume();
-
-       loadList();
-
 
         }
 

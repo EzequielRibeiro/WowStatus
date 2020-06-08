@@ -15,10 +15,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -33,16 +29,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.crashlytics.android.Crashlytics;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -54,7 +52,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private String countrySelected, searchSelected;
     private ListView listView;
     private AdView mAdView;
-    private TextView textViewNa, textViewEu, textViewRu, textViewAsia;
+    private TextView textViewNa, textViewEu, textViewRu, textViewAsia, textViewServerVersion;
     private UserAdapter userAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
     private boolean multipleNick = false;
@@ -62,7 +60,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private HttpGetRequest getRequest;
     private ProgressBar progressBar;
     private EditText editText;
-
+    private SharedPreferences prefs;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -114,12 +112,21 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         radioButtonPlayer = (RadioButton) findViewById(R.id.radioButtonPlayer);
         radioButtonPlayer.setOnClickListener(this);
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         editText = (EditText) findViewById(R.id.editText);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
         editText.setBackgroundColor(getResources().getColor(R.color.bar_background));
+
+
+        prefs = getSharedPreferences("info", MODE_PRIVATE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (!prefs.contains("version"))
+                    prefs.edit().putString("version", new StatusServer().getServeVersion()).commit();
+            }
+        }).start();
 
         fab.setOnClickListener(new View.OnClickListener() {
 
@@ -134,7 +141,6 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                                            maxLength = 2;
                                        else
                                            maxLength = 3;
-
 
                                        if (checkNetworkConnection())
                                            if (editText.getText().length() >= maxLength) {
@@ -197,32 +203,22 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                     mFirebaseAnalytics.logEvent("ADMOB", bundle);
                 }
 
-
             }
 
 
         });
 
-
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread thread, Throwable throwable) {
-
-                if (throwable.getCause() != null)
-                    Crashlytics.log(throwable.getCause().toString());
-            }
-        });
 
     }
 
 
     private void serverStatus() {
 
-
         textViewNa = (TextView) findViewById(R.id.textViewServerNA);
         textViewEu = (TextView) findViewById(R.id.textviewServerEU);
         textViewRu = (TextView) findViewById(R.id.textViewServerRU);
         textViewAsia = (TextView) findViewById(R.id.textViewServerAsia);
+        textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
 
         new Thread(new Runnable() {
             @Override
@@ -234,15 +230,13 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void run() {
-
                         textViewNa.setText(statusServer.getNa());
                         textViewEu.setText(statusServer.getEu());
                         textViewRu.setText(statusServer.getRu());
                         textViewAsia.setText(statusServer.getAsia());
-
+                        textViewServerVersion.setText("Game version: " + prefs.getString("version", statusServer.getServeVersion()));
                     }
                 });
-
 
             }
         }).start();
@@ -251,7 +245,6 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void hideKeyboard() {
-
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.

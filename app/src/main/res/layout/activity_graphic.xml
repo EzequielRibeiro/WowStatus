@@ -8,7 +8,7 @@
     android:background="@null"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.wows.stats.Graphic">
+    tools:context=".Graphic">
 
     <FrameLayout
         android:layout_width="match_parent"
