@@ -77,9 +77,15 @@ public class StatusServer {
 
         } catch (ExecutionException e) {
             e.printStackTrace();
+            return "0.0.0.0";
         } catch (InterruptedException | JSONException e) {
             e.printStackTrace();
-        }
+            return "0.0.0.0";
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return "0.0.0.0";
+            }
+
 
         return result;
 
