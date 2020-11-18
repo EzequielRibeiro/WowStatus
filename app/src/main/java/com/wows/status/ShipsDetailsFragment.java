@@ -15,12 +15,12 @@ import androidx.fragment.app.Fragment;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ShipsDetails extends Fragment implements View.OnClickListener {
+public class ShipsDetailsFragment extends Fragment implements View.OnClickListener {
 
 
     private ListView listView;
-    private Button shipName, shipTier, shipType, shipNation, shipBattle, shipPercent, shipWins, shipWinRate,shipKill,
-            maxXp,totalXp,maxDamage,maxPlanes,totalPlanes,torpsHits,torpsKill;
+    private Button shipName, shipTier, shipType, shipNation, shipBattle, shipPercent, shipWins, shipWinRate, shipKill,
+            maxXp, totalXp, maxDamage, maxPlanes, totalPlanes, torpsHits, torpsKill;
     private ShipsAdapter shipAdapter;
     SingletonsClass singletonsClass = SingletonsClass.getInstance();
     private static String sortBy = "Battles";
@@ -31,7 +31,7 @@ public class ShipsDetails extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
 
-        final View v = inflater.inflate(R.layout.activity_ships, container, false);
+        final View v = inflater.inflate(R.layout.fragment_ships, container, false);
         listView = (ListView) v.findViewById(R.id.listOfShips);
         shipName = (Button) v.findViewById(R.id.buttonShipName);
         shipTier = (Button) v.findViewById(R.id.buttonShipTier);

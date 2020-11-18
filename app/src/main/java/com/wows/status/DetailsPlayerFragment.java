@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-public class Details extends Fragment {
+public class DetailsPlayerFragment extends Fragment {
 
 
     TextView nickNameView;
@@ -74,7 +74,7 @@ public class Details extends Fragment {
 
         setRetainInstance(true);
 
-        final View view = inflater.inflate(R.layout.activity_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         final String id = getArguments().getString("id");
         final String country = getArguments().getString("country");
@@ -236,8 +236,7 @@ public class Details extends Fragment {
             }
 
 
-
-        } catch (JSONException | ExecutionException | InterruptedException e) {
+        } catch (JSONException | ExecutionException | ClassCastException | InterruptedException e) {
             e.printStackTrace();
         }
 

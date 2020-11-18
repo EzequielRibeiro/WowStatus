@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wows.status">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,27 +17,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label">
         <activity
             android:name=".ClanActivity"
             android:label="@string/title_activity_clan"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".PrivacyPolicyHelp" />
-        <activity
-            android:name=".ShipsDetails"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <activity
             android:name=".TabActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
-            android:name=".Graphic"
+            android:name=".ShipsDetailsFragment"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".GraphicFragment"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Details"
+            android:name=".DetailsPlayerFragment"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProgressFragment"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ScrollingActivity"
             android:theme="@style/AppTheme.NoActionBar">

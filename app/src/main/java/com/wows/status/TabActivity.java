@@ -8,6 +8,7 @@ ViewPagerAdapter – Custom adapter class provides fragments required for the vi
 */
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class TabActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -33,12 +37,15 @@ public class TabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -52,17 +59,20 @@ public class TabActivity extends AppCompatActivity {
         bundle.putString("id", id);
         bundle.putString("country", country);
 
-        Details details = new Details();
+        DetailsPlayerFragment details = new DetailsPlayerFragment();
         details.setArguments(bundle);
 
-        Graphic graphic = new Graphic();
+        GraphicFragment graphic = new GraphicFragment();
         graphic.setArguments(bundle);
 
+        ProgressFragment progressFragment = new ProgressFragment();
+        progressFragment.setArguments(bundle);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(details, "PROFILE");
         adapter.addFragment(graphic, "CHART");
-        adapter.addFragment(new ShipsDetails(), "Ships Details");
+        adapter.addFragment(progressFragment, "PROGRESS");
+        adapter.addFragment(new ShipsDetailsFragment(), "Ships Details");
 
         viewPager.setAdapter(adapter);
     }
@@ -100,8 +110,15 @@ public class TabActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+
         SingletonsClass singletonsClass = SingletonsClass.getInstance();
         singletonsClass.clear();
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
 
     }
 

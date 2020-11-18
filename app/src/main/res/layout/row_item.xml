@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:text="TextView"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/white"
         android:textSize="22sp" />
 </RelativeLayout>

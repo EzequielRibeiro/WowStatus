@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_google_signin_btn_text_dark_focused">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/textViewShipName"
@@ -14,7 +14,7 @@
         android:minWidth="170dp"
         android:paddingLeft="5dp"
         android:text="SHIP NAME"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:maxLines="1"
         android:minWidth="70dp"
         android:text="TIER"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:maxLines="1"
         android:minWidth="100dp"
         android:text="TYPE"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -55,7 +55,7 @@
         android:maxLines="1"
         android:minWidth="100dp"
         android:text="NATION"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -69,7 +69,7 @@
         android:maxLines="1"
         android:minWidth="70dp"
         android:text="BATTLES"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -83,7 +83,7 @@
         android:maxLines="1"
         android:minWidth="60dp"
         android:text="%"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -95,7 +95,7 @@
         android:maxWidth="60dp"
         android:minWidth="60dp"
         android:text="WINS"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -109,7 +109,7 @@
         android:maxLines="1"
         android:minWidth="80dp"
         android:text="WINRATE"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -123,7 +123,7 @@
         android:maxLines="1"
         android:minWidth="70dp"
         android:text="KILLS"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -137,7 +137,7 @@
         android:maxLines="1"
         android:minWidth="70dp"
         android:text="MAX XP"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -151,7 +151,7 @@
         android:maxLines="1"
         android:minWidth="85dp"
         android:text="TOTAL XP"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -165,7 +165,7 @@
         android:maxLines="1"
         android:minWidth="115dp"
         android:text="MAX DAMAGE"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -179,7 +179,7 @@
         android:maxLines="1"
         android:minWidth="115dp"
         android:text="MAX PLANES KILL"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -193,7 +193,7 @@
         android:maxLines="1"
         android:minWidth="120dp"
         android:text="TOTAL PLANES KILL"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -207,7 +207,7 @@
         android:maxLines="1"
         android:minWidth="100dp"
         android:text="TORPS HITS"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
     <TextView
@@ -221,7 +221,7 @@
         android:maxLines="1"
         android:minWidth="100dp"
         android:text="TORPS KILL"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
 

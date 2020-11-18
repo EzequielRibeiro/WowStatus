@@ -8,7 +8,7 @@
     android:background="@null"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".Graphic">
+    tools:context=".GraphicFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

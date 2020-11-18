@@ -8,4 +8,5 @@
     <color name="button_default">#1A1919</color>
     <color name="background">#000000</color>
     <color name="bar_background">#313030</color>
+    <color name="white">#FFFFFF</color>
 </resources>

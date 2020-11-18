@@ -2,7 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+    android:id="@+id/nestedScrollViewClan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
@@ -10,30 +10,23 @@
     tools:context=".ClanActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutClan"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:minHeight="350dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonClanShowMembers">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp">
-
-                <ProgressBar
-                    android:id="@+id/progressBarClanList"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
+                android:layout_height="match_parent">
 
                 <ListView
                     android:id="@+id/listViewMembersClan"
@@ -44,7 +37,17 @@
                     android:choiceMode="singleChoice"
                     android:clickable="true"
                     android:scrollbars="horizontal|vertical" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarClanList"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
             </FrameLayout>
+
         </LinearLayout>
 
         <TextView
@@ -56,36 +59,6 @@
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/textViewClanCreated"
             app:layout_constraintTop_toTopOf="@+id/textViewClanCreated" />
-
-        <ScrollView
-            android:id="@+id/scrollViewClan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginRight="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewClanCreatorName">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bar_color"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewClanDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bar_color"
-                    android:padding="10dp"
-                    android:textColor="@color/button_pressed"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </ScrollView>
 
         <TextView
             android:id="@+id/textViewClanCreated"
@@ -102,14 +75,12 @@
             android:id="@+id/textViewClanMembrosNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="membros"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/textViewClanMembros"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewClan" />
+            android:textColor="@color/button_focused"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonClanShowMembers"
+            app:layout_constraintEnd_toStartOf="@+id/buttonClanShowMembers" />
 
         <TextView
             android:id="@+id/textViewClanCreatorName"
@@ -135,12 +106,12 @@
             android:id="@+id/textViewClanMembros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_margin"
             android:text="40"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewClan" />
+            android:textColor="@color/button_focused"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewClanMembrosNumber"
+            app:layout_constraintEnd_toEndOf="@+id/textViewClanMembrosNumber"
+            app:layout_constraintStart_toStartOf="@+id/textViewClanMembrosNumber" />
 
         <TextView
             android:id="@+id/textViewClanTag"
@@ -153,18 +124,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textViewClanDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bar_color"
+            android:padding="10dp"
+            android:text="rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            android:textColor="@color/button_pressed"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewClanCreatorName" />
+
         <Button
             android:id="@+id/buttonClanShowMembers"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button"
             android:padding="10dp"
             android:text="Show members"
             android:textColor="@color/button_focused"
-            app:layout_constraintStart_toEndOf="@+id/textViewClanMembrosNumber"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewClan" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewClanDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

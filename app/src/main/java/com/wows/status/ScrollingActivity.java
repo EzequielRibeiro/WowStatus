@@ -29,20 +29,28 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.OnFailureListener;
 
 
 public class ScrollingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -61,6 +69,76 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private ProgressBar progressBar;
     private EditText editText;
     private SharedPreferences prefs;
+
+    public static void rateApp(final Activity activity) throws Exception {
+        final ReviewManager reviewManager = ReviewManagerFactory.create(activity);
+        //reviewManager = new FakeReviewManager(this);
+        com.google.android.play.core.tasks.Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+
+        request.addOnCompleteListener(new com.google.android.play.core.tasks.OnCompleteListener<ReviewInfo>() {
+            @Override
+            public void onComplete(com.google.android.play.core.tasks.Task<ReviewInfo> task) {
+                if (task.isSuccessful()) {
+                    Log.e("Rate Task", "Complete");
+                    ReviewInfo reviewInfo = task.getResult();
+                    com.google.android.play.core.tasks.Task<Void> flow = reviewManager.launchReviewFlow(activity, reviewInfo);
+                    flow.addOnCompleteListener(new com.google.android.play.core.tasks.OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(com.google.android.play.core.tasks.Task<Void> task) {
+                            Log.e("Rate Flow", "Complete");
+                        }
+                    });
+
+                    flow.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
+                            Log.e("Rate Flow", "Fail");
+                            e.printStackTrace();
+                        }
+                    });
+
+                } else {
+                    activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
+                    Log.e("Rate Task", "Fail");
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
+                e.printStackTrace();
+                Log.e("Rate Request", "Fail");
+            }
+        });
+
+    }
+
+    public static void showRequestRateApp(final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Feedback");
+        builder.setMessage(activity.getString(R.string.rate_msg));
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                try {
+                    rateApp(activity);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(exception);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -208,6 +286,14 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
         });
 
+        int rated = getSharedPreferences("rated", MODE_PRIVATE).getInt("time", 0);
+        getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", rated + 1).commit();
+
+        if (rated == 3) {
+            showRequestRateApp(ScrollingActivity.this);
+        } else if (rated == 40) {
+            getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
+        }
 
     }
 

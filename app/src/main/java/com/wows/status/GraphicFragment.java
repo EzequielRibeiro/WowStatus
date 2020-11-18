@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class Graphic extends Fragment {
+public class GraphicFragment extends Fragment {
 
 
     private WebView webViewIndex;
@@ -51,18 +51,30 @@ public class Graphic extends Fragment {
 
         setRetainInstance(true);
 
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_graphic, container, false);
+
+        webViewIndex = v.findViewById(R.id.webViewIndex);
+        progressBarChart = v.findViewById(R.id.progressBarChart);
+
+
         final String id = getArguments().getString("id");
         final String country = getArguments().getString("country");
 
-        if(singletonsClass.getListShips().size() == 0){
-              shipMap = new HashMap<>();
+        if (singletonsClass.getListShips().size() == 0) {
+            shipMap = new HashMap<>();
 
-              new Thread(new Runnable() {
-                  @Override
-                  public void run() {
-                      requestShipData(id, country);
-                  }
-              }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    requestShipData(id, country);
+                }
+            }).start();
 
 
         }else{
@@ -70,16 +82,6 @@ public class Graphic extends Fragment {
             resultToGrafic(singletonsClass.getEntry());
 
         }
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_graphic, container, false);
-
-        webViewIndex = v.findViewById(R.id.webViewIndex);
-        progressBarChart = v.findViewById(R.id.progressBarChart);
 
         return v;
     }

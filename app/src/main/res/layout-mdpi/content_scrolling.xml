@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:text="@string/nickname"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@android:color/white"
         android:textSize="14sp" />
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/common_google_signin_btn_text_light_focused"
+        android:background="@color/background"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal">
 
@@ -62,7 +62,7 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <TextView
@@ -80,7 +80,7 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
         <TextView
@@ -116,7 +116,7 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColor="@android:color/white"
             android:textSize="12sp" />
 
     </LinearLayout>

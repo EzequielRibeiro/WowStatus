@@ -9,6 +9,7 @@
     <string name="player_clan_not_belong">this player does not belong to any clan</string>
     <string name="short_name_app" tools:ignore="MissingTranslation">WoWs Stats</string>
     <string name="banner_ad_unit_id" tools:ignore="MissingTranslation">ca-app-pub-0822808376839371/6121594957</string>
+    <string name="interstitial_ad_unit_id" tools:ignore="MissingTranslation">ca-app-pub-0822808376839371/8974485397</string>
     <string name="created">Created:</string>
     <string name="last_battle">Last Battle:</string>
     <string name="high_caliber">HIGH CALIBER</string>
@@ -52,5 +53,8 @@
     <string name="first_blood">FIRST BLOOD</string>
     <string name="die_hard">DIE HARD</string>
     <string name="air_defense">Air Defense</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rate_msg">"Forgive the interruption - would you mind leaving us a comment ? "</string>
 
 </resources>

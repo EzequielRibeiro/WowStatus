@@ -67,26 +67,21 @@ public class StatusServer {
         String result = "0.0.0.0";
         String url = "https://api.worldofwarships.com/wows/encyclopedia/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&fields=game_version";
 
-
         httpGetRequest = new HttpGetRequest(null);
         try {
             result = httpGetRequest.execute(url).get();
             JSONObject object = new JSONObject(result);
             JSONObject objectData = object.getJSONObject("data");
-            result = objectData.get("game_version").toString();
+            if (objectData != null)
+                result = objectData.get("game_version").toString();
 
-        } catch (ExecutionException e) {
+        } catch (ExecutionException | NullPointerException e) {
             e.printStackTrace();
             return "0.0.0.0";
         } catch (InterruptedException | JSONException e) {
             e.printStackTrace();
             return "0.0.0.0";
-        }catch (NullPointerException e){
-            e.printStackTrace();
-            return "0.0.0.0";
-            }
-
-
+        }
         return result;
 
 
