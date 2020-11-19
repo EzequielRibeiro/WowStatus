@@ -1,14 +1,13 @@
 package com.wows.status;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -26,9 +25,12 @@ import com.anychart.graphics.vector.Stroke;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -70,8 +72,6 @@ public class ProgressFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -241,17 +241,19 @@ public class ProgressFragment extends Fragment {
                         survived = Integer.valueOf(json.getString("survived_battles"));
                         wins = Integer.valueOf(json.getString("wins"));
                         destroyed = Integer.valueOf(json.getString("frags"));
-                        return;
+
+                    } else {
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                        Date date = dateFormat.parse(arrayDates[i].replace("-", "/"));
+                        seriesData.add(new CustomDataEntry(java.text.DateFormat.getDateInstance().format(date), Integer.valueOf(json.getString("battles")) - battles, Integer.valueOf(json.getString("survived_battles")) - survived,
+                                Integer.valueOf(json.getString("wins")) - wins, Integer.valueOf(json.getString("frags")) - destroyed));
+
+                        battles = Integer.valueOf(json.getString("battles"));
+                        survived = Integer.valueOf(json.getString("survived_battles"));
+                        wins = Integer.valueOf(json.getString("wins"));
+                        destroyed = Integer.valueOf(json.getString("frags"));
                     }
 
-
-                    seriesData.add(new CustomDataEntry(arrayDates[i], Integer.valueOf(json.getString("battles")) - battles, Integer.valueOf(json.getString("survived_battles")) - survived,
-                            Integer.valueOf(json.getString("wins")) - wins, Integer.valueOf(json.getString("frags")) - destroyed));
-
-                    battles = Integer.valueOf(json.getString("battles"));
-                    survived = Integer.valueOf(json.getString("survived_battles"));
-                    wins = Integer.valueOf(json.getString("wins"));
-                    destroyed = Integer.valueOf(json.getString("frags"));
 
                 }
             }
@@ -272,6 +274,8 @@ public class ProgressFragment extends Fragment {
             seriesData.add(new CustomDataEntry("", 0.0, 0.0,
                     0.0, 0.0));
             e.printStackTrace();
+        } catch (ParseException exception) {
+            exception.printStackTrace();
         }
     }
 
