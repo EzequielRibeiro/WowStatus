@@ -295,6 +295,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
         }
 
+
     }
 
 
@@ -305,6 +306,14 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         textViewRu = (TextView) findViewById(R.id.textViewServerRU);
         textViewAsia = (TextView) findViewById(R.id.textViewServerAsia);
         textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
+
+        textViewServerVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), BrowserActivity.class));
+            }
+        });
 
         new Thread(new Runnable() {
             @Override
@@ -320,7 +329,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                         textViewEu.setText(statusServer.getEu());
                         textViewRu.setText(statusServer.getRu());
                         textViewAsia.setText(statusServer.getAsia());
-                        textViewServerVersion.setText("Game version: " + prefs.getString("version", statusServer.getServeVersion()));
+                        textViewServerVersion.setText("click here for version details: " + prefs.getString("version", statusServer.getServeVersion()));
                     }
                 });
 

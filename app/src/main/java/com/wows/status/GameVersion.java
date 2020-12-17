@@ -33,6 +33,7 @@ public class GameVersion extends BroadcastReceiver {
 
                 if (num1 < num2) {
                     preferences.edit().putString("version", requestVersion).commit();
+
                     notification(context);
                 }
             }
@@ -43,9 +44,7 @@ public class GameVersion extends BroadcastReceiver {
 
     private void notification(Context context) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("prefs", MODE_PRIVATE);
-
-        Intent intent = new Intent(context, ScrollingActivity.class);
+        Intent intent = new Intent(context, BrowserActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 

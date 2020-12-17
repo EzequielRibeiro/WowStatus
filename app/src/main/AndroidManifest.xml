@@ -20,20 +20,21 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label">
         <activity
+            android:name=".BrowserActivity"
+            android:label="@string/title_activity_browser"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ClanActivity"
             android:label="@string/title_activity_clan"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PrivacyPolicyHelp" />
-
         <activity
             android:name=".TabActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ShipsDetailsFragment"
             android:configChanges="orientation|screenSize|keyboardHidden" />
-
         <activity
             android:name=".GraphicFragment"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -46,7 +47,6 @@
             android:name=".ProgressFragment"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ScrollingActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -70,7 +70,6 @@
                 <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

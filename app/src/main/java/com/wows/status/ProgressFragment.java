@@ -107,7 +107,7 @@ public class ProgressFragment extends Fragment {
         }
         String urlReplaced = url.replace("XXX", stringBuffer);
         requestJSON(seriesData, urlReplaced, id, 10, 0);
-
+        Log.e("URL1:", urlReplaced);
         // 10 until 19
         stringBuffer = new StringBuffer();
         for (int i = 10; i <= 19; i++) {
@@ -119,7 +119,7 @@ public class ProgressFragment extends Fragment {
         }
         urlReplaced = url.replace("XXX", stringBuffer);
         requestJSON(seriesData, urlReplaced, id, 20, 10);
-
+        Log.e("URL2:", urlReplaced);
         // 20 until 27
         stringBuffer = new StringBuffer();
         for (int i = 20; i < 28; i++) {
@@ -130,7 +130,7 @@ public class ProgressFragment extends Fragment {
         }
         urlReplaced = url.replace("XXX", stringBuffer);
         requestJSON(seriesData, urlReplaced, id, 28, 20);
-
+        Log.e("URL3:", urlReplaced);
         Cartesian cartesian = AnyChart.line();
         cartesian.dataArea().background().enabled(true);
         cartesian.background().fill("#000000");
