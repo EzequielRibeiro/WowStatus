@@ -1,13 +1,16 @@
 package com.wows.status;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -49,9 +52,12 @@ public class BrowserActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             stack.pop();
             webView.loadUrl(stack.pop());
-        } else
-            finish();
-        startActivity(new Intent(getApplicationContext(), ScrollingActivity.class));
+        } else {
+            super.onBackPressed();
+            Intent intent = new Intent(this, ScrollingActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 
     public class WebViewClient extends android.webkit.WebViewClient {
@@ -60,13 +66,16 @@ public class BrowserActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             progressBar.setVisibility(View.VISIBLE);
-            stack.push(url);
+            if (!stack.contains(url)) {
+                stack.push(url);
+            }
             return false;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            view.loadUrl(urlPage);
+            Toast.makeText(BrowserActivity.this, "Internet Connection error: " + error.getDescription().toString(), Toast.LENGTH_LONG).show();
         }
 
         @Override
