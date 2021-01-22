@@ -319,33 +319,33 @@ public class DetailsPlayerFragment extends Fragment {
                         @Override
                         public void run() {
 
-                            textViewKraken.setText(objAchievements.optString("WARRIOR"));
-                            textViewStrike.setText(objAchievements.optString("INSTANT_KILL"));
-                            textViewHigh.setText(objAchievements.optString("MAIN_CALIBER"));
-                            textViewDoubleKill.setText(objAchievements.optString("DOUBLE_KILL"));
+                            textViewKraken.setText(objAchievements.optString("PCH023_Warrior"));
+                            textViewStrike.setText(objAchievements.optString("PCH011_InstantKill"));
+                            textViewHigh.setText(objAchievements.optString("PCH003_MainCaliber"));
+                            textViewDoubleKill.setText(objAchievements.optString("PCH001_DoubleKill"));
                             ;
-                            textViewLiquidator.setText(objAchievements.optString("LIQUIDATOR"));
+                            textViewLiquidator.setText(objAchievements.optString("PCH013_Liquidator"));
                             ;
-                            textViewFireProof.setText(objAchievements.optString("FIREPROOF"));
-                            textViewWithering.setText(objAchievements.optString("WITHERING"));
+                            textViewFireProof.setText(objAchievements.optString("PCH017_Fireproof"));
+                            textViewWithering.setText(objAchievements.optString("PCH006_Withering"));
                             ;
-                            textViewConfederator.setText(objAchievements.optString("SUPPORT"));
+                            textViewConfederator.setText(objAchievements.optString("PCH005_Support"));
                             ;
-                            textViewClosedShoot.setText(objAchievements.optString("ATBA_CALIBER"));
+                            textViewClosedShoot.setText(objAchievements.optString("PCH020_ATBACaliber"));
                             ;
-                            textViewArsionist.setText(objAchievements.optString("ARSONIST"));
+                            textViewArsionist.setText(objAchievements.optString("PCH012_Arsonist"));
                             ;
-                            textViewDetonated.setText(objAchievements.optString("DETONATED"));
+                            textViewDetonated.setText(objAchievements.optString("PCH019_Detonated"));
                             ;
-                            textViewDreadnought.setText(objAchievements.optString("DREADNOUGHT"));
+                            textViewDreadnought.setText(objAchievements.optString("PCH004_Dreadnought"));
                             ;
-                            textViewRetribution.setText(objAchievements.optString("RETRIBUTION"));
+                            textViewRetribution.setText(objAchievements.optString("PCH010_Retribution"));
                             ;
-                            textViewFirstBlood.setText(objAchievements.optString("FIRST_BLOOD"));
+                            textViewFirstBlood.setText(objAchievements.optString("PCH016_FirstBlood"));
                             ;
-                            textViewHeadButt.setText(objAchievements.optString("HEADBUTT"));
+                            textViewHeadButt.setText(objAchievements.optString("PCH014_Headbutt"));
                             ;
-                            textViewAirDefense.setText(objAchievements.optString("AIRDEFENSEEXPERT"));
+                            textViewAirDefense.setText(objAchievements.optString("PCH174_AirDefenseExpert"));
                             ;
 
 
