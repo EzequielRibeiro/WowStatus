@@ -1,69 +1,69 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" tools:ignore="MissingTranslation">World of Warships Stats</string>
-    <string name="action_settings" tools:ignore="MissingTranslation">Settings</string>
-    <string name="action_privacy_policy">Privacy Policy</string>
-    <string name="action_contact">Contact me</string>
-    <string name="action_help">Help</string>
-    <string name="url_privacy_policy">https://ezequielportfolio.wordpress.com/privacy-policy</string>
-    <string name="url_contact">https://ezequielportfolio.wordpress.com/contato/</string>
-    <string name="player_clan_not_belong">this player does not belong to any clan</string>
-    <string name="short_name_app" tools:ignore="MissingTranslation">WoWs Stats</string>
-    <string name="banner_ad_unit_id" tools:ignore="MissingTranslation">ca-app-pub-0822808376839371/6121594957</string>
-    <string name="interstitial_ad_unit_id" tools:ignore="MissingTranslation">ca-app-pub-0822808376839371/8974485397</string>
-    <string name="created">Created:</string>
-    <string name="last_battle">Last Battle:</string>
-    <string name="high_caliber">HIGH CALIBER</string>
-    <string name="devasting_strike">DEVASTATING</string>
-    <string name="battles">Battles:</string>
-    <string name="wins">Wins:</string>
-    <string name="defeat">Defeat:</string>
-    <string name="draws">Draws:</string>
-    <string name="max_planes_kill">Max Planes Destroyed:</string>
-    <string name="max_planes_kill_ship_name">Max Planes Destroyed with:</string>
-    <string name="planes_kill">Planes Kill:</string>
-    <string name="max_xp">Max XP:</string>
-    <string name="max_xp_ship_name">Max XP with:</string>
-    <string name="max_damage">Max Damage:</string>
-    <string name="max_damage_with">Max Damage with:</string>
-    <string name="total_damage">Total Damage:</string>
-    <string name="average_damage">Average Damage:</string>
-    <string name="max_destroyed">Max ship Destroyed:</string>
-    <string name="destroyed_ships">Destroyed Ships:</string>
-    <string name="average_destroyed_ships">Average Destroyed Ships:</string>
-    <string name="survived_battles">Survived Battles:</string>
-    <string name="survived_with_wins">Survived with Wins:</string>
-    <string name="progress_dialog_mensagem">" Downloading ..."</string>
-    <string name="no_connection">No internet connection</string>
-    <string name="url_web" tools:ignore="MissingTranslation">https://playtogether.worldofwarships.com/invite/wm2LE6k</string>
-    <string name="enter_text">Enter a text</string>
-    <string name="nickname">Search:</string>
-    <string name="ship_name" tools:ignore="MissingTranslation">Ship Name</string>
-    <string name="title_activity_clan">ClanActivity</string>
-    <string name="max_ships_destroyed_by">Max ships destroyed by:</string>
-    <string name="double_kill">DOUBLE KILL</string>
-    <string name="detonation">DETONATION</string>
-    <string name="confederate">CONFEDERATE</string>
-    <string name="secondary_kill">SECONDARY KILL</string>
-    <string name="withering">WITHERING</string>
-    <string name="dreadnought">DREADNOUGHT</string>
-    <string name="liquidator">LIQUIDATOR</string>
-    <string name="fireproof">FIREPROOF</string>
-    <string name="arsionist">ARSIONIST</string>
-    <string name="retribution">RETRIBUTION</string>
-    <string name="first_blood">FIRST BLOOD</string>
-    <string name="die_hard">DIE HARD</string>
-    <string name="air_defense">Air Defense</string>
+    <string name="app_name" tools:ignore="MissingTranslation" translatable="false">World of Warships Stats</string>
+    <string name="action_settings" tools:ignore="MissingTranslation" translatable="false">Settings</string>
+    <string name="action_privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="action_contact" translatable="false">Contact me</string>
+    <string name="action_help" translatable="false">Help</string>
+    <string name="url_privacy_policy" translatable="false">https://ezequielportfolio.wordpress.com/privacy-policy</string>
+    <string name="url_contact" translatable="false">https://ezequielportfolio.wordpress.com/contato/</string>
+    <string name="player_clan_not_belong" translatable="false">this player does not belong to any clan</string>
+    <string name="short_name_app" tools:ignore="MissingTranslation" translatable="false">WoWs Stats</string>
+    <string name="banner_ad_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/6121594957</string>
+    <string name="interstitial_ad_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/8974485397</string>
+    <string name="created" translatable="false">Created:</string>
+    <string name="last_battle" translatable="false">Last Battle:</string>
+    <string name="high_caliber" translatable="false">HIGH CALIBER</string>
+    <string name="devasting_strike" translatable="false">DEVASTATING</string>
+    <string name="battles" translatable="false">Battles:</string>
+    <string name="wins" translatable="false">Wins:</string>
+    <string name="defeat" translatable="false">Defeat:</string>
+    <string name="draws" translatable="false">Draws:</string>
+    <string name="max_planes_kill" translatable="false">Max Planes Destroyed:</string>
+    <string name="max_planes_kill_ship_name" translatable="false">Max Planes Destroyed with:</string>
+    <string name="planes_kill" translatable="false">Planes Kill:</string>
+    <string name="max_xp" translatable="false">Max XP:</string>
+    <string name="max_xp_ship_name" translatable="false">Max XP with:</string>
+    <string name="max_damage" translatable="false">Max Damage:</string>
+    <string name="max_damage_with" translatable="false">Max Damage with:</string>
+    <string name="total_damage" translatable="false">Total Damage:</string>
+    <string name="average_damage" translatable="false">Average Damage:</string>
+    <string name="max_destroyed" translatable="false">Max ship Destroyed:</string>
+    <string name="destroyed_ships" translatable="false">Destroyed Ships:</string>
+    <string name="average_destroyed_ships" translatable="false">Average Destroyed Ships:</string>
+    <string name="survived_battles" translatable="false">Survived Battles:</string>
+    <string name="survived_with_wins" translatable="false">Survived with Wins:</string>
+    <string name="progress_dialog_mensagem" translatable="false">" Downloading ..."</string>
+    <string name="no_connection" translatable="false">No internet connection</string>
+    <string name="url_web" tools:ignore="MissingTranslation" translatable="false">https://playtogether.worldofwarships.com/invite/wm2LE6k</string>
+    <string name="enter_text" translatable="false">Enter a text</string>
+    <string name="nickname" translatable="false">Search:</string>
+    <string name="ship_name" tools:ignore="MissingTranslation" translatable="false">Ship Name</string>
+    <string name="title_activity_clan" translatable="false">ClanActivity</string>
+    <string name="max_ships_destroyed_by" translatable="false">Max ships destroyed by:</string>
+    <string name="double_kill" translatable="false">DOUBLE KILL</string>
+    <string name="detonation" translatable="false">DETONATION</string>
+    <string name="confederate" translatable="false">CONFEDERATE</string>
+    <string name="secondary_kill" translatable="false">SECONDARY KILL</string>
+    <string name="withering" translatable="false">WITHERING</string>
+    <string name="dreadnought" translatable="false">DREADNOUGHT</string>
+    <string name="liquidator" translatable="false">LIQUIDATOR</string>
+    <string name="fireproof" translatable="false">FIREPROOF</string>
+    <string name="arsionist" translatable="false">ARSIONIST</string>
+    <string name="retribution" translatable="false">RETRIBUTION</string>
+    <string name="first_blood" translatable="false">FIRST BLOOD</string>
+    <string name="die_hard" translatable="false">DIE HARD</string>
+    <string name="air_defense" translatable="false">Air Defense</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="rate_msg">"Forgive the interruption - would you mind leaving us a comment ? "</string>
-    <string name="title_activity_browser">BrowserActivity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="rate_msg" translatable="false">"Forgive the interruption - would you mind leaving us a comment ? "</string>
+    <string name="title_activity_browser" translatable="false">BrowserActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
 
 </resources>

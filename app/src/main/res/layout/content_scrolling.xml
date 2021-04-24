@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,28 +7,47 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal|top"
-    android:layout_marginTop="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:background="@android:color/black"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.wows.status.ScrollingActivity"
     tools:showIn="@layout/activity_scrolling">
 
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:src="@android:drawable/ic_menu_search"
+        ads:backgroundTint="@color/colorPrimaryDark"
+        ads:fabSize="mini"
+        ads:layout_anchorGravity="right|center_vertical"
+        ads:layout_constraintBottom_toBottomOf="@+id/editText"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
+
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:id="@+id/textViewSearch"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:paddingLeft="5dp"
         android:text="@string/nickname"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold"
+        ads:layout_constraintBottom_toTopOf="@id/editText"
+        ads:layout_constraintEnd_toEndOf="@+id/editText"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bar_color"
         android:focusableInTouchMode="false"
         android:imeOptions="actionSearch"
@@ -38,24 +57,29 @@
         android:singleLine="true"
         android:soundEffectsEnabled="false"
         android:textColor="@android:color/background_light"
-        android:textColorLink="@color/colorPrimaryDark" />
+        android:textColorLink="@color/colorPrimaryDark"
+        ads:layout_constraintEnd_toStartOf="@+id/fab"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="8dp"
         android:background="@color/background"
         android:gravity="center_horizontal|center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/editText">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="1dp"
             android:text="NA:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textViewServerNA"
@@ -64,16 +88,14 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="1dp"
             android:text="EU:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textviewServerEU"
@@ -82,16 +104,14 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="1dp"
             android:text="RU:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textViewServerRU"
@@ -100,16 +120,14 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="1dp"
             android:text="ASIA:"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/textViewServerAsia"
@@ -118,139 +136,146 @@
             android:maxLines="1"
             android:minWidth="30dp"
             android:paddingRight="5dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
-    <LinearLayout
+
+    <RadioGroup
+        android:id="@+id/radioGroupSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/button_default"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingTop="5dp">
+        android:paddingRight="5dp"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <RadioGroup
-            android:id="@+id/radioGroupSearch"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/radioButtonPlayer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@color/button_default"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingRight="5dp">
+            android:checked="true"
+            android:tag="player"
+            android:text="PLAYER"
+            android:textColor="@color/button_pressed" />
 
-            <RadioButton
-                android:id="@+id/radioButtonPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:tag="player"
-                android:text="PLAYER"
-                android:textColor="@color/button_pressed" />
-
-            <RadioButton
-                android:id="@+id/radioButtonClan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="clan"
-                android:text="CLAN"
-                android:textColor="@color/button_pressed" />
-
-
-        </RadioGroup>
-
-
-        <RadioGroup
-            android:id="@+id/radioGroupCountry"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/radioButtonClan"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/button_default"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingRight="5dp">
+            android:tag="clan"
+            android:text="CLAN"
+            android:textColor="@color/button_pressed" />
 
-            <RadioButton
-                android:id="@+id/radioButtonNa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:tag=".com"
-                android:text="NA"
-                android:textColor="@color/button_pressed" />
 
-            <RadioButton
-                android:id="@+id/radioButtonEu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag=".eu"
-                android:text="EU"
-                android:textColor="@color/button_pressed" />
+    </RadioGroup>
 
-            <RadioButton
-                android:id="@+id/radioButtonRu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag=".ru"
-                android:text="RU"
-                android:textColor="@color/button_pressed" />
 
-            <RadioButton
-                android:id="@+id/radioButtonAsia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag=".asia"
-                android:text="ASIA"
-                android:textColor="@color/button_pressed" />
-        </RadioGroup>
-    </LinearLayout>
+    <RadioGroup
+        android:id="@+id/radioGroupCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/button_default"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingRight="5dp"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/radioGroupSearch">
+
+        <RadioButton
+            android:id="@+id/radioButtonNa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:tag=".com"
+            android:text="NA"
+            android:textColor="@color/button_pressed" />
+
+        <RadioButton
+            android:id="@+id/radioButtonEu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".eu"
+            android:text="EU"
+            android:textColor="@color/button_pressed" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".ru"
+            android:text="RU"
+            android:textColor="@color/button_pressed" />
+
+        <RadioButton
+            android:id="@+id/radioButtonAsia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag=".asia"
+            android:text="ASIA"
+            android:textColor="@color/button_pressed" />
+    </RadioGroup>
+
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:minWidth="90dp"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry"></com.google.android.gms.ads.AdView>
 
     <TextView
         android:id="@+id/textViewServerVersion"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
         android:gravity="right"
         android:text="Game version: 0.0.0.0"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/adView" />
+
 
     <FrameLayout
-        android:id="@+id/frameLayoutContent"
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:paddingTop="5dp"
-        android:visibility="visible">
-
-        <ProgressBar
-            android:id="@+id/progressBarContent"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="150sp"
-            android:layout_height="150sp"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/textViewServerVersion">
 
         <ListView
             android:id="@+id/list_item_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:background="@null"
             android:choiceMode="singleChoice"
-            android:dividerHeight="@dimen/text_margin"
-            android:padding="15dp" />
+            android:dividerHeight="@dimen/text_margin" />
 
+        <ProgressBar
+            android:id="@+id/progressBarContent"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
     </FrameLayout>
-</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

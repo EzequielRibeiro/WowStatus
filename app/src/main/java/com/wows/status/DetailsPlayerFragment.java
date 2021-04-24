@@ -151,6 +151,7 @@ public class DetailsPlayerFragment extends Fragment {
         if(nickNameView.getText().toString().equals("NickName"))
              request(id, country);
 
+        initLabel(view);
         // Inflate the layout for this fragment
         return view;
     }
@@ -160,6 +161,94 @@ public class DetailsPlayerFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+    }
+
+    private void initLabel(View view){
+
+
+        DBAdapter dbAdapter = new DBAdapter(getActivity());
+        TextView createdAtView = (TextView) view.findViewById(R.id.textViewCreated);
+        createdAtView.setText(dbAdapter.getMensagemTranslated(1));
+        TextView lastBattleTimeView = (TextView) view.findViewById(R.id.textViewLastBattle);
+        lastBattleTimeView.setText(dbAdapter.getMensagemTranslated(2));
+        TextView textViewWinRate = (TextView) view.findViewById(R.id.textViewLabelWinRate);
+        textViewWinRate.setText(dbAdapter.getMensagemTranslated(3));
+        TextView killDeath = (TextView) view.findViewById(R.id.textViewLabelKillDeath);
+        killDeath.setText(dbAdapter.getMensagemTranslated(4));
+        TextView battlesView = (TextView) view.findViewById(R.id.textViewBattle);
+        battlesView.setText(dbAdapter.getMensagemTranslated(21));
+        TextView winsView = (TextView) view.findViewById(R.id.textViewWins);
+        winsView.setText(dbAdapter.getMensagemTranslated(22));
+        TextView defeatView = (TextView) view.findViewById(R.id.textViewDefeat);
+        defeatView.setText(dbAdapter.getMensagemTranslated(23));
+        TextView drawsView = (TextView) view.findViewById(R.id.textViewDraws);
+        drawsView.setText(dbAdapter.getMensagemTranslated(24));
+        TextView textViewMaxXp = (TextView) view.findViewById(R.id.textViewMaxXp);
+        textViewMaxXp.setText(dbAdapter.getMensagemTranslated(25));
+        TextView textViewMaxXpShipName = (TextView) view.findViewById(R.id.textViewMaxXpShipName);
+        textViewMaxXpShipName.setText(dbAdapter.getMensagemTranslated(26));
+        TextView maxPlanesKillView = (TextView) view.findViewById(R.id.textViewMaxPlaneKill);
+        maxPlanesKillView.setText(dbAdapter.getMensagemTranslated(27));
+        TextView textViewMaxPlanesKillShipName = (TextView) view.findViewById(R.id.textViewMaxPlanesKillShipName);
+        textViewMaxPlanesKillShipName.setText(dbAdapter.getMensagemTranslated(28));
+        TextView planesKilledView = (TextView) view.findViewById(R.id.textViewPlaneKill);
+        planesKilledView.setText(dbAdapter.getMensagemTranslated(29));
+        TextView maxDamageView = (TextView) view.findViewById(R.id.textViewMaxDamage);
+        maxDamageView.setText(dbAdapter.getMensagemTranslated(30));
+        TextView maxDamageShipView = (TextView) view.findViewById(R.id.textViewMaxDamageShip);
+        maxDamageShipView.setText(dbAdapter.getMensagemTranslated(31));;
+        TextView totalDamage = (TextView) view.findViewById(R.id.textViewTotalDamage);
+        totalDamage.setText(dbAdapter.getMensagemTranslated(32));
+        TextView averageDamageView = (TextView) view.findViewById(R.id.textViewAverageDamage);
+        averageDamageView.setText(dbAdapter.getMensagemTranslated(33));
+        TextView maxChipsDestroyerView = (TextView) view.findViewById(R.id.textViewMaxDestroyed);
+        maxChipsDestroyerView.setText(dbAdapter.getMensagemTranslated(34));
+        TextView textViewMaxDestroyedShipName = (TextView) view.findViewById(R.id.textViewMaxDestroyedShipName);
+        textViewMaxDestroyedShipName.setText(dbAdapter.getMensagemTranslated(35));
+        TextView shipsDestroyed = (TextView) view.findViewById(R.id.textViewDestroyedShips);
+        shipsDestroyed.setText(dbAdapter.getMensagemTranslated(36));
+        TextView averageShipsDestroyed = (TextView) view.findViewById(R.id.textViewAverageDestroyed);
+        averageShipsDestroyed.setText(dbAdapter.getMensagemTranslated(37));
+        TextView survivedBattlesView = (TextView) view.findViewById(R.id.textViewSurvivedBattles);
+        survivedBattlesView.setText(dbAdapter.getMensagemTranslated(38));
+        TextView survivedWinsView = (TextView) view.findViewById(R.id.textViewSurvivedWins);
+        survivedWinsView.setText(dbAdapter.getMensagemTranslated(39));
+
+        //achieves
+        TextView textViewHigh = (TextView) view.findViewById(R.id.textViewLabelCaliber);
+        textViewHigh.setText(dbAdapter.getMensagemTranslated(5));
+        TextView textViewKraken = (TextView) view.findViewById(R.id.textViewLabelKraken);
+        textViewKraken.setText(dbAdapter.getMensagemTranslated(6));
+        TextView textViewStrike = (TextView) view.findViewById(R.id.textViewLabelDevasting);
+        textViewStrike.setText(dbAdapter.getMensagemTranslated(7));
+        TextView textViewDoubleKill = (TextView) view.findViewById(R.id.textViewLabelDoubleKill);
+        textViewDoubleKill.setText(dbAdapter.getMensagemTranslated(8));
+        TextView textViewDetonated = (TextView) view.findViewById(R.id.textViewLabelDetonation);
+        textViewDetonated.setText(dbAdapter.getMensagemTranslated(9));
+        TextView textViewConfederator = (TextView) view.findViewById(R.id.textViewLabelSupportConfederado);
+        textViewConfederator.setText(dbAdapter.getMensagemTranslated(10));
+        TextView textViewClosedShoot = (TextView) view.findViewById(R.id.textViewLabelCloseShoot);
+        textViewClosedShoot.setText(dbAdapter.getMensagemTranslated(11));
+        TextView textViewWithering = (TextView) view.findViewById(R.id.textViewLabelWitheringSecador);
+        textViewWithering.setText(dbAdapter.getMensagemTranslated(12));
+        TextView textViewDreadnought = (TextView) view.findViewById(R.id.textViewLabelDreadnought);
+        textViewDreadnought.setText(dbAdapter.getMensagemTranslated(13));
+        TextView textViewLiquidator = (TextView) view.findViewById(R.id.textViewLabelLiquidator);
+        textViewLiquidator.setText(dbAdapter.getMensagemTranslated(14));
+        TextView textViewFireProof = (TextView) view.findViewById(R.id.textViewLabelFireProof);
+        textViewFireProof.setText(dbAdapter.getMensagemTranslated(15));
+        TextView textViewArsionist = (TextView) view.findViewById(R.id.textViewLabelArsionist);
+        textViewArsionist.setText(dbAdapter.getMensagemTranslated(16));
+        TextView textViewRetribution = (TextView) view.findViewById(R.id.textViewLabelRetribution);
+        textViewRetribution.setText(dbAdapter.getMensagemTranslated(17));
+        TextView textViewFirstBlood = (TextView) view.findViewById(R.id.textViewLabelFirstBlood);
+        textViewFirstBlood.setText(dbAdapter.getMensagemTranslated(18));
+        TextView textViewHeadButt = (TextView) view.findViewById(R.id.textViewLabelHeadButt);
+        textViewHeadButt.setText(dbAdapter.getMensagemTranslated(19));
+        TextView textViewAirDefense = (TextView) view.findViewById(R.id.textViewLabelAirDefense);
+        textViewAirDefense.setText(dbAdapter.getMensagemTranslated(20));
+
+        dbAdapter.close();
     }
 
     private String getDate(long time) {

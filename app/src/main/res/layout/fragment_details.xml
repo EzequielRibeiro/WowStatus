@@ -151,6 +151,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/textViewLabelWinRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -179,6 +180,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/textViewLabelKillDeath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -288,7 +290,7 @@
                     app:srcCompat="@drawable/icon_achievement_instant_kill" />
 
                 <TextView
-                    android:id="@+id/textViewLaberDevasting"
+                    android:id="@+id/textViewLabelDevasting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -388,7 +390,7 @@
                     app:srcCompat="@drawable/icon_achievement_confederate_support" />
 
                 <TextView
-                    android:id="@+id/textViewLaberSupportConfederado"
+                    android:id="@+id/textViewLabelSupportConfederado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -454,7 +456,7 @@
                     app:srcCompat="@drawable/icon_achievement_withering" />
 
                 <TextView
-                    android:id="@+id/textViewLaberWitheringSecador"
+                    android:id="@+id/textViewLabelWitheringSecador"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -769,6 +771,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/battles"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -800,6 +803,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/wins"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -832,6 +836,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/defeat"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -864,6 +869,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/draws"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -897,6 +903,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_xp"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -930,6 +937,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2sp"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_xp_ship_name"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -962,6 +970,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLength="35"
+                    android:maxLines="1"
                     android:text="@string/max_planes_kill"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -995,13 +1005,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2sp"
                     android:gravity="left|center_vertical"
+                    android:maxLength="35"
+                    android:maxLines="1"
                     android:text="@string/max_planes_kill_ship_name"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textViewMaxPlanesKillShipNameV"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_weight="1"
@@ -1028,6 +1040,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/planes_kill"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1060,6 +1073,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_damage"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1091,6 +1105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_damage_with"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1122,6 +1137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/total_damage"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1155,6 +1171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/average_damage"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1187,6 +1204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_destroyed"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1219,6 +1237,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/max_ships_destroyed_by"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
@@ -1251,6 +1270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:maxLines="1"
                     android:text="@string/destroyed_ships"
                     android:textColor="@android:color/background_light"
                     android:textSize="14sp" />
