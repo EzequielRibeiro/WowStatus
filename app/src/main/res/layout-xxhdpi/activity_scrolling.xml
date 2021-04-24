@@ -11,8 +11,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/backgroud_top_small"
+        android:layout_height="200dp"
+        android:background="@drawable/banner_home"
         android:baselineAligned="false"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">

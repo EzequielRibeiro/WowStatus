@@ -12,7 +12,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@android:dimen/thumbnail_width"
-        android:background="@drawable/backgroud_top"
+        android:background="@drawable/banner_home"
         android:baselineAligned="false"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -38,7 +38,8 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_scrolling" />
+        layout="@layout/content_scrolling"
+        android:layout_width="wrap_content" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

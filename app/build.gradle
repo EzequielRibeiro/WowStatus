@@ -30,7 +30,7 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    buildToolsVersion '30.0.0'
+    buildToolsVersion '30.0.2'
     productFlavors {
     }
 }
