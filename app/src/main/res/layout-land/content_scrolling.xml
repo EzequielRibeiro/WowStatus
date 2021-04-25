@@ -19,7 +19,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="8dp"
         android:adjustViewBounds="false"
         android:src="@android:drawable/ic_menu_search"
         ads:backgroundTint="@color/colorPrimaryDark"
@@ -27,47 +27,45 @@
         ads:layout_anchorGravity="right|center_vertical"
         ads:layout_constraintBottom_toBottomOf="@+id/editText"
         ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toEndOf="@+id/editText"
         ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
     <TextView
         android:id="@+id/textViewSearch"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:paddingLeft="5dp"
         android:text="@string/nickname"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         ads:layout_constraintBottom_toTopOf="@id/editText"
-        ads:layout_constraintEnd_toEndOf="@+id/editText"
-        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintStart_toStartOf="@+id/editText"
         ads:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bar_color"
         android:focusableInTouchMode="false"
         android:imeOptions="actionSearch"
         android:inputType="textPersonName"
         android:maxWidth="350dp"
-        android:paddingLeft="10dp"
         android:singleLine="true"
         android:soundEffectsEnabled="false"
         android:textColor="@android:color/background_light"
         android:textColorLink="@color/colorPrimaryDark"
+        ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
         ads:layout_constraintEnd_toStartOf="@+id/fab"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@color/background"
@@ -149,13 +147,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/button_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingRight="5dp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toStartOf="@+id/radioGroupCountry"
+        ads:layout_constraintStart_toStartOf="@+id/linearLayout"
         ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <RadioButton
@@ -188,9 +186,9 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingRight="5dp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/radioGroupSearch">
+        ads:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        ads:layout_constraintStart_toEndOf="@+id/radioGroupSearch"
+        ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <RadioButton
             android:id="@+id/radioButtonNa"
@@ -231,42 +229,43 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:minWidth="90dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
+        ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry"></com.google.android.gms.ads.AdView>
+        ads:layout_constraintTop_toBottomOf="@+id/frameLayout"></com.google.android.gms.ads.AdView>
 
     <TextView
         android:id="@+id/textViewServerVersion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="right"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="left"
         android:text="Game version: 0.0.0.0"
         android:textColor="@android:color/white"
+        ads:layout_constraintBottom_toTopOf="@+id/frameLayout"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/adView" />
+        ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry" />
 
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintBottom_toTopOf="@+id/adView"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/textViewServerVersion">
 
         <ListView
             android:id="@+id/list_item_content"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:background="@null"
             android:choiceMode="singleChoice"
             android:dividerHeight="@dimen/text_margin" />

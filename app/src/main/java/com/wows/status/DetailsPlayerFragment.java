@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
@@ -677,9 +678,6 @@ public class DetailsPlayerFragment extends Fragment {
 
 
     }
-
-
-
 
 }
 

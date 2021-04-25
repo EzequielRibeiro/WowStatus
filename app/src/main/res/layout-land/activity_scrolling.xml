@@ -18,8 +18,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:background="@drawable/banner_home"
+            android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay"
@@ -31,7 +30,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="1dp"
                 android:fitsSystemWindows="true"
                 app:toolbarId="@+id/toolbarTab">
 
