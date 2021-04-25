@@ -19,7 +19,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="25dp"
         android:adjustViewBounds="false"
         android:src="@android:drawable/ic_menu_search"
         ads:backgroundTint="@color/colorPrimaryDark"
@@ -33,23 +33,20 @@
         android:id="@+id/textViewSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:paddingLeft="5dp"
         android:text="@string/nickname"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         ads:layout_constraintBottom_toTopOf="@id/editText"
         ads:layout_constraintEnd_toEndOf="@+id/editText"
-        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintStart_toStartOf="@+id/editText"
         ads:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bar_color"
         android:focusableInTouchMode="false"
@@ -62,7 +59,7 @@
         android:textColor="@android:color/background_light"
         android:textColorLink="@color/colorPrimaryDark"
         ads:layout_constraintEnd_toStartOf="@+id/fab"
-        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintStart_toStartOf="@+id/radioGroupSearch"
         ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
     <LinearLayout
@@ -146,16 +143,14 @@
 
     <RadioGroup
         android:id="@+id/radioGroupSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
         android:background="@color/button_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingRight="5dp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="@+id/radioGroupCountry"
+        ads:layout_constraintStart_toStartOf="@+id/radioGroupCountry"
         ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <RadioButton
@@ -187,7 +182,6 @@
         android:background="@color/button_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingRight="5dp"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/radioGroupSearch">
@@ -221,6 +215,7 @@
             android:id="@+id/radioButtonAsia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:tag=".asia"
             android:text="ASIA"
             android:textColor="@color/button_pressed" />
@@ -232,9 +227,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:minWidth="90dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
+        ads:layout_constraintBottom_toTopOf="@+id/textViewServerVersion"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry"></com.google.android.gms.ads.AdView>
@@ -244,10 +241,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="right"
+        android:gravity="center"
         android:text="Game version: 0.0.0.0"
         android:textColor="@android:color/white"
+        ads:layout_constraintBottom_toTopOf="@+id/frameLayout"
         ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/adView" />
 
 

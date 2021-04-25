@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -374,7 +375,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             Log.d("Mensagem",m.getId()+" "+m.getMensagem()+" - "+m.getTranslated());
         }
 
-        textViewSearch.setText(dbAdapter.getMensagemTranslated(41));
+        textViewSearch.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(41)));
         dbAdapter.close();
 
         }
@@ -413,7 +414,8 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
                             DBAdapter dbAdapter = new DBAdapter(ScrollingActivity.this);
 
-                            textViewServerVersion.setText(dbAdapter.getMensagemTranslated(40)+" "+ prefs.getString("version", statusServer.getServeVersion()));
+                            textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40)+
+                                    " "+ prefs.getString("version", statusServer.getServeVersion())));
                         }
                     });
 
@@ -808,7 +810,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void run() {
                         editText.setEnabled(false);
-                        textViewAlertTranslate.setText(translate(LOCALE_DEFAULT,locale.getLanguage(),alertTranslate));
+                        textViewAlertTranslate.setText(Html.fromHtml(translate(LOCALE_DEFAULT,locale.getLanguage(),alertTranslate)));
                     }
                 });
 
