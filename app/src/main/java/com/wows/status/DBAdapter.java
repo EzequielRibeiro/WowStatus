@@ -87,6 +87,15 @@ public class DBAdapter {
     }
 
 
+    public boolean updatetoFalseTranslated() throws SQLException {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_TRANSLATED, 0);
+
+        return db.update(DATABASE_TABLENAME_MENSAGEM, contentValues, null, null) > 0;
+
+    }
+
     public boolean updateMensagem(int id, String translate) throws SQLException {
 
         ContentValues contentValues = new ContentValues();

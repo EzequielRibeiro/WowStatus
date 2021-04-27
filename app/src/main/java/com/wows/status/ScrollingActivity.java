@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
@@ -95,11 +96,16 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     private SharedPreferences prefs;
     private Locale locale;
     private TextView textViewSearch;
+    private String languageCode;
+    private  String mensagem_to_translate = "Translating application to your language.";
 
     private String translate(String langFrom, String langTo, String text) {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        if(langFrom.equals(langTo))
+            return text;
 
         final String yourURL = "https://script.google.com/macros/s/AKfycbyHrs_kLCmXJB-fH_mS2ODtud3y0lR4Povq9nE2EqCSBPSiqjF80PNMKJohEV3TrZws/exec";
 
@@ -222,6 +228,18 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
         setSupportActionBar(toolbar);
 
+        locale = getResources().getConfiguration().locale;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+           // countryCode = getResources().getConfiguration().getLocales().get(0).getCountry();
+            languageCode = getResources().getConfiguration().getLocales().get(0).getLanguage();
+          //  countDisplayName = getResources().getConfiguration().getLocales().get(0).getDisplayCountry();
+        } else {
+           // countryCode = getResources().getConfiguration().locale.getCountry();
+            languageCode = getResources().getConfiguration().locale.getLanguage();
+          //  countDisplayName = getResources().getConfiguration().locale.getDisplayCountry();
+        }
+
         listView = (ListView) findViewById(R.id.list_item_content);
         progressBar = (ProgressBar) findViewById(R.id.progressBarContent);
         textViewSearch = findViewById(R.id.textViewSearch);
@@ -273,6 +291,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
             public void run() {
                 if (!prefs.contains("version"))
                     prefs.edit().putString("version", new StatusServer().getServeVersion()).commit();
+                    mensagem_to_translate = translate(LOCALE_DEFAULT,languageCode,"Translating application to your language.");
             }
         }).start();
 
@@ -364,22 +383,10 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                 dbAdapter.insertMensagem(m, m);
         }
 
-        locale = getResources().getConfiguration().locale;
-        if (!locale.getLanguage().equals(LOCALE_DEFAULT)) {
-            if (!(dbAdapter.getCountMensagemTranslated() == MENSAGEM_ARRAY.length))
-                new TranslateTopics(ScrollingActivity.this).execute();
-                hideKeyboard();
-        }
-
-        for(DBAdapter.Mensagem m:dbAdapter.getAllMensagem()){
-            Log.d("Mensagem",m.getId()+" "+m.getMensagem()+" - "+m.getTranslated());
-        }
-
         textViewSearch.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(41)));
         dbAdapter.close();
 
         }
-
 
         private void serverStatus () {
 
@@ -691,14 +698,35 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                 return true;
             }
 
+            if (id == R.id.action_translate) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ScrollingActivity.this);
+
+                builder.setMessage(mensagem_to_translate)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                               DBAdapter dbAdapter = new DBAdapter(ScrollingActivity.this);
+                               dbAdapter.updatetoFalseTranslated();
+                               dbAdapter.close();
+
+                                new TranslateTopics(ScrollingActivity.this).execute();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.create().show();
+            }
+
             return super.onOptionsItemSelected(item);
         }
 
-
-        public void forceCrash (View view){
+       /* public void forceCrash (View view){
             throw new RuntimeException("This is a crash");
-        }
-
+        }*/
 
         private void restorePrefs () {
 
@@ -801,6 +829,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                 textViewTranslate = ((Activity) context).findViewById(R.id.textViewTranslate);
                 textViewAlertTranslate = ((Activity) context).findViewById(R.id.textViewAlertTranslate);
                 this.linearLayoutTranslate.setVisibility(View.VISIBLE);
+                hideKeyboard();
 
             }
 

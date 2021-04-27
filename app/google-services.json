@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:361018014094:android:f504bd419544864a",
+        "mobilesdk_app_id": "1:361018014094:android:8b95af8d675f2ddf2d8cdf",
         "android_client_info": {
-          "package_name": "com.wows.status"
+          "package_name": "com.wows.stats"
         }
       },
       "oauth_client": [
@@ -25,17 +25,53 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361018014094-2ks4hu0vitbp0tq7f0ael546e45f4qes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361018014094:android:f504bd419544864a",
+        "android_client_info": {
+          "package_name": "com.wows.status"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361018014094-74qlbraoo4pdsqf87dsa4i7v24us2bgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wows.status",
+            "certificate_hash": "81d493ff668fa2500a7a68c3b677eaf454973148"
+          }
+        },
+        {
+          "client_id": "361018014094-2ks4hu0vitbp0tq7f0ael546e45f4qes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUvIRVbNuw1RM61rqAF4x8Yxb7Nu6-Zi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361018014094-2ks4hu0vitbp0tq7f0ael546e45f4qes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-0822808376839371~3439591297"
     }
   ],
   "configuration_version": "1"

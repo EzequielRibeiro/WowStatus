@@ -5,17 +5,18 @@ android {
         config {
             keyAlias 'key'
             keyPassword '123456'
-            storeFile file('D:/Projeto-Android/WowStatus/key.keystore')
+            storeFile file('D:/Projeto-Android/WowStatus/key_wows_stats.jks')
             storePassword '123456'
         }
     }
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.wows.status"
+      //  applicationId "com.wows.status"
+        applicationId "com.wows.stats"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 22
-        versionName "1.22"
+        versionName "1.23"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }
