@@ -54,7 +54,7 @@ public class BrowserActivity extends AppCompatActivity {
             webView.loadUrl(stack.pop());
         } else {
             super.onBackPressed();
-            Intent intent = new Intent(this, ScrollingActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }

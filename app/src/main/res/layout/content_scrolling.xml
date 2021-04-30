@@ -11,7 +11,7 @@
     android:layout_marginRight="20dp"
     android:background="@android:color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wows.status.ScrollingActivity"
+    tools:context="com.wows.status.MainActivity"
     tools:showIn="@layout/activity_scrolling">
 
 
@@ -19,13 +19,14 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:adjustViewBounds="false"
         android:src="@android:drawable/ic_menu_search"
         ads:backgroundTint="@color/colorPrimaryDark"
         ads:fabSize="mini"
         ads:layout_anchorGravity="right|center_vertical"
         ads:layout_constraintBottom_toBottomOf="@+id/editText"
+        ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toEndOf="@+id/textViewSearch"
         ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
@@ -33,7 +34,7 @@
         android:id="@+id/textViewSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:text="@string/nickname"
         android:textColor="@color/white"
         android:textSize="14sp"
@@ -47,6 +48,8 @@
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bar_color"
         android:focusableInTouchMode="false"
@@ -57,8 +60,8 @@
         android:textColor="@android:color/background_light"
         android:textColorLink="@color/colorPrimaryDark"
         ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        ads:layout_constraintEnd_toEndOf="@+id/radioGroupSearch"
-        ads:layout_constraintStart_toStartOf="@+id/radioGroupSearch"
+        ads:layout_constraintEnd_toStartOf="@+id/fab"
+        ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/textViewSearch" />
 
     <LinearLayout
@@ -69,6 +72,7 @@
         android:background="@color/background"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal"
+        ads:layout_constraintBottom_toTopOf="@+id/radioGroupSearch"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/editText">
@@ -145,16 +149,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="9dp"
         android:background="@color/button_default"
         android:gravity="center"
         android:orientation="horizontal"
+        ads:layout_constraintBottom_toTopOf="@+id/radioGroupCountry"
         ads:layout_constraintEnd_toEndOf="@+id/radioGroupCountry"
         ads:layout_constraintStart_toStartOf="@+id/radioGroupCountry"
         ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <RadioButton
             android:id="@+id/radioButtonPlayer"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:checked="true"
             android:tag="player"
@@ -163,7 +169,7 @@
 
         <RadioButton
             android:id="@+id/radioButtonClan"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:tag="clan"
             android:text="CLAN"

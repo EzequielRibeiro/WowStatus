@@ -27,8 +27,16 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_rate"
+        android:orderInCategory="100"
+        android:title="Rate us!"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_version"
         android:orderInCategory="100"
         android:title=""
         app:showAsAction="never" />
+
+
 </menu>

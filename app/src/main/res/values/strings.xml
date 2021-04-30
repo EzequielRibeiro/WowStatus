@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" tools:ignore="MissingTranslation" translatable="false">World of Warships Stats</string>
+    <string name="app_name" tools:ignore="MissingTranslation" translatable="false">WoWs Stats</string>
     <string name="action_settings" tools:ignore="MissingTranslation" translatable="false">Settings</string>
     <string name="action_privacy_policy" translatable="false">Privacy Policy</string>
     <string name="action_contact" translatable="false">Contact me</string>

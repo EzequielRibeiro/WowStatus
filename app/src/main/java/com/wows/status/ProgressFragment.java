@@ -51,6 +51,7 @@ public class ProgressFragment extends Fragment {
     private String mParam2;
     private String[] arrayDates = new String[28];
     private int battles = 0, survived = 0, wins = 0, destroyed = 0;
+    private DBAdapter dbAdapter;
 
     public ProgressFragment() {
         // Required empty public constructor
@@ -72,6 +73,8 @@ public class ProgressFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        dbAdapter = new DBAdapter(getActivity());
     }
 
     @Override
@@ -147,9 +150,9 @@ public class ProgressFragment extends Fragment {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Your progress: Total Battles, Number of Battles Survived, Wins");
+        cartesian.title(dbAdapter.getMensagemTranslated(61));
 
-        cartesian.yAxis(0).title("last 28 days played");
+        cartesian.yAxis(0).title(dbAdapter.getMensagemTranslated(62));
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         Set set = Set.instantiate();
@@ -160,7 +163,7 @@ public class ProgressFragment extends Fragment {
         Mapping series4Mapping = set.mapAs("{ x: 'x', value: 'value4' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("Battles");
+        series1.name(dbAdapter.getMensagemTranslated(21));
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -172,7 +175,7 @@ public class ProgressFragment extends Fragment {
                 .offsetY(5d);
 
         Line series2 = cartesian.line(series2Mapping);
-        series2.name("Survived Battles");
+        series2.name(dbAdapter.getMensagemTranslated(38));
         series2.hovered().markers().enabled(true);
         series2.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -184,7 +187,7 @@ public class ProgressFragment extends Fragment {
                 .offsetY(5d);
 
         Line series3 = cartesian.line(series3Mapping);
-        series3.name("Wins");
+        series3.name(dbAdapter.getMensagemTranslated(22));
         series3.hovered().markers().enabled(true);
         series3.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -196,7 +199,7 @@ public class ProgressFragment extends Fragment {
                 .offsetY(5d);
 
         Line series4 = cartesian.line(series4Mapping);
-        series4.name("Destroyed Ships");
+        series4.name(dbAdapter.getMensagemTranslated(36));
         series4.hovered().markers().enabled(true);
         series4.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -270,13 +273,20 @@ public class ProgressFragment extends Fragment {
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (ClassCastException e) {
-            Toast.makeText(getContext(), "No games played in the last 28 days", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), dbAdapter.getMensagemTranslated(67), Toast.LENGTH_LONG).show();
             seriesData.add(new CustomDataEntry("", 0.0, 0.0,
                     0.0, 0.0));
             e.printStackTrace();
         } catch (ParseException exception) {
             exception.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if(dbAdapter != null)
+            dbAdapter.close();
+        super.onDestroy();
     }
 
     private class CustomDataEntry extends ValueDataEntry {

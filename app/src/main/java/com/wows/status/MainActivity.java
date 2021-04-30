@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -70,7 +69,7 @@ import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.OnFailureListener;
 
 
-public class ScrollingActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String alertTranslate = "The application will be translated into your language in a few seconds.";
     private final static String[] MENSAGEM_ARRAY = {"Created","Last Battle","Win Rate","Killed / was killed",
@@ -78,7 +77,10 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
     "Liquidator","Fireproof","Arsionist","Retribution","First Death","Die Hard","Air Defense","Battles","Wins","Defeat","Tied Game","Max XP","Max XP with",
     "Max Planes Destroyed","Max Planes Destroyed with","Planes destroyed","Max Damage","Max Damage with","Total Damage",
     "Average Damage","Max ship destroyed","Max ship destroyed with","Destroyed ships","Average destroyed ships",
-            "Survived battles","Survived with wins","Click here for version details","Search","Profile","Chart","Progress","Ships Details"};
+            "Survived battles","Survived with wins","Click here for version details","Search","Profile","Chart","Progress","Ships Details",
+    "not found","Battle for Types","Cruiser","Battleship","Destroyer","Carrier","Battle for Nation","USA","German","USSR","UK",
+    "Japan","France","Pan Asia","Battle for Tier","Your progress: Total Battles, Number of Battles","Last 28 days played","Ship Name",
+     "Tier","Type","Nation","No games played in the last 28 days"};
     private final static String LOCALE_DEFAULT = "en";
     private RadioButton radioButtonCountry, radioButtonSearch;
     private RadioButton radioButtonNa, radioButtonEu, radioButtonRu, radioButtonAsia, radioButtonClan, radioButtonPlayer;
@@ -371,13 +373,13 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
         int rated = getSharedPreferences("rated", MODE_PRIVATE).getInt("time", 0);
         getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", rated + 1).commit();
 
-        if (rated == 3) {
-            showRequestRateApp(ScrollingActivity.this);
+        if (rated == 5) {
+            showRequestRateApp(MainActivity.this);
         } else if (rated == 40) {
             getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
         }
 
-        DBAdapter dbAdapter = new DBAdapter(ScrollingActivity.this);
+        DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
         if (dbAdapter.getCountMensagem() < MENSAGEM_ARRAY.length) {
             for (String m : MENSAGEM_ARRAY)
                 dbAdapter.insertMensagem(m, m);
@@ -419,7 +421,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                             textViewRu.setText(statusServer.getRu());
                             textViewAsia.setText(statusServer.getAsia());
 
-                            DBAdapter dbAdapter = new DBAdapter(ScrollingActivity.this);
+                            DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
 
                             textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40)+
                                     " "+ prefs.getString("version", statusServer.getServeVersion())));
@@ -449,7 +451,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
             ProgressDialog progressDialog;
 
-            progressDialog = new ProgressDialog(ScrollingActivity.this);
+            progressDialog = new ProgressDialog(MainActivity.this);
             //progressDialog.setMax(100);
             progressDialog.setMessage(getString(R.string.progress_dialog_mensagem));
             //  progressDialog.setTitle(getString(R.string.progress_dialog_mensagem));
@@ -589,8 +591,9 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
 
                 } else {
-
-                    Toast.makeText(this, "Not Found", Toast.LENGTH_LONG).show();
+                    DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
+                    Toast.makeText(this, dbAdapter.getMensagemTranslated(46), Toast.LENGTH_LONG).show();
+                    dbAdapter.close();
 
                 }
 
@@ -700,16 +703,16 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
 
             if (id == R.id.action_translate) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ScrollingActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 builder.setMessage(mensagem_to_translate)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                               DBAdapter dbAdapter = new DBAdapter(ScrollingActivity.this);
+                               DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
                                dbAdapter.updatetoFalseTranslated();
                                dbAdapter.close();
 
-                                new TranslateTopics(ScrollingActivity.this).execute();
+                                new TranslateTopics(MainActivity.this).execute();
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -719,6 +722,15 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                         });
                 // Create the AlertDialog object and return it
                 builder.create().show();
+            }
+
+            if (id == R.id.action_rate) {
+                try {
+                    rateApp(MainActivity.this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
             }
 
             return super.onOptionsItemSelected(item);
@@ -865,7 +877,7 @@ public class ScrollingActivity extends AppCompatActivity implements View.OnClick
                         else
                             dbAdapter.updateMensagem(topicList.get(i).getId(), topic);
                     }
-                }
+                 }
 
                 return null;
             }
