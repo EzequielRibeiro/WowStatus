@@ -19,9 +19,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Html;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -43,6 +45,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -94,12 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String[] listNicks;
     private HttpGetRequest getRequest;
     private ProgressBar progressBar;
-    private EditText editText;
+    private TextInputEditText editText;
     private SharedPreferences prefs;
     private Locale locale;
-    private TextView textViewSearch;
     private String languageCode;
-    private  String mensagem_to_translate = "Translating application to your language.";
+    private final String mensagem_to_translate = "Translating application to your language.";
 
     private String translate(String langFrom, String langTo, String text) {
 
@@ -244,23 +246,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         listView = (ListView) findViewById(R.id.list_item_content);
         progressBar = (ProgressBar) findViewById(R.id.progressBarContent);
-        textViewSearch = findViewById(R.id.textViewSearch);
 
         LinearLayout linearlayout = findViewById(R.id.linearLayoutTranslate);
         linearlayout.setVisibility(View.GONE);
-
-        progressBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (progressBar.getVisibility() == View.VISIBLE) {
-                    progressBar.setVisibility(View.GONE);
-                    getRequest.cancel(true);
-                }
-
-            }
-        });
-
 
         radioButtonNa = (RadioButton) findViewById(R.id.radioButtonNa);
         radioButtonNa.setOnClickListener(this);
@@ -280,12 +268,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radioButtonPlayer = (RadioButton) findViewById(R.id.radioButtonPlayer);
         radioButtonPlayer.setOnClickListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        editText = (EditText) findViewById(R.id.editText);
+        editText = (TextInputEditText) findViewById(R.id.editText);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
-        editText.setBackgroundColor(getResources().getColor(R.color.bar_background));
-
 
         prefs = getSharedPreferences("info", MODE_PRIVATE);
         new Thread(new Runnable() {
@@ -293,55 +278,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 if (!prefs.contains("version"))
                     prefs.edit().putString("version", new StatusServer().getServeVersion()).commit();
-                    mensagem_to_translate = translate(LOCALE_DEFAULT,languageCode,"Translating application to your language.");
+                    getSharedPreferences("msg",MODE_PRIVATE).edit().putString("text",
+                            Html.fromHtml(translate(LOCALE_DEFAULT,languageCode,mensagem_to_translate)).toString()).apply();
             }
         }).start();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-
-                                   int maxLength;
-
-                                   @Override
-                                   public void onClick(View view) {
-
-                                       radioButtonSelected();
-
-                                       if (searchSelected.equals("clan"))
-                                           maxLength = 2;
-                                       else
-                                           maxLength = 3;
-
-                                       if (checkNetworkConnection())
-                                           if (editText.getText().length() >= maxLength) {
-
-                                               if (editText.getText().toString().contains(",")) {
-                                                   multipleNick = true;
-                                                   listNicks = editText.getText().toString().replaceAll("\\s+", "").split(",");
-                                               }
-
-                                               if (checkNetworkConnection()) {
-
-                                                   listView.setFocusableInTouchMode(true);
-                                                   listView.requestFocus();
-                                                   hideKeyboard();
-                                                   request(editText.getText().toString(), countrySelected);
-
-
-                                               }
-
-
-                                           } else {
-
-                                               Snackbar.make(view, R.string.enter_text, Snackbar.LENGTH_LONG)
-                                                       .setAction("Action", null).show();
-
-                                           }
-
-                                   }
-                               }
-
-
-        );
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -385,7 +325,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dbAdapter.insertMensagem(m, m);
         }
 
-        textViewSearch.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(41)));
+        editText.setHint(Html.fromHtml(dbAdapter.getMensagemTranslated(41)));
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_SEND) {
+
+                    if (checkNetworkConnection())
+                        if (editText.getText().length() >= 3) {
+
+                            if (editText.getText().toString().contains(",")) {
+                                multipleNick = true;
+                                listNicks = editText.getText().toString().replaceAll("\\s+", "").split(",");
+                            }
+
+                            if (checkNetworkConnection()) {
+                                hideKeyboard();
+                                request(editText.getText().toString(), countrySelected);
+                            }
+
+
+                        } else {
+
+                            Snackbar.make(v, R.string.enter_text, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+
+                        }
+
+                    handled = true;
+                }
+                return handled;
+            }
+        });
         dbAdapter.close();
 
         }
@@ -520,7 +492,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 multipleNick = false;
 
             }
-
             getRequest = new HttpGetRequest(progressBar);
             //Perform the doInBackground method, passing in our url
 
@@ -705,7 +676,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                builder.setMessage(mensagem_to_translate)
+                builder.setMessage(getSharedPreferences("msg",MODE_PRIVATE).getString("text",mensagem_to_translate))
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
@@ -799,7 +770,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 userAdapter.notifyDataSetChanged();
 
             }
-
 
         }
 

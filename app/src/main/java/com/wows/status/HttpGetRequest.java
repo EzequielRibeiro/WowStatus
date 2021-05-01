@@ -17,30 +17,22 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     public static final String REQUEST_METHOD = "GET";
     public static final int READ_TIMEOUT = 15000;
     public static final int CONNECTION_TIMEOUT = 15000;
-    ProgressBar progressBar;
-
+    private ProgressBar progressBar;
 
     public HttpGetRequest(ProgressBar progressBar) {
 
         this.progressBar = progressBar;
 
-
         if(progressBar != null)
             if(progressBar.getVisibility() == View.GONE){
-
                 progressBar.setVisibility(View.VISIBLE);
-
             }
-
-
     }
 
     protected String doInBackground(String... params){
         String stringUrl = params[0];
         String result;
         String inputLine;
-
-
 
         try {
             //Create a URL object holding our url
