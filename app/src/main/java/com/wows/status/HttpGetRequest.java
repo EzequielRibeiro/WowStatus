@@ -44,8 +44,8 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
         this.context = context;
         this.userAdapter = userAdapter;
         this.arrayList = arrayList;
-        name_ = "nickname";
-        account_id = "account_id";
+      //  name_ = "nickname";
+      //  account_id = "account_id";
 
         if (progressBar != null)
             if (progressBar.getVisibility() == View.GONE) {
@@ -53,11 +53,17 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             }
     }
 
-    public HttpGetRequest(Context context, ListView listView) {
-        name_ = "tag";
-        account_id = "clan_id";
+
+    public HttpGetRequest(Context context) {
+       // name_ = "tag";
+      //  account_id = "clan_id";
         this.context = context;
-        this.listView = listView;
+
+    }
+
+    public void setParams(String name_, String account_id){
+        this.name_ = name_;
+        this.account_id = account_id;
     }
 
     protected String doInBackground(String... params) {
@@ -100,39 +106,37 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
+        DBAdapter dbAdapter = new DBAdapter(context);
         JSONObject jObj = null;
+        JSONArray arr = null;
         try {
-            jObj = new JSONObject(result);
-            JSONArray arr = jObj.getJSONArray("data");
+           jObj = new JSONObject(result);
+           arr = jObj.getJSONArray("data");
 
-            if (arr.length() > 0) {
-
+          if (arr.length() > 0) {
                 arrayList.clear();
                  for (int i = 0; i < arr.length(); i++) {
 
                     JSONObject mJsonObject = arr.getJSONObject(i);
                     arrayList.add(new User(mJsonObject.getString(name_), mJsonObject.getString(account_id)));
                 }
-
                     userAdapter.notifyDataSetChanged();
+            }else{
+              Toast.makeText(context, dbAdapter.getMensagemTranslated(46), Toast.LENGTH_LONG).show();
+              dbAdapter.close();
+          }
 
-            }
         } catch (JSONException e) {
             e.printStackTrace();
+
         } catch (NullPointerException e) {
             e.printStackTrace();
-            DBAdapter dbAdapter = new DBAdapter(context);
-            Toast.makeText(context, dbAdapter.getMensagemTranslated(46), Toast.LENGTH_LONG).show();
-            dbAdapter.close();
         }
-
 
         if (progressBar != null)
             if (progressBar.getVisibility() == View.VISIBLE)
                 progressBar.setVisibility(View.GONE);
 
     }
-
 
 }

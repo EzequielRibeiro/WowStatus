@@ -5,7 +5,6 @@ package com.wows.status;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -44,13 +42,11 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,17 +62,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.OnFailureListener;
-
-import static com.wows.status.HttpGetRequest.CONNECTION_TIMEOUT;
-import static com.wows.status.HttpGetRequest.READ_TIMEOUT;
-import static com.wows.status.HttpGetRequest.REQUEST_METHOD;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -102,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAnalytics mFirebaseAnalytics;
     private boolean multipleNick = false;
     private String[] listNicks;
-    private HttpGetRequest getRequest;
+    private HttpGetRequest httpGetRequest;
     private ProgressBar progressBar;
     private TextInputEditText editText;
     private SharedPreferences prefs;
@@ -428,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String result = "0.0.0.0";
         String url = "https://api.worldofwarships.com/wows/encyclopedia/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&fields=game_version";
 
-        HttpGetRequest httpGetRequest = new HttpGetRequest(context, null);
+        HttpGetRequest httpGetRequest = new HttpGetRequest(context);
         try {
             result = httpGetRequest.execute(url).get();
             JSONObject object = new JSONObject(result);
@@ -449,18 +439,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void serverStatus() {
-        StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
-        statusServer.execute();
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-                        textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40) +
-                                " " + prefs.getString("version", getServeVersion(MainActivity.this))));
-                        dbAdapter.close();
-                    }
-                });
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
+                textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40) +
+                        " " + prefs.getString("version", getServeVersion(MainActivity.this))));
+                dbAdapter.close();
+
+                StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
+                statusServer.execute();
+            }
+        });
     }
 
     private void hideKeyboard() {
@@ -519,15 +510,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        httpGetRequest = new HttpGetRequest(progressBar, MainActivity.this, listView, userAdapter, arrayList);
+
         if (searchSelected.equals("clan")) {
-
-            getRequest = new HttpGetRequest(MainActivity.this, listView);
-            getRequest.execute(myUrlClan);
-
-
+            httpGetRequest.setParams("tag","clan_id");
+            httpGetRequest.execute(myUrlClan);
         } else {
-            getRequest = new HttpGetRequest(progressBar, MainActivity.this, listView, userAdapter, arrayList);
-            getRequest.execute(myUrl);
+            httpGetRequest.setParams("nickname","account_id");
+            httpGetRequest.execute(myUrl);
         }
 
     }

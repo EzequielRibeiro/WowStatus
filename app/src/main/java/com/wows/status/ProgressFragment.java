@@ -222,7 +222,7 @@ public class ProgressFragment extends Fragment {
     }
 
     private void requestJSON(List<DataEntry> seriesData, String url, String id, int rangeDateMax, int rangeDateMin) {
-        HttpGetRequest getRequest = new HttpGetRequest(getContext(),null);
+        HttpGetRequest getRequest = new HttpGetRequest(getContext());
         String result;
 
 
