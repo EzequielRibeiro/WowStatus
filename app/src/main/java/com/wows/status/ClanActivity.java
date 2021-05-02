@@ -142,7 +142,7 @@ public class ClanActivity extends AppCompatActivity {
                 String url = "https://api.worldofwarships"+country_+"/wows/clans/accountinfo/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=";
                 String listId = "";
                 String result;
-                HttpGetRequest getRequest = new HttpGetRequest(null);
+                HttpGetRequest getRequest = new HttpGetRequest(ClanActivity.this,null);
                 User user;
                 ArrayList<User> memberList = new ArrayList<>();
 
@@ -227,7 +227,7 @@ public class ClanActivity extends AppCompatActivity {
 
         runOnUiThread(new Runnable() {
 
-            HttpGetRequest getRequest = new HttpGetRequest(null);
+            HttpGetRequest getRequest = new HttpGetRequest(ClanActivity.this,null);
             String urlClan = urlClan1 + clanCountry_ + urlClan2 + clanId_;
 
             @Override

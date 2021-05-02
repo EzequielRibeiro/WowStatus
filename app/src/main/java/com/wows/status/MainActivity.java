@@ -39,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -65,25 +66,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.OnFailureListener;
 
+import static com.wows.status.HttpGetRequest.CONNECTION_TIMEOUT;
+import static com.wows.status.HttpGetRequest.READ_TIMEOUT;
+import static com.wows.status.HttpGetRequest.REQUEST_METHOD;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String alertTranslate = "The application will be translated into your language in a few seconds.";
-    private final static String[] MENSAGEM_ARRAY = {"Created","Last Battle","Win Rate","Killed / was killed",
-    "High Caliber","Kraken","Devastating","Double Kill","Detonation","Confederate","Death by Secondary","Drying","Dreadnought",
-    "Liquidator","Fireproof","Arsionist","Retribution","First Death","Die Hard","Air Defense","Battles","Wins","Defeat","Tied Game","Max XP","Max XP with",
-    "Max Planes Destroyed","Max Planes Destroyed with","Planes destroyed","Max Damage","Max Damage with","Total Damage",
-    "Average Damage","Max ship destroyed","Max ship destroyed with","Destroyed ships","Average destroyed ships",
-            "Survived battles","Survived with wins","Click here for version details","Search","Profile","Chart","Progress","Ships Details",
-    "not found","Battle for Types","Cruiser","Battleship","Destroyer","Carrier","Battle for Nation","USA","German","USSR","UK",
-    "Japan","France","Pan Asia","Battle for Tier","Your progress: Total Battles, Number of Battles","Last 28 days played","Ship Name",
-     "Tier","Type","Nation","No games played in the last 28 days"};
+    private final static String[] MENSAGEM_ARRAY = {"Created", "Last Battle", "Win Rate", "Killed / was killed",
+            "High Caliber", "Kraken", "Devastating", "Double Kill", "Detonation", "Confederate", "Death by Secondary", "Drying", "Dreadnought",
+            "Liquidator", "Fireproof", "Arsionist", "Retribution", "First Death", "Die Hard", "Air Defense", "Battles", "Wins", "Defeat", "Tied Game", "Max XP", "Max XP with",
+            "Max Planes Destroyed", "Max Planes Destroyed with", "Planes destroyed", "Max Damage", "Max Damage with", "Total Damage",
+            "Average Damage", "Max ship destroyed", "Max ship destroyed with", "Destroyed ships", "Average destroyed ships",
+            "Survived battles", "Survived with wins", "Click here for version details", "Search", "Profile", "Chart", "Progress", "Ships Details",
+            "not found", "Battle for Types", "Cruiser", "Battleship", "Destroyer", "Carrier", "Battle for Nation", "USA", "German", "USSR", "UK",
+            "Japan", "France", "Pan Asia", "Battle for Tier", "Your progress: Total Battles, Number of Battles", "Last 28 days played", "Ship Name",
+            "Tier", "Type", "Nation", "No games played in the last 28 days"};
     private final static String LOCALE_DEFAULT = "en";
     private RadioButton radioButtonCountry, radioButtonSearch;
     private RadioButton radioButtonNa, radioButtonEu, radioButtonRu, radioButtonAsia, radioButtonClan, radioButtonPlayer;
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences prefs;
     private Locale locale;
     private String languageCode;
+    private ArrayList<User> arrayList = new ArrayList<>();
     private final String mensagem_to_translate = "Translating application to your language.";
 
     private String translate(String langFrom, String langTo, String text) {
@@ -108,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        if(langFrom.equals(langTo))
+        if (langFrom.equals(langTo))
             return text;
 
         final String yourURL = "https://script.google.com/macros/s/AKfycbyHrs_kLCmXJB-fH_mS2ODtud3y0lR4Povq9nE2EqCSBPSiqjF80PNMKJohEV3TrZws/exec";
@@ -144,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
     public static void rateApp(final Activity activity) throws Exception {
         final ReviewManager reviewManager = ReviewManagerFactory.create(activity);
         //reviewManager = new FakeReviewManager(this);
@@ -188,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-
     }
 
     public static void showRequestRateApp(final Activity activity) {
@@ -222,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolling);
 
-       // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -235,17 +243,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         locale = getResources().getConfiguration().locale;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-           // countryCode = getResources().getConfiguration().getLocales().get(0).getCountry();
+            // countryCode = getResources().getConfiguration().getLocales().get(0).getCountry();
             languageCode = getResources().getConfiguration().getLocales().get(0).getLanguage();
-          //  countDisplayName = getResources().getConfiguration().getLocales().get(0).getDisplayCountry();
+            //  countDisplayName = getResources().getConfiguration().getLocales().get(0).getDisplayCountry();
         } else {
-           // countryCode = getResources().getConfiguration().locale.getCountry();
+            // countryCode = getResources().getConfiguration().locale.getCountry();
             languageCode = getResources().getConfiguration().locale.getLanguage();
-          //  countDisplayName = getResources().getConfiguration().locale.getDisplayCountry();
+            //  countDisplayName = getResources().getConfiguration().locale.getDisplayCountry();
         }
-
+        userAdapter = new UserAdapter(MainActivity.this, arrayList);
         listView = (ListView) findViewById(R.id.list_item_content);
+        listView.setAdapter(userAdapter);
         progressBar = (ProgressBar) findViewById(R.id.progressBarContent);
+
+        textViewNa = (TextView) findViewById(R.id.textViewServerNA);
+        textViewEu = (TextView) findViewById(R.id.textviewServerEU);
+        textViewRu = (TextView) findViewById(R.id.textViewServerRU);
+        textViewAsia = (TextView) findViewById(R.id.textViewServerAsia);
 
         LinearLayout linearlayout = findViewById(R.id.linearLayoutTranslate);
         linearlayout.setVisibility(View.GONE);
@@ -272,14 +286,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
 
+        textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
+
+        textViewServerVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), BrowserActivity.class));
+            }
+        });
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                User user = (User) parent.getItemAtPosition(position);
+                Bundle b = new Bundle();
+
+                if (searchSelected.equals("clan")) {
+
+                    b.putString("clanId", user.getUserId());
+                    b.putString("country", countrySelected);
+
+                    Intent intent = new Intent(MainActivity.this, ClanActivity.class);
+                    intent.putExtra("clanBundle", b);
+                    startActivity(intent);
+
+                } else {
+
+                    b.putString("id", user.getUserId());
+                    b.putString("country", countrySelected);
+
+                    Intent intent = new Intent(MainActivity.this, TabActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+
+
         prefs = getSharedPreferences("info", MODE_PRIVATE);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (!prefs.contains("version"))
-                    prefs.edit().putString("version", new StatusServer().getServeVersion()).commit();
-                    getSharedPreferences("msg",MODE_PRIVATE).edit().putString("text",
-                            Html.fromHtml(translate(LOCALE_DEFAULT,languageCode,mensagem_to_translate)).toString()).apply();
+                    prefs.edit().putString("version", getServeVersion(MainActivity.this)).commit();
+                getSharedPreferences("msg", MODE_PRIVATE).edit().putString("text",
+                        Html.fromHtml(translate(LOCALE_DEFAULT, languageCode, mensagem_to_translate)).toString()).apply();
             }
         }).start();
 
@@ -288,7 +344,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdView.loadAd(adRequest);
 
         mAdView.setAdListener(new AdListener() {
-
 
             @Override
             public void onAdLoaded() {
@@ -301,10 +356,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                 super.onAdFailedToLoad(loadAdError);
                 mAdView.setVisibility(View.GONE);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("ERROR", String.valueOf(loadAdError));
-                    bundle.putString("COUNTRY", getResources().getConfiguration().locale.getDisplayCountry());
-                    mFirebaseAnalytics.logEvent("ADMOB", bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("ERROR", String.valueOf(loadAdError));
+                bundle.putString("COUNTRY", getResources().getConfiguration().locale.getDisplayCountry());
+                mFirebaseAnalytics.logEvent("ADMOB", bundle);
 
             }
 
@@ -330,10 +385,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
+                radioButtonSelected();
+                int maxLength = 0;
+                if (searchSelected.equals("clan"))
+                    maxLength = 2;
+                else
+                    maxLength = 3;
+
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_SEND) {
 
                     if (checkNetworkConnection())
-                        if (editText.getText().length() >= 3) {
+                        if (editText.getText().length() >= maxLength) {
 
                             if (editText.getText().toString().contains(",")) {
                                 multipleNick = true;
@@ -360,521 +422,403 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         dbAdapter.close();
 
+    }
+
+    public static String getServeVersion(Context context) {
+        String result = "0.0.0.0";
+        String url = "https://api.worldofwarships.com/wows/encyclopedia/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&fields=game_version";
+
+        HttpGetRequest httpGetRequest = new HttpGetRequest(context, null);
+        try {
+            result = httpGetRequest.execute(url).get();
+            JSONObject object = new JSONObject(result);
+            JSONObject objectData = object.getJSONObject("data");
+            if (objectData != null)
+                result = objectData.get("game_version").toString();
+
+        } catch (ExecutionException | NullPointerException e) {
+            e.printStackTrace();
+            return "0.0.0.0";
+        } catch (InterruptedException | JSONException e) {
+            e.printStackTrace();
+            return "0.0.0.0";
         }
+        return result;
 
-        private void serverStatus () {
 
-            textViewNa = (TextView) findViewById(R.id.textViewServerNA);
-            textViewEu = (TextView) findViewById(R.id.textviewServerEU);
-            textViewRu = (TextView) findViewById(R.id.textViewServerRU);
-            textViewAsia = (TextView) findViewById(R.id.textViewServerAsia);
-            textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
+    }
 
-            textViewServerVersion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), BrowserActivity.class));
-                }
-            });
+    private void serverStatus() {
+        StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
+        statusServer.execute();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    runOnUiThread(new Runnable() {
-
-                        StatusServer statusServer = new StatusServer();
-
-                        @Override
-                        public void run() {
-                            textViewNa.setText(statusServer.getNa());
-                            textViewEu.setText(statusServer.getEu());
-                            textViewRu.setText(statusServer.getRu());
-                            textViewAsia.setText(statusServer.getAsia());
-
-                            DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-
-                            textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40)+
-                                    " "+ prefs.getString("version", statusServer.getServeVersion())));
-                        }
-                    });
-
-                }
-            }).start();
-
-
-        }
-
-        private void hideKeyboard () {
-
-            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-            //Find the currently focused view, so we can grab the correct window token from it.
-            View view = editText;
-            //If no view currently has focus, create a new one, just so we can grab a window token from it
-            if (view == null) {
-                view = new View(this);
-            }
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-        }
-
-        private void progressDialogShow () {
-
-            ProgressDialog progressDialog;
-
-            progressDialog = new ProgressDialog(MainActivity.this);
-            //progressDialog.setMax(100);
-            progressDialog.setMessage(getString(R.string.progress_dialog_mensagem));
-            //  progressDialog.setTitle(getString(R.string.progress_dialog_mensagem));
-            // progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(true);
-
-            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-
-                    if (getRequest != null)
-                        getRequest.cancel(true);
-
-                }
-            });
-
-            progressDialog.show();
-
-
-        }
-
-        private void radioButtonSelected () {
-
-            RadioGroup radioGroup1 = (RadioGroup) findViewById(R.id.radioGroupCountry);
-            RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.radioGroupSearch);
-
-            int selectedIdCountry = radioGroup1.getCheckedRadioButtonId();
-            int selectedIdSearch = radioGroup2.getCheckedRadioButtonId();
-
-            radioButtonCountry = (RadioButton) findViewById(selectedIdCountry);
-            radioButtonSearch = (RadioButton) findViewById(selectedIdSearch);
-
-            countrySelected = radioButtonCountry.getTag().toString();
-            searchSelected = radioButtonSearch.getTag().toString();
-
-
-        }
-
-        private void request (String name, String country){
-
-            //Some url endpoint that you may have
-            String myUrl = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name;
-            String myUrlMultipleNick = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=";
-            String myUrlClan = "https://api.worldofwarships" + country + "/wows/clans/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name + "&fields=clan_id%2Ctag";
-
-            String result;
-            String temp = "";
-            String name_ = "nickname";
-            String account_id = "account_id";
-
-
-            if (multipleNick) {
-
-                for (int i = 0; i < listNicks.length; i++) {
-
-                    if (i != (listNicks.length - 1))
-                        temp += listNicks[i] + "%2C";
-
-                }
-
-                temp += listNicks[listNicks.length - 1];
-
-                myUrl = myUrlMultipleNick + temp + "&type=exact";
-
-                multipleNick = false;
-
-            }
-            getRequest = new HttpGetRequest(progressBar);
-            //Perform the doInBackground method, passing in our url
-
-            try {
-
-                if (searchSelected.equals("clan")) {
-
-                    result = getRequest.execute(myUrlClan).get();
-                    name_ = "tag";
-                    account_id = "clan_id";
-
-                } else {
-
-                    result = getRequest.execute(myUrl).get();
-
-                }
-
-                JSONObject jObj = new JSONObject(result);
-
-                JSONArray arr = jObj.getJSONArray("data");
-
-                if (arr.length() > 0) {
-                    ArrayList<User> arrayList = new ArrayList<>();
-
-                    for (int i = 0; i < arr.length(); i++) {
-
-                        JSONObject mJsonObject = arr.getJSONObject(i);
-
-                        arrayList.add(new User(mJsonObject.getString(name_), mJsonObject.getString(account_id)));
-
-
-                    }
-
-                    userAdapter = new UserAdapter(this, arrayList);
-                    listView.setAdapter(userAdapter);
-
-
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            User user = (User) parent.getItemAtPosition(position);
-                            Bundle b = new Bundle();
-
-                            if (searchSelected.equals("clan")) {
-
-                                b.putString("clanId", user.getUserId());
-                                b.putString("country", countrySelected);
-
-                                Intent intent = new Intent(getApplicationContext(), ClanActivity.class);
-                                intent.putExtra("clanBundle", b);
-                                startActivity(intent);
-
-
-                            } else {
-
-                                b.putString("id", user.getUserId());
-                                b.putString("country", countrySelected);
-
-                                Intent intent = new Intent(getApplicationContext(), TabActivity.class);
-                                intent.putExtras(b);
-                                startActivity(intent);
-                            }
-
-
-                        }
-                    });
-
-
-                } else {
-                    DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-                    Toast.makeText(this, dbAdapter.getMensagemTranslated(46), Toast.LENGTH_LONG).show();
-                    dbAdapter.close();
-
-                }
-
-
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (JSONException j) {
-                j.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-
-
-            }
-
-
-        }
-
-        @Override
-        public void onResume () {
-            super.onResume();
-
-            restorePrefs();
-
-            //clear list of ship to new values
-            SingletonsClass singletonsClass = SingletonsClass.getInstance();
-            singletonsClass.clear();
-
-            if (checkNetworkConnection())
-                serverStatus();
-
-
-            if (mAdView != null) {
-                mAdView.resume();
-            }
-
-
-        }
-
-        public boolean checkNetworkConnection () {
-            ConnectivityManager connMgr = (ConnectivityManager)
-                    getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            boolean isConnected = false;
-            if (networkInfo != null && (isConnected = networkInfo.isConnected())) {
-
-                isConnected = true;
-
-            } else {
-
-                Toast.makeText(this, getText(R.string.no_connection), Toast.LENGTH_LONG).show();
-
-            }
-
-            return isConnected;
-        }
-
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-
-
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-
-            MenuItem menuItem = menu.findItem(R.id.action_version);
-            menuItem.setTitle("v" + BuildConfig.VERSION_NAME);
-
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_privacy_policy) {
-
-                Intent intent = new Intent(getBaseContext(), PrivacyPolicyHelp.class);
-                startActivity(intent);
-                return true;
-            }
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_contact) {
-
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_contact)));
-                startActivity(i);
-                return true;
-            }
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_help) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("help", "yes");
-                Intent i = new Intent(getBaseContext(), PrivacyPolicyHelp.class);
-                i.putExtra("helpB", bundle);
-                i.putExtras(bundle);
-                startActivity(i);
-                return true;
-            }
-
-            if (id == R.id.action_translate) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-                builder.setMessage(getSharedPreferences("msg",MODE_PRIVATE).getString("text",mensagem_to_translate))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                               DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-                               dbAdapter.updatetoFalseTranslated();
-                               dbAdapter.close();
-
-                                new TranslateTopics(MainActivity.this).execute();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
-                // Create the AlertDialog object and return it
-                builder.create().show();
-            }
-
-            if (id == R.id.action_rate) {
-                try {
-                    rateApp(MainActivity.this);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-
-       /* public void forceCrash (View view){
-            throw new RuntimeException("This is a crash");
-        }*/
-
-        private void restorePrefs () {
-
-
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
-            searchSelected = preferences.getString("searchSelected", "player");
-            countrySelected = preferences.getString("countrySelected", ".com");
-
-            editText.setText(preferences.getString("text", ""));
-
-
-            if (searchSelected.equals("player"))
-                radioButtonPlayer.setChecked(true);
-            else
-                radioButtonClan.setChecked(true);
-
-
-            switch (countrySelected) {
-
-                case ".com":
-                    radioButtonNa.setChecked(true);
-                    break;
-                case ".eu":
-                    radioButtonEu.setChecked(true);
-                    break;
-                case ".ru":
-                    radioButtonRu.setChecked(true);
-                    break;
-                case ".asia":
-                    radioButtonAsia.setChecked(true);
-                    break;
-
-
-            }
-
-
-        }
-
-        private void savePrefs () {
-
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.putString("text", editText.getText().toString());
-            editor.putString("searchSelected", searchSelected);
-            editor.putString("countrySelected", countrySelected);
-            editor.apply();
-
-
-        }
-
-        @Override
-        public void onClick (View v){
-
-            if (userAdapter != null) {
-
-                userAdapter.clear();
-                userAdapter.notifyDataSetChanged();
-
-            }
-
-        }
-
-        @Override
-        public void onPause () {
-
-            if (mAdView != null) {
-                mAdView.pause();
-            }
-            savePrefs();
-            super.onPause();
-        }
-
-
-        /**
-         * Called before the activity is destroyed
-         */
-        @Override
-        public void onDestroy () {
-            if (mAdView != null) {
-                mAdView.destroy();
-            }
-            super.onDestroy();
-        }
-
-        private class TranslateTopics extends AsyncTask {
-
-            private DBAdapter dbAdapter;
-            private Activity activity;
-            private LinearLayout linearLayoutTranslate;
-            private TextView textViewTranslate;
-            private TextView textViewAlertTranslate;
-
-
-            public TranslateTopics(Context context) {
-                dbAdapter = new DBAdapter(context);
-                activity = (Activity) context;
-                linearLayoutTranslate =  ((Activity) context).findViewById(R.id.linearLayoutTranslate);
-                textViewTranslate = ((Activity) context).findViewById(R.id.textViewTranslate);
-                textViewAlertTranslate = ((Activity) context).findViewById(R.id.textViewAlertTranslate);
-                this.linearLayoutTranslate.setVisibility(View.VISIBLE);
-                hideKeyboard();
-
-            }
-
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                activity.runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        editText.setEnabled(false);
-                        textViewAlertTranslate.setText(Html.fromHtml(translate(LOCALE_DEFAULT,locale.getLanguage(),alertTranslate)));
+                        DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
+                        textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40) +
+                                " " + prefs.getString("version", getServeVersion(MainActivity.this))));
+                        dbAdapter.close();
                     }
                 });
+    }
+
+    private void hideKeyboard() {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = editText;
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+    }
 
 
-                final List<DBAdapter.Mensagem> topicList = dbAdapter.getAllMensagem();
-                for (int i = 0; i < topicList.size(); i++) {
-                    String topic = topicList.get(i).getMensagem();
-                    String translate = "";
-                    if (!topicList.get(i).getIsTranlated()) {
-                        translate = translate(LOCALE_DEFAULT, locale.getLanguage(), topic);
+    private void radioButtonSelected() {
 
-                        final int finalI = i;
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                textViewTranslate.setText(finalI + "/" + topicList.size());
-                            }
-                        });
+        RadioGroup radioGroup1 = (RadioGroup) findViewById(R.id.radioGroupCountry);
+        RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.radioGroupSearch);
+
+        int selectedIdCountry = radioGroup1.getCheckedRadioButtonId();
+        int selectedIdSearch = radioGroup2.getCheckedRadioButtonId();
+
+        radioButtonCountry = (RadioButton) findViewById(selectedIdCountry);
+        radioButtonSearch = (RadioButton) findViewById(selectedIdSearch);
+
+        countrySelected = radioButtonCountry.getTag().toString();
+        searchSelected = radioButtonSearch.getTag().toString();
 
 
-                        if (translate.length() > 0)
-                            dbAdapter.updateMensagem(topicList.get(i).getId(), translate);
-                        else
-                            dbAdapter.updateMensagem(topicList.get(i).getId(), topic);
-                    }
-                 }
+    }
 
-                return null;
+    private void request(String name, String country) {
+
+        //Some url endpoint that you may have
+        String myUrl = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name;
+        String myUrlMultipleNick = "https://api.worldofwarships" + country + "/wows/account/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=";
+        String myUrlClan = "https://api.worldofwarships" + country + "/wows/clans/list/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&search=" + name + "&fields=clan_id%2Ctag";
+        String temp = "";
+
+        if (multipleNick) {
+
+            for (int i = 0; i < listNicks.length; i++) {
+
+                if (i != (listNicks.length - 1))
+                    temp += listNicks[i] + "%2C";
+
             }
 
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
+            temp += listNicks[listNicks.length - 1];
 
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        linearLayoutTranslate.setVisibility(View.GONE);
-                        editText.setEnabled(true);
-                    }
-                });
+            myUrl = myUrlMultipleNick + temp + "&type=exact";
 
+            multipleNick = false;
 
-                for(DBAdapter.Mensagem m:dbAdapter.getAllMensagem()){
-                    Log.d("Mensagem",m.getId()+" "+m.getMensagem()+" - "+m.getTranslated());
-                }
+        }
 
-                dbAdapter.close();
+        if (searchSelected.equals("clan")) {
+
+            getRequest = new HttpGetRequest(MainActivity.this, listView);
+            getRequest.execute(myUrlClan);
 
 
-            }
+        } else {
+            getRequest = new HttpGetRequest(progressBar, MainActivity.this, listView, userAdapter, arrayList);
+            getRequest.execute(myUrl);
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        restorePrefs();
+
+        //clear list of ship to new values
+        SingletonsClass singletonsClass = SingletonsClass.getInstance();
+        singletonsClass.clear();
+
+        if (checkNetworkConnection())
+            serverStatus();
+
+
+        if (mAdView != null) {
+            mAdView.resume();
         }
 
 
     }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        boolean isConnected = false;
+        if (networkInfo != null && (isConnected = networkInfo.isConnected())) {
+
+            isConnected = true;
+
+        } else {
+
+            Toast.makeText(this, getText(R.string.no_connection), Toast.LENGTH_LONG).show();
+
+        }
+
+        return isConnected;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_version);
+        menuItem.setTitle("v" + BuildConfig.VERSION_NAME);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_privacy_policy) {
+
+            Intent intent = new Intent(getBaseContext(), PrivacyPolicyHelp.class);
+            startActivity(intent);
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_contact) {
+
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_contact)));
+            startActivity(i);
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_help) {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("help", "yes");
+            Intent i = new Intent(getBaseContext(), PrivacyPolicyHelp.class);
+            i.putExtra("helpB", bundle);
+            i.putExtras(bundle);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_translate) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+            builder.setMessage(getSharedPreferences("msg", MODE_PRIVATE).getString("text", mensagem_to_translate))
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
+                            dbAdapter.updatetoFalseTranslated();
+                            dbAdapter.close();
+
+                            new TranslateTopics(MainActivity.this).execute();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            builder.create().show();
+        }
+
+        if (id == R.id.action_rate) {
+            try {
+                rateApp(MainActivity.this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void restorePrefs() {
+
+
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
+        searchSelected = preferences.getString("searchSelected", "player");
+        countrySelected = preferences.getString("countrySelected", ".com");
+
+        editText.setText(preferences.getString("text", ""));
+
+
+        if (searchSelected.equals("player"))
+            radioButtonPlayer.setChecked(true);
+        else
+            radioButtonClan.setChecked(true);
+
+
+        switch (countrySelected) {
+
+            case ".com":
+                radioButtonNa.setChecked(true);
+                break;
+            case ".eu":
+                radioButtonEu.setChecked(true);
+                break;
+            case ".ru":
+                radioButtonRu.setChecked(true);
+                break;
+            case ".asia":
+                radioButtonAsia.setChecked(true);
+                break;
+
+
+        }
+
+
+    }
+
+    private void savePrefs() {
+
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("text", editText.getText().toString());
+        editor.putString("searchSelected", searchSelected);
+        editor.putString("countrySelected", countrySelected);
+        editor.apply();
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (userAdapter != null) {
+
+            userAdapter.clear();
+            userAdapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        savePrefs();
+        super.onPause();
+    }
+
+
+    /**
+     * Called before the activity is destroyed
+     */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    private class TranslateTopics extends AsyncTask {
+
+        private DBAdapter dbAdapter;
+        private Activity activity;
+        private LinearLayout linearLayoutTranslate;
+        private TextView textViewTranslate;
+        private TextView textViewAlertTranslate;
+
+
+        public TranslateTopics(Context context) {
+            dbAdapter = new DBAdapter(context);
+            activity = (Activity) context;
+            linearLayoutTranslate = ((Activity) context).findViewById(R.id.linearLayoutTranslate);
+            textViewTranslate = ((Activity) context).findViewById(R.id.textViewTranslate);
+            textViewAlertTranslate = ((Activity) context).findViewById(R.id.textViewAlertTranslate);
+            this.linearLayoutTranslate.setVisibility(View.VISIBLE);
+            hideKeyboard();
+
+        }
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setEnabled(false);
+                    textViewAlertTranslate.setText(Html.fromHtml(translate(LOCALE_DEFAULT, locale.getLanguage(), alertTranslate)));
+                }
+            });
+
+
+            final List<DBAdapter.Mensagem> topicList = dbAdapter.getAllMensagem();
+            for (int i = 0; i < topicList.size(); i++) {
+                String topic = topicList.get(i).getMensagem();
+                String translate = "";
+                if (!topicList.get(i).getIsTranlated()) {
+                    translate = translate(LOCALE_DEFAULT, locale.getLanguage(), topic);
+
+                    final int finalI = i;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewTranslate.setText(finalI + "/" + topicList.size());
+                        }
+                    });
+
+
+                    if (translate.length() > 0)
+                        dbAdapter.updateMensagem(topicList.get(i).getId(), translate);
+                    else
+                        dbAdapter.updateMensagem(topicList.get(i).getId(), topic);
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    linearLayoutTranslate.setVisibility(View.GONE);
+                    editText.setEnabled(true);
+                }
+            });
+
+
+            for (DBAdapter.Mensagem m : dbAdapter.getAllMensagem()) {
+                Log.d("Mensagem", m.getId() + " " + m.getMensagem() + " - " + m.getTranslated());
+            }
+
+            dbAdapter.close();
+
+
+        }
+    }
+
+
+}
 

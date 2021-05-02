@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.wows.status.MainActivity.getServeVersion;
 
 public class GameVersion extends BroadcastReceiver {
 
@@ -22,10 +23,10 @@ public class GameVersion extends BroadcastReceiver {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                StatusServer statusServer = new StatusServer();
+
                 SharedPreferences preferences = context.getSharedPreferences("info", MODE_PRIVATE);
                 String currentVersion = preferences.getString("version", "0.0.0.0").replace(".", "");
-                requestVersion = statusServer.getServeVersion();
+                requestVersion = getServeVersion(context);
                 String temp = requestVersion.replace(".", "");
 
                 int num1 = Integer.valueOf(currentVersion);

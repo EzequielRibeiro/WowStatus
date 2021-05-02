@@ -273,7 +273,7 @@ public class DetailsPlayerFragment extends Fragment {
         String result;
         String shipName = "---";
 
-        HttpGetRequest getRequest = new HttpGetRequest(null);
+        HttpGetRequest getRequest = new HttpGetRequest(getActivity(),null);
 
         try {
             result = getRequest.execute(myUrl).get();
@@ -311,7 +311,7 @@ public class DetailsPlayerFragment extends Fragment {
 
         HttpGetRequest getRequest;
 
-        getRequest = new HttpGetRequest(null);
+        getRequest = new HttpGetRequest(getContext(),null);
 
         JSONObject jsonObject = null;
         try {
@@ -348,7 +348,7 @@ public class DetailsPlayerFragment extends Fragment {
         HttpGetRequest getRequest;
 
         try {
-            getRequest = new HttpGetRequest(null);
+            getRequest = new HttpGetRequest(getContext(),null);
             result = getRequest.execute(myUrlClanId).get();
             JSONObject jsonObject = new JSONObject(result);
             JSONObject objData = jsonObject.getJSONObject("data");
@@ -357,7 +357,7 @@ public class DetailsPlayerFragment extends Fragment {
             if (!objectId.isNull("clan_id")) {
                 clanId = objectId.get("clan_id").toString();
                 urlfinalClanName = urlClanName + clanId + urlfinalClanName;
-                getRequest = new HttpGetRequest(null);
+                getRequest = new HttpGetRequest(getContext(),null);
                 result = getRequest.execute(urlfinalClanName).get();
                 jsonObject = new JSONObject(result);
                 objData = jsonObject.getJSONObject("data");
@@ -396,7 +396,7 @@ public class DetailsPlayerFragment extends Fragment {
 
                     String result;
 
-                    HttpGetRequest getRequest = new HttpGetRequest(null);
+                    HttpGetRequest getRequest = new HttpGetRequest(getContext(),null);
 
                     result = getRequest.execute(myUrl).get();
 
@@ -537,7 +537,7 @@ public class DetailsPlayerFragment extends Fragment {
                     try {
 
 
-                        HttpGetRequest getRequest = new HttpGetRequest(null);
+                        HttpGetRequest getRequest = new HttpGetRequest(getContext(),null);
                         //Perform the doInBackground method, passing in our url
 
                         result[0] = getRequest.execute(myUrl).get();

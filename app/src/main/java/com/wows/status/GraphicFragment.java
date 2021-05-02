@@ -104,7 +104,7 @@ public class GraphicFragment extends Fragment {
                     String result;
                     String shipListId = "";
 
-                    HttpGetRequest getRequest = new HttpGetRequest(null);
+                    HttpGetRequest getRequest = new HttpGetRequest(getContext(),null);
 
                     result = getRequest.execute(urlBattles).get();
                     Ship ship;
@@ -387,7 +387,7 @@ public class GraphicFragment extends Fragment {
 
             String result;
 
-            HttpGetRequest getRequest = new HttpGetRequest(null);
+            HttpGetRequest getRequest = new HttpGetRequest(getContext(),null);
 
             result = getRequest.execute(url).get();
 
