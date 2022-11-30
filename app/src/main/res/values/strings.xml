@@ -13,6 +13,7 @@
     <string name="interstitial_ad_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/8974485397</string>-->
     <string name="banner_ad_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/6148288331</string>
     <string name="interstitial_ad_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/6677743707</string>
+    <string name="banner_nativo_unit_id" tools:ignore="MissingTranslation" translatable="false">ca-app-pub-0822808376839371/8861843902</string>
     <string name="created" translatable="false">Created:</string>
     <string name="last_battle" translatable="false">Last Battle:</string>
     <string name="high_caliber" translatable="false">HIGH CALIBER</string>

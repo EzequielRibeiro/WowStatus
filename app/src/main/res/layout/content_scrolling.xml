@@ -14,39 +14,6 @@
     tools:context="com.wows.status.MainActivity"
     tools:showIn="@layout/activity_scrolling">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:padding="5dp"
-        ads:hintTextColor="@color/white"
-        ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        ads:layout_constraintEnd_toEndOf="@+id/radioGroupSearch"
-        ads:layout_constraintStart_toStartOf="@+id/radioGroupSearch"
-        ads:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:background="@color/white"
-            android:focusableInTouchMode="false"
-            android:gravity="bottom|start"
-            android:hint="ID:"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingBottom="3dp"
-            android:singleLine="true"
-            android:soundEffectsEnabled="false"
-            android:textColor="@color/button_default"
-            android:textColorHighlight="@color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:translationY="5dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -131,7 +98,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="9dp"
         android:background="@color/button_default"
         android:gravity="center"
         android:orientation="horizontal"
@@ -147,7 +113,8 @@
             android:checked="true"
             android:tag="player"
             android:text="PLAYER"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonClan"
@@ -155,7 +122,8 @@
             android:layout_height="wrap_content"
             android:tag="clan"
             android:text="CLAN"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </RadioGroup>
@@ -165,10 +133,10 @@
         android:id="@+id/radioGroupCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:background="@color/button_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        ads:layout_constraintBottom_toTopOf="@+id/adView"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/radioGroupSearch">
@@ -180,7 +148,8 @@
             android:checked="true"
             android:tag=".com"
             android:text="NA"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonEu"
@@ -188,7 +157,8 @@
             android:layout_height="wrap_content"
             android:tag=".eu"
             android:text="EU"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonRu"
@@ -196,7 +166,8 @@
             android:layout_height="wrap_content"
             android:tag=".ru"
             android:text="RU"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonAsia"
@@ -205,7 +176,8 @@
             android:layout_marginRight="5dp"
             android:tag=".asia"
             android:text="ASIA"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
     </RadioGroup>
 
 
@@ -213,8 +185,6 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:minWidth="90dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
@@ -263,6 +233,33 @@
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/progressBarContent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|start"
+            android:hint="Enter a Nickname"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="@color/button_pressed"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:translationY="5dp"
+            ads:textInputLayoutFocusedRectEnabled="false" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

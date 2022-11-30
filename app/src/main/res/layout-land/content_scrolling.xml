@@ -22,7 +22,6 @@
         android:layout_marginBottom="8dp"
         android:padding="5dp"
         ads:boxCollapsedPaddingTop="5dp"
-        ads:hintTextColor="@color/white"
         ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
         ads:layout_constraintEnd_toEndOf="@+id/radioGroupSearch"
         ads:layout_constraintStart_toStartOf="@+id/radioGroupSearch"
@@ -32,17 +31,14 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:focusableInTouchMode="false"
             android:gravity="bottom|start"
+            android:hint="Enter a Nickname"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:paddingBottom="3dp"
-            android:singleLine="true"
-            android:soundEffectsEnabled="false"
-            android:textColor="@color/button_default"
-            android:textColorHighlight="@color/white"
-            android:textColorHint="@android:color/darker_gray"
+
+            android:textColor="@color/button_pressed"
+
+            android:textColorHint="@color/colorPrimaryDark"
             android:translationY="5dp" />
     </com.google.android.material.textfield.TextInputLayout>
 

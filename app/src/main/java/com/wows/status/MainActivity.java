@@ -22,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -37,7 +38,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -46,10 +46,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -221,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_scrolling);
 
         // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -273,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radioButtonPlayer.setOnClickListener(this);
 
         editText = (TextInputEditText) findViewById(R.id.editText);
-        editText.setFocusableInTouchMode(true);
+       // editText.setFocusableInTouchMode(true);
         editText.requestFocus();
 
         textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
@@ -372,6 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editText.setHint(Html.fromHtml(dbAdapter.getMensagemTranslated(41)));
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
