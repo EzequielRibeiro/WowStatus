@@ -1,14 +1,11 @@
 package com.wows.status;
 
 
-import android.app.Activity;
+
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -106,10 +103,11 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        DBAdapter dbAdapter = new DBAdapter(context);
-        JSONObject jObj = null;
-        JSONArray arr = null;
+
         try {
+            DBAdapter dbAdapter = new DBAdapter(context);
+            JSONObject jObj = null;
+            JSONArray arr = null;
            jObj = new JSONObject(result);
            arr = jObj.getJSONArray("data");
 
@@ -126,11 +124,9 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
               dbAdapter.close();
           }
 
-        } catch (JSONException e) {
+        } catch (JSONException | NullPointerException e) {
             e.printStackTrace();
 
-        } catch (NullPointerException e) {
-            e.printStackTrace();
         }
 
         if (progressBar != null)

@@ -66,7 +66,6 @@ public class ClanActivity extends AppCompatActivity {
         });
         */
 
-
         textViewMember      = (TextView) findViewById(R.id.textViewClanMembros);
         textViewName        = (TextView) findViewById(R.id.textViewClanName);
         textViewCreatorName = (TextView) findViewById(R.id.textViewClanCreatorName);
@@ -258,25 +257,14 @@ public class ClanActivity extends AppCompatActivity {
 
 
 
-                } catch (JSONException j) {
+                } catch (JSONException | InterruptedException | ExecutionException |
+                        NullPointerException | ClassCastException j) {
                     j.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
                 }
 
 
             }
         });
-
-
-
-
 
     }
 

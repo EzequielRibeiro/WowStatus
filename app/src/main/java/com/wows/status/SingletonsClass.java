@@ -7,14 +7,15 @@ import java.util.Map;
 
 public class SingletonsClass {
 
-    private static ArrayList<Ship> shipsList;
-    private static Map<String, Ship> entry;
-    private static String battlesTotal = "0";
-    private static SingletonsClass ourInstance ;
+    private ArrayList<Ship> shipsList;
+    private Map<String, Ship> entry;
+    private String battlesTotal = "0";
+    private User user;
+    private static SingletonsClass ourInstance;
 
-    public static ArrayList<Ship> getShipsList() {
 
-       // Collections.sort(shipsList);
+    public ArrayList<Ship> getShipsList() {
+        // Collections.sort(shipsList);
         return shipsList;
     }
 
@@ -25,68 +26,65 @@ public class SingletonsClass {
 
             synchronized (SingletonsClass.class) {   //Check for the second time.
                 //if there is no instance available... create new one
-                if (ourInstance == null)
+                if (ourInstance == null) {
                     ourInstance = new SingletonsClass();
+                }
 
-                if(shipsList == null)
-                    shipsList = new ArrayList<Ship>();
 
-                if(entry == null)
-                    entry = new HashMap<>();
             }
         }
 
         return ourInstance;
     }
 
-    private SingletonsClass() {
+    public SingletonsClass() {
+        shipsList = new ArrayList<Ship>();
+        entry = new HashMap<>();
     }
 
-
-    public static Map<String, Ship> getEntry() {
+    public Map<String, Ship> getEntry() {
         return entry;
     }
 
-    public static void setEntry(Map<String, Ship> entry) {
-        SingletonsClass.entry = entry;
+    public void setEntry(Map<String, Ship> entry) {
+        this.entry = entry;
     }
 
-    public ArrayList getListShips(){
+    public ArrayList getListShips() {
 
         return shipsList;
     }
 
-   protected void setAddShipsList(Ship ship){
+    public User getUser() {
+
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    protected void setAddShipsList(Ship ship) {
 
         shipsList.add(ship);
 
-   }
+    }
 
 
-    protected void setBattlesTotal(String battles){
+    protected void setBattlesTotal(String battles) {
 
         this.battlesTotal = battles;
 
     }
 
-    protected String getBattlesTotal(){
+    protected String getBattlesTotal() {
 
         return battlesTotal;
 
     }
 
-
-
-    public void clear()
-    {
-       ourInstance = null;
-       shipsList = null;
-       entry = null;
-
+    public void clear() {
+        ourInstance = null;
     }
-
-
-
-
 
 }

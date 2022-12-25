@@ -1,11 +1,18 @@
 package com.wows.status;
 
 
+import static com.wows.status.HttpGetRequest.CONNECTION_TIMEOUT;
+import static com.wows.status.HttpGetRequest.READ_TIMEOUT;
+import static com.wows.status.HttpGetRequest.REQUEST_METHOD;
+
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
@@ -67,7 +81,10 @@ public class DetailsPlayerFragment extends Fragment {
     ProgressDialog progressDialog;
     private String clanId;
     private TextView textViewClan;
-    private String clanName;
+    private String clanName="";
+    private SingletonsClass singletonsClass;
+    private String id, country;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,12 +92,11 @@ public class DetailsPlayerFragment extends Fragment {
 
 
         setRetainInstance(true);
-
+        singletonsClass = SingletonsClass.getInstance();
         final View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        final String id = getArguments().getString("id");
-        final String country = getArguments().getString("country");
-
+        id = getArguments().getString("id");
+        country = getArguments().getString("country");
 
         nickNameView = (TextView) view.findViewById(R.id.textViewNick);
         textViewWinRate = (TextView) view.findViewById(R.id.textViewWinRate);
@@ -106,7 +122,7 @@ public class DetailsPlayerFragment extends Fragment {
         textViewMaxDestroyedShipName = (TextView) view.findViewById(R.id.textViewMaxDestroyedShipNameV);
         textViewMaxPlanesKillShipName = (TextView) view.findViewById(R.id.textViewMaxPlanesKillShipNameV);
         textViewMaxXp = (TextView) view.findViewById(R.id.textViewMaxXpV);
-        textViewMaxXpShipName = (TextView) view.findViewById(R.id.textViewMaxXpShipNameV) ;
+        textViewMaxXpShipName = (TextView) view.findViewById(R.id.textViewMaxXpShipNameV);
 
         //achieves
         textViewKraken = (TextView) view.findViewById(R.id.textViewKraken);
@@ -127,7 +143,6 @@ public class DetailsPlayerFragment extends Fragment {
         textViewAirDefense = (TextView) view.findViewById(R.id.textViewAirDefense);
 
 
-
         textViewClan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,7 +154,6 @@ public class DetailsPlayerFragment extends Fragment {
 
                     Intent intent = new Intent(getContext(), ClanActivity.class);
                     intent.putExtra("clanBundle", b);
-                    getActivity().finish();
                     startActivity(intent);
 
                 } else {
@@ -149,13 +163,101 @@ public class DetailsPlayerFragment extends Fragment {
             }
         });
 
-
-        if(nickNameView.getText().toString().equals("NickName"))
-             request(id, country);
-
         initLabel(view);
+
+        progressDialog = new ProgressDialog(getContext());
+        //progressDialog.setMax(100);
+        progressDialog.setMessage(getString(R.string.progress_dialog_mensagem));
+        //  progressDialog.setTitle(getString(R.string.progress_dialog_mensagem));
+        // progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+       // progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+
+        if(singletonsClass.getUser() == null)
+           progressDialog.show();
+
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(SingletonsClass.getInstance().getUser() == null) {
+            new TaskSync().execute();
+        }
+        else
+            loadPlayerStats();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
+
+    private void loadPlayerStats()  {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void run() {
+
+                try {
+                    textViewClan.setTag(singletonsClass.getUser().getClanId());
+                    textViewClan.setText(singletonsClass.getUser().getClanName());
+                    nickNameView.setText(singletonsClass.getUser().getUserName());
+                    createdAtView.setText(singletonsClass.getUser().getCreatedAt());
+                    lastBattleTimeView.setText(singletonsClass.getUser().getLastBattleTime());
+                    winsView.setText(singletonsClass.getUser().getWins());
+                    battlesView.setText(singletonsClass.getUser().getBattles());
+                    maxPlanesKillView.setText(singletonsClass.getUser().getMaxPlanesKill());
+                    textViewMaxPlanesKillShipName.setText(singletonsClass.getUser().getMaxPlanesKilledShipName());
+                    maxDamageView.setText(singletonsClass.getUser().getMaxDamage());
+                    survivedBattlesView.setText(singletonsClass.getUser().getSurvivedBattles());
+                    survivedWinsView.setText(singletonsClass.getUser().getSurvivedWins());
+                    maxChipsDestroyerView.setText(singletonsClass.getUser().getMaxChipsDestroyer());
+                    defeatView.setText(singletonsClass.getUser().getDefeat());
+                    planesKilledView.setText(singletonsClass.getUser().getPlanesKilled());
+                    drawsView.setText(singletonsClass.getUser().getDraws());
+                    textViewWinRate.setText(singletonsClass.getUser().getWinRate());
+                    shipsDestroyed.setText(singletonsClass.getUser().getShipsDestroyedNumber());
+                    averageShipsDestroyed.setText(singletonsClass.getUser().getAverageShipsDestroyed());
+                    totalDamage.setText(singletonsClass.getUser().getDamageDealt());
+                    averageDamageView.setText(singletonsClass.getUser().getAverageDamage());
+                    killDeath.setText(singletonsClass.getUser().getDeathKill());
+                    maxDamageShipView.setText(singletonsClass.getUser().getMaxDamageShip());
+                    textViewMaxDestroyedShipName.setText(singletonsClass.getUser().getMaxDamageShipName());
+                    textViewMaxXp.setText(singletonsClass.getUser().getMax_xp());
+                    textViewMaxXpShipName.setText(singletonsClass.getUser().getMax_xp_ship_name());
+
+                    JSONObject objAchievements = singletonsClass.getUser().getObjAchievements();
+
+                    textViewKraken.setText(objAchievements.optString("PCH023_Warrior"));
+                    textViewStrike.setText(objAchievements.optString("PCH011_InstantKill"));
+                    textViewHigh.setText(objAchievements.optString("PCH003_MainCaliber"));
+                    textViewDoubleKill.setText(objAchievements.optString("PCH001_DoubleKill"));
+                    textViewLiquidator.setText(objAchievements.optString("PCH013_Liquidator"));
+                    textViewFireProof.setText(objAchievements.optString("PCH017_Fireproof"));
+                    textViewWithering.setText(objAchievements.optString("PCH006_Withering"));
+                    textViewConfederator.setText(objAchievements.optString("PCH005_Support"));
+                    textViewClosedShoot.setText(objAchievements.optString("PCH020_ATBACaliber"));
+                    textViewArsionist.setText(objAchievements.optString("PCH012_Arsonist"));
+                    textViewDetonated.setText(objAchievements.optString("PCH019_Detonated"));
+                    textViewDreadnought.setText(objAchievements.optString("PCH004_Dreadnought"));
+                    textViewRetribution.setText(objAchievements.optString("PCH010_Retribution"));
+                    textViewFirstBlood.setText(objAchievements.optString("PCH016_FirstBlood"));
+                    textViewHeadButt.setText(objAchievements.optString("PCH014_Headbutt"));
+                    textViewAirDefense.setText(objAchievements.optString("PCH174_AirDefenseExpert"));
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -165,7 +267,7 @@ public class DetailsPlayerFragment extends Fragment {
 
     }
 
-    private void initLabel(View view){
+    private void initLabel(View view) {
 
 
         DBAdapter dbAdapter = new DBAdapter(getActivity());
@@ -273,10 +375,10 @@ public class DetailsPlayerFragment extends Fragment {
         String result;
         String shipName = "---";
 
-        HttpGetRequest getRequest = new HttpGetRequest(getActivity());
+     //   HttpGetRequest getRequest = new HttpGetRequest(getActivity());
 
         try {
-            result = getRequest.execute(myUrl).get();
+            result = requestStats(myUrl);
             JSONObject jsonObject = new JSONObject(result);
 
             JSONObject objData = jsonObject.getJSONObject("data");
@@ -285,38 +387,31 @@ public class DetailsPlayerFragment extends Fragment {
             shipName = objectIdShip.get("name").toString();
 
 
-        } catch (JSONException j) {
+        } catch (JSONException | NullPointerException |
+                ClassCastException j) {
             j.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
+            return shipName;
+
         }
-
-
         return shipName;
 
 
     }
 
-    private String ship_destroyed_name(String shipId)  {
+    private String ship_destroyed_name(String shipId) {
 
-        String url = "https://api.worldofwarships.com/wows/encyclopedia/ships/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&ship_id="+shipId+"&fields=name";
+        String url = "https://api.worldofwarships.com/wows/encyclopedia/ships/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&ship_id=" + shipId + "&fields=name";
         String shipName = "---";
         String result;
 
-        HttpGetRequest getRequest;
+     //   HttpGetRequest getRequest;
 
-        getRequest = new HttpGetRequest(getContext());
+      //  getRequest = new HttpGetRequest(getContext());
 
         JSONObject jsonObject = null;
         try {
 
-            result = getRequest.execute(url).get();
+            result = requestStats(url);
             jsonObject = new JSONObject(result);
             JSONObject objData = jsonObject.getJSONObject("data");
             JSONObject objectId = objData.getJSONObject(shipId);
@@ -327,17 +422,14 @@ public class DetailsPlayerFragment extends Fragment {
             }
 
 
-        } catch (JSONException | ExecutionException | ClassCastException | InterruptedException e) {
+        } catch (JSONException | ClassCastException e) {
             e.printStackTrace();
+            return shipName;
         }
-
-
-          return  shipName;
-
-
+        return shipName;
     }
 
-    
+
     private String clanName(String idPlayer, String country) {
 
         String myUrlClanId = "https://api.worldofwarships" + country + "/wows/clans/accountinfo/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + idPlayer + "&fields=clan_id";
@@ -345,11 +437,11 @@ public class DetailsPlayerFragment extends Fragment {
         String urlfinalClanName = "&fields=tag";
         String result;
 
-        HttpGetRequest getRequest;
+      //  HttpGetRequest getRequest;
 
         try {
-            getRequest = new HttpGetRequest(getContext());
-            result = getRequest.execute(myUrlClanId).get();
+          //  getRequest = new HttpGetRequest(getContext());
+            result = requestStats(myUrlClanId);
             JSONObject jsonObject = new JSONObject(result);
             JSONObject objData = jsonObject.getJSONObject("data");
             JSONObject objectId = objData.getJSONObject(idPlayer);
@@ -357,193 +449,309 @@ public class DetailsPlayerFragment extends Fragment {
             if (!objectId.isNull("clan_id")) {
                 clanId = objectId.get("clan_id").toString();
                 urlfinalClanName = urlClanName + clanId + urlfinalClanName;
-                getRequest = new HttpGetRequest(getContext());
-                result = getRequest.execute(urlfinalClanName).get();
+              //  getRequest = new HttpGetRequest(getContext());
+                result = requestStats(urlfinalClanName);
                 jsonObject = new JSONObject(result);
                 objData = jsonObject.getJSONObject("data");
                 objectId = (JSONObject) objData.get(clanId);
                 clanName = "[" + objectId.get("tag").toString() + "]";
             }
 
-        } catch (JSONException j) {
+        } catch (JSONException | NullPointerException |
+                ClassCastException j) {
             j.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
+            return clanName;
         }
 
         return clanName;
 
     }
-
-    private void requestAchievements(final String id, String country) {
-
-        final String myUrl = "https://api.worldofwarships" + country + "/wows/account/achievements/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id + "&fields=battle";
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-
-                try {
-
-
-                    String result;
-
-                    HttpGetRequest getRequest = new HttpGetRequest(getContext());
-
-                    result = getRequest.execute(myUrl).get();
-
-                    JSONObject jsonObject = new JSONObject(result);
-
-                    JSONObject objData = (JSONObject) jsonObject.get("data");
-                    JSONObject objId = (JSONObject) objData.get(id);
-                    final JSONObject objAchievements = (JSONObject) objId.get("battle");
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            textViewKraken.setText(objAchievements.optString("PCH023_Warrior"));
-                            textViewStrike.setText(objAchievements.optString("PCH011_InstantKill"));
-                            textViewHigh.setText(objAchievements.optString("PCH003_MainCaliber"));
-                            textViewDoubleKill.setText(objAchievements.optString("PCH001_DoubleKill"));
-                            ;
-                            textViewLiquidator.setText(objAchievements.optString("PCH013_Liquidator"));
-                            ;
-                            textViewFireProof.setText(objAchievements.optString("PCH017_Fireproof"));
-                            textViewWithering.setText(objAchievements.optString("PCH006_Withering"));
-                            ;
-                            textViewConfederator.setText(objAchievements.optString("PCH005_Support"));
-                            ;
-                            textViewClosedShoot.setText(objAchievements.optString("PCH020_ATBACaliber"));
-                            ;
-                            textViewArsionist.setText(objAchievements.optString("PCH012_Arsonist"));
-                            ;
-                            textViewDetonated.setText(objAchievements.optString("PCH019_Detonated"));
-                            ;
-                            textViewDreadnought.setText(objAchievements.optString("PCH004_Dreadnought"));
-                            ;
-                            textViewRetribution.setText(objAchievements.optString("PCH010_Retribution"));
-                            ;
-                            textViewFirstBlood.setText(objAchievements.optString("PCH016_FirstBlood"));
-                            ;
-                            textViewHeadButt.setText(objAchievements.optString("PCH014_Headbutt"));
-                            ;
-                            textViewAirDefense.setText(objAchievements.optString("PCH174_AirDefenseExpert"));
-                            ;
-
-
-                        }
-                    });
-
-
-                } catch (JSONException j) {
-                    j.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
-
-    }
-
     /*
-    private int requestPveBattles(String country, String id){
+      private void requestAchievements(final String id, String country) {
 
-        String myUrlPve = "https://api.worldofwarships"+country+"/wows/account/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id="+id+"&fields=statistics.pve.battles&extra=statistics.pve";
-        int value = 0;
-
-                try {
+          final String myUrl = "https://api.worldofwarships" + country + "/wows/account/achievements/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id + "&fields=battle";
 
 
-                    String result;
-
-                    HttpGetRequest getRequest = new HttpGetRequest();
-
-                    result = getRequest.execute(myUrlPve).get();
-
-                    JSONObject jsonObject = new JSONObject(result);
-                    JSONObject objData = (JSONObject) jsonObject.get("data");
-                    JSONObject objId = (JSONObject) objData.get(id);
-                    JSONObject statistics = (JSONObject) objId.get("statistics");
-                    JSONObject pve = (JSONObject) statistics.get("pve");
-
-                    if(!pve.isNull("battles"))
-                      value = Integer.valueOf(pve.get("battles").toString());
+          new Thread(new Runnable() {
+              @Override
+              public void run() {
 
 
-                } catch (JSONException j) {
-                    j.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
+                  try {
 
-                return value;
+                      String result;
 
+                      HttpGetRequest getRequest = new HttpGetRequest(getContext());
 
+                      result = getRequest.execute(myUrl).get();
 
-    }
-    */
-    private void request(final String id, final String country) {
+                      JSONObject jsonObject = new JSONObject(result);
 
+                      JSONObject objData = (JSONObject) jsonObject.get("data");
+                      JSONObject objId = (JSONObject) objData.get(id);
+                      final JSONObject objAchievements = (JSONObject) objId.get("battle");
 
-        //Some url endpoint that you may have
-        final String myUrl = "https://api.worldofwarships" + country + "/wows/account/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id +
-                "&fields=nickname%2Ccreated_at%2Chidden_profile%2Clast_battle_time%2Cstatistics.pvp.wins" +
-                "%2Cstatistics.pvp.survived_wins%2Cstatistics.pvp.survived_battles%2Cstatistics.pvp.battles" +
-                "%2Cstatistics.pvp.max_damage_dealt%2Cstatistics.pvp.max_frags_battle" +
-                "%2Cstatistics.pvp.max_planes_killed%2Cstatistics.pvp.losses%2Cstatistics.pvp.draws%2Cstatistics.pvp.planes_killed" +
-                "%2Cstatistics.pvp.frags%2Cstatistics.pvp.damage_dealt%2Cstatistics.pvp.max_damage_dealt_ship_id%2Cstatistics.pvp.max_frags_ship_id" +
-                "%2Cstatistics.pvp.max_planes_killed_ship_id%2Cstatistics.pvp.max_xp%2Cstatistics.pvp.max_xp_ship_id";
-        //String to place our result in
-        final String[] result = new String[1];
-        //Instantiate new instance of our class
+                      requireActivity().runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
 
-            progressDialog = new ProgressDialog(getContext());
-            //progressDialog.setMax(100);
-            progressDialog.setMessage(getString(R.string.progress_dialog_mensagem));
-            //  progressDialog.setTitle(getString(R.string.progress_dialog_mensagem));
-            // progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
+                              textViewKraken.setText(objAchievements.optString("PCH023_Warrior"));
+                              textViewStrike.setText(objAchievements.optString("PCH011_InstantKill"));
+                              textViewHigh.setText(objAchievements.optString("PCH003_MainCaliber"));
+                              textViewDoubleKill.setText(objAchievements.optString("PCH001_DoubleKill"));
+                              textViewLiquidator.setText(objAchievements.optString("PCH013_Liquidator"));
+                              textViewFireProof.setText(objAchievements.optString("PCH017_Fireproof"));
+                              textViewWithering.setText(objAchievements.optString("PCH006_Withering"));
+                              textViewConfederator.setText(objAchievements.optString("PCH005_Support"));
+                              textViewClosedShoot.setText(objAchievements.optString("PCH020_ATBACaliber"));
+                              textViewArsionist.setText(objAchievements.optString("PCH012_Arsonist"));
+                              textViewDetonated.setText(objAchievements.optString("PCH019_Detonated"));
+                              textViewDreadnought.setText(objAchievements.optString("PCH004_Dreadnought"));
+                              textViewRetribution.setText(objAchievements.optString("PCH010_Retribution"));
+                              textViewFirstBlood.setText(objAchievements.optString("PCH016_FirstBlood"));
+                              textViewHeadButt.setText(objAchievements.optString("PCH014_Headbutt"));
+                              textViewAirDefense.setText(objAchievements.optString("PCH174_AirDefenseExpert"));
+                          }
+                      });
 
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+                  } catch (JSONException | InterruptedException | ExecutionException |
+                          NullPointerException | ClassCastException j) {
+                      j.printStackTrace();
+                  }
+
+              }
+          }).start();
+
+
+      }
+
+
+      private int requestPveBattles(String country, String id){
+
+          String myUrlPve = "https://api.worldofwarships"+country+"/wows/account/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id="+id+"&fields=statistics.pve.battles&extra=statistics.pve";
+          int value = 0;
+
+                  try {
+
+
+                      String result;
+
+                      HttpGetRequest getRequest = new HttpGetRequest();
+
+                      result = getRequest.execute(myUrlPve).get();
+
+                      JSONObject jsonObject = new JSONObject(result);
+                      JSONObject objData = (JSONObject) jsonObject.get("data");
+                      JSONObject objId = (JSONObject) objData.get(id);
+                      JSONObject statistics = (JSONObject) objId.get("statistics");
+                      JSONObject pve = (JSONObject) statistics.get("pve");
+
+                      if(!pve.isNull("battles"))
+                        value = Integer.valueOf(pve.get("battles").toString());
+
+
+                  } catch (JSONException j) {
+                      j.printStackTrace();
+                  } catch (InterruptedException e) {
+                      e.printStackTrace();
+                  } catch (ExecutionException e) {
+                      e.printStackTrace();
+                  } catch (NullPointerException e) {
+                      e.printStackTrace();
+                  } catch (ClassCastException e) {
+                      e.printStackTrace();
+                  }
+
+                  return value;
+
+
+
+      }
+
+      private void request(final String id, final String country) {
+
+
+          //Some url endpoint that you may have
+          final String myUrl = "https://api.worldofwarships" + country + "/wows/account/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id +
+                  "&fields=nickname%2Ccreated_at%2Chidden_profile%2Clast_battle_time%2Cstatistics.pvp.wins" +
+                  "%2Cstatistics.pvp.survived_wins%2Cstatistics.pvp.survived_battles%2Cstatistics.pvp.battles" +
+                  "%2Cstatistics.pvp.max_damage_dealt%2Cstatistics.pvp.max_frags_battle" +
+                  "%2Cstatistics.pvp.max_planes_killed%2Cstatistics.pvp.losses%2Cstatistics.pvp.draws%2Cstatistics.pvp.planes_killed" +
+                  "%2Cstatistics.pvp.frags%2Cstatistics.pvp.damage_dealt%2Cstatistics.pvp.max_damage_dealt_ship_id%2Cstatistics.pvp.max_frags_ship_id" +
+                  "%2Cstatistics.pvp.max_planes_killed_ship_id%2Cstatistics.pvp.max_xp%2Cstatistics.pvp.max_xp_ship_id";
+          //String to place our result in
+          final String[] result = new String[1];
+          //Instantiate new instance of our class
+
+          progressDialog = new ProgressDialog(getContext());
+          //progressDialog.setMax(100);
+          progressDialog.setMessage(getString(R.string.progress_dialog_mensagem));
+          //  progressDialog.setTitle(getString(R.string.progress_dialog_mensagem));
+          // progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+          progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+          progressDialog.show();
+
+
+          new Thread(new Runnable() {
+              @Override
+              public void run() {
+
+                  try {
+
+                      HttpGetRequest getRequest = new HttpGetRequest(getContext());
+                      //Perform the doInBackground method, passing in our url
+
+                      result[0] = getRequest.execute(myUrl).get();
+
+                      JSONObject jsonObject = new JSONObject(result[0]);
+
+                      if (jsonObject == null)
+                          return;
+
+                      JSONObject objData = jsonObject.getJSONObject("data");
+                      JSONObject objectId = (JSONObject) objData.get(id);
+                      JSONObject objStats = (JSONObject) objectId.get("statistics");
+                      JSONObject objPvp = (JSONObject) objStats.get("pvp");
+
+                      final String nickName = objectId.get("nickname").toString();
+                      String hiddenProfile = objectId.get("hidden_profile").toString();
+                      final String createdAt = objectId.get("created_at").toString();
+                      final String lastBattleTime = objectId.get("last_battle_time").toString();
+
+                      final String wins = objPvp.get("wins").toString();
+                      final String battles = objPvp.get("battles").toString();
+
+                      final String maxPlanesKill = objPvp.get("max_planes_killed").toString();
+                      final String maxDamage = objPvp.get("max_damage_dealt").toString();
+                      String maxDamageshipId = objPvp.get("max_damage_dealt_ship_id").toString();
+                      final String survivedBattles = objPvp.get("survived_battles").toString();
+                      final String survivedWins = objPvp.get("survived_wins").toString();
+                      final String maxChipsDestroyer = objPvp.get("max_frags_battle").toString();
+                      final String defeat = objPvp.get("losses").toString();
+                      final String planesKilled = objPvp.get("planes_killed").toString();
+                      final String draws = objPvp.get("draws").toString();
+                      final String shipsDestroyedNumber = objPvp.get("frags").toString();
+                      final String damageDealt = objPvp.get("damage_dealt").toString();
+                      final String max_frags_ship_name = ship_destroyed_name(objPvp.get("max_frags_ship_id").toString());
+                      final String max_planes_killed_ship_name = ship_destroyed_name(objPvp.get("max_planes_killed_ship_id").toString());
+                      final String max_xp = objPvp.get("max_xp").toString();
+                      final String max_xp_ship_name = ship_destroyed_name(objPvp.get("max_xp_ship_id").toString());
+
+                      singletonsClass.setBattlesTotal(battles);
+
+                      int winRate = 0;
+                      float killPer = 0f;
+                      int death = 0;
+                      float deathKill = 0f;
+                      int averageDamage = 0;
+
+
+                      if (Integer.parseInt(shipsDestroyedNumber) > 0) {
+
+                          killPer = Float.parseFloat(shipsDestroyedNumber) /
+                                  (Float.parseFloat(defeat) + Float.parseFloat(wins));
+
+                      }
+
+
+                      if (Integer.parseInt(wins) > 0) {
+
+                          winRate = (Integer.parseInt(wins) * 100) / (Integer.parseInt(defeat) +
+                                  Integer.parseInt(wins));
+
+                      }
+
+                      death = Integer.parseInt(battles) - Integer.parseInt(survivedBattles);
+
+
+                      if (death > 0) {
+
+                          deathKill = Float.parseFloat(shipsDestroyedNumber) / (float) death;
+
+                      }
+
+                      if (Integer.parseInt(damageDealt) > 0) {
+
+                          averageDamage = Integer.parseInt(damageDealt) / Integer.parseInt(battles);
+
+
+                      }
+
+                      requestAchievements(id, country);
+
+                      final int finalWinRate = winRate;
+                      final float finalKillPer = killPer;
+                      final int finalAverageDamage = averageDamage;
+                      final float finalDeathKill = deathKill;
+                      final String finalMaxDamageshipId = maxDamageshipId;
+
+                      getActivity().runOnUiThread(new Runnable() {
+                          @SuppressLint("DefaultLocale")
+                          @Override
+                          public void run() {
+
+                              textViewClan.setTag(clanId);
+                              textViewClan.setText(clanName(id, country));
+                              nickNameView.setText(nickName);
+                              createdAtView.setText(getDate(Long.parseLong(createdAt)));
+                              lastBattleTimeView.setText(getDate(Long.parseLong(lastBattleTime)));
+                              winsView.setText(String.format("%,d", Integer.valueOf(wins)));
+                              battlesView.setText(String.format("%,d", Integer.valueOf(battles)));
+                              maxPlanesKillView.setText(String.format("%,d", Integer.valueOf(maxPlanesKill)));
+                              textViewMaxPlanesKillShipName.setText(max_planes_killed_ship_name);
+                              maxDamageView.setText(String.format("%,d", Integer.valueOf(maxDamage)));
+                              survivedBattlesView.setText(String.format("%,d", Integer.valueOf(survivedBattles)));
+                              survivedWinsView.setText(String.format("%,d", Integer.valueOf(survivedWins)));
+                              maxChipsDestroyerView.setText(maxChipsDestroyer);
+                              defeatView.setText(String.format("%,d", Integer.valueOf(defeat)));
+                              planesKilledView.setText(String.format("%,d", Integer.valueOf(planesKilled)));
+                              drawsView.setText(String.format("%,d", Integer.valueOf(draws)));
+                              textViewWinRate.setText(String.valueOf(finalWinRate).concat("%"));
+                              shipsDestroyed.setText(String.format("%,d", Integer.valueOf(shipsDestroyedNumber)));
+                              averageShipsDestroyed.setText(String.format("%.2f", finalKillPer));
+                              totalDamage.setText(String.format("%,d", Integer.valueOf(damageDealt)));
+                              averageDamageView.setText(String.format("%,d", finalAverageDamage));
+                              killDeath.setText(String.format("%.2f", finalDeathKill));
+                              maxDamageShipView.setText(max_damage_ship(finalMaxDamageshipId));
+                              textViewMaxDestroyedShipName.setText(max_frags_ship_name);
+                              textViewMaxXp.setText(max_xp);
+                              textViewMaxXpShipName.setText(max_xp_ship_name);
+
+                              if (progressDialog != null)
+                                  progressDialog.dismiss();
+                          }
+                      });
+
+
+                  } catch (JSONException | InterruptedException | ExecutionException |
+                          NullPointerException | ClassCastException j) {
+                      j.printStackTrace();
+                  }
+
+              }
+          }).start();
+      }
+   */
+    private void requestFromApi(final String id, final String country) {
+
+            //Some url endpoint that you may have
+            final String myUrl = "https://api.worldofwarships" + country + "/wows/account/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id +
+                    "&fields=nickname%2Ccreated_at%2Chidden_profile%2Clast_battle_time%2Cstatistics.pvp.wins" +
+                    "%2Cstatistics.pvp.survived_wins%2Cstatistics.pvp.survived_battles%2Cstatistics.pvp.battles" +
+                    "%2Cstatistics.pvp.max_damage_dealt%2Cstatistics.pvp.max_frags_battle" +
+                    "%2Cstatistics.pvp.max_planes_killed%2Cstatistics.pvp.losses%2Cstatistics.pvp.draws%2Cstatistics.pvp.planes_killed" +
+                    "%2Cstatistics.pvp.frags%2Cstatistics.pvp.damage_dealt%2Cstatistics.pvp.max_damage_dealt_ship_id%2Cstatistics.pvp.max_frags_ship_id" +
+                    "%2Cstatistics.pvp.max_planes_killed_ship_id%2Cstatistics.pvp.max_xp%2Cstatistics.pvp.max_xp_ship_id";
+            //String to place our result in
+            String[] result = new String[1];
 
                     try {
 
-                        HttpGetRequest getRequest = new HttpGetRequest(getContext());
-                        //Perform the doInBackground method, passing in our url
+                        User user = new User();
 
-                        result[0] = getRequest.execute(myUrl).get();
-
+                        result[0] = requestStats(myUrl);
                         JSONObject jsonObject = new JSONObject(result[0]);
-
-                        if (jsonObject == null)
-                            return;
 
                         JSONObject objData = jsonObject.getJSONObject("data");
                         JSONObject objectId = (JSONObject) objData.get(id);
@@ -551,16 +759,14 @@ public class DetailsPlayerFragment extends Fragment {
                         JSONObject objPvp = (JSONObject) objStats.get("pvp");
 
                         final String nickName = objectId.get("nickname").toString();
-                        String hiddenProfile = objectId.get("hidden_profile").toString();
+                        final String hiddenProfile = objectId.get("hidden_profile").toString();
                         final String createdAt = objectId.get("created_at").toString();
                         final String lastBattleTime = objectId.get("last_battle_time").toString();
-
                         final String wins = objPvp.get("wins").toString();
                         final String battles = objPvp.get("battles").toString();
-
                         final String maxPlanesKill = objPvp.get("max_planes_killed").toString();
                         final String maxDamage = objPvp.get("max_damage_dealt").toString();
-                        String maxDamageshipId = objPvp.get("max_damage_dealt_ship_id").toString();
+                        final String maxDamageshipId = objPvp.get("max_damage_dealt_ship_id").toString();
                         final String survivedBattles = objPvp.get("survived_battles").toString();
                         final String survivedWins = objPvp.get("survived_wins").toString();
                         final String maxChipsDestroyer = objPvp.get("max_frags_battle").toString();
@@ -569,13 +775,12 @@ public class DetailsPlayerFragment extends Fragment {
                         final String draws = objPvp.get("draws").toString();
                         final String shipsDestroyedNumber = objPvp.get("frags").toString();
                         final String damageDealt = objPvp.get("damage_dealt").toString();
+
                         final String max_frags_ship_name = ship_destroyed_name(objPvp.get("max_frags_ship_id").toString());
                         final String max_planes_killed_ship_name = ship_destroyed_name(objPvp.get("max_planes_killed_ship_id").toString());
                         final String max_xp = objPvp.get("max_xp").toString();
                         final String max_xp_ship_name = ship_destroyed_name(objPvp.get("max_xp_ship_id").toString());
 
-
-                        SingletonsClass singletonsClass = SingletonsClass.getInstance();
                         singletonsClass.setBattlesTotal(battles);
 
                         int winRate = 0;
@@ -585,97 +790,173 @@ public class DetailsPlayerFragment extends Fragment {
                         int averageDamage = 0;
 
 
-                        if (Integer.valueOf(shipsDestroyedNumber) > 0) {
+                        if (Integer.parseInt(shipsDestroyedNumber) > 0) {
 
-                            killPer = Float.valueOf(shipsDestroyedNumber) / (Float.valueOf(defeat) + Float.valueOf(wins));
-
-                        }
-
-
-                        if (Integer.valueOf(wins) > 0) {
-
-                            winRate = (Integer.valueOf(wins) * 100) / (Integer.valueOf(defeat) + Integer.valueOf(wins));
+                            killPer = Float.parseFloat(shipsDestroyedNumber) /
+                                    (Float.parseFloat(defeat) + Float.parseFloat(wins));
 
                         }
 
-                        death = Integer.valueOf(battles) - Integer.valueOf(survivedBattles);
+
+                        if (Integer.parseInt(wins) > 0) {
+
+                            winRate = (Integer.parseInt(wins) * 100) / (Integer.parseInt(defeat) +
+                                    Integer.parseInt(wins));
+
+                        }
+
+                        death = Integer.parseInt(battles) - Integer.parseInt(survivedBattles);
 
 
                         if (death > 0) {
 
-                            deathKill = Float.valueOf(shipsDestroyedNumber) / Float.valueOf(death);
+                            deathKill = Float.parseFloat(shipsDestroyedNumber) / (float) death;
 
                         }
 
-                        if (Integer.valueOf(damageDealt) > 0) {
+                        if (Integer.parseInt(damageDealt) > 0) {
 
-                            averageDamage = Integer.valueOf(damageDealt) / Integer.valueOf(battles);
+                            averageDamage = Integer.parseInt(damageDealt) / Integer.parseInt(battles);
 
 
                         }
-
-                        requestAchievements(id, country);
-
 
                         final int finalWinRate = winRate;
                         final float finalKillPer = killPer;
                         final int finalAverageDamage = averageDamage;
-                        final float finalDeathKill = deathKill;
-                        final String finalMaxDamageshipId = maxDamageshipId;
 
+                        user.setClanName(clanName(id, country));
+                        user.setClanId(clanId);
+                        user.setUserName(nickName);
+                        user.setHiddenProfile(hiddenProfile);
+                        user.setCreatedAt(getDate(Long.parseLong(createdAt)));
+                        user.setLastBattleTime(getDate(Long.parseLong(lastBattleTime)));
+                        user.setWins(String.format("%,d", Integer.valueOf(wins)));
+                        user.setBattles(String.format("%,d", Integer.valueOf(battles)));
+                        user.setMaxPlanesKill(String.format("%,d", Integer.valueOf(maxPlanesKill)));
+                        user.setMax_planes_killed_ship_name(max_planes_killed_ship_name);
+                        user.setMaxDamage(String.format("%,d", Integer.valueOf(maxDamage)));
+                        user.setSurvivedBattles(String.format("%,d", Integer.valueOf(survivedBattles)));
+                        user.setSurvivedWins(String.format("%,d", Integer.valueOf(survivedWins)));
+                        user.setMaxChipsDestroyer(maxChipsDestroyer);
+                        user.setDefeat(String.format("%,d", Integer.valueOf(defeat)));
+                        user.setPlanesKilled(String.format("%,d", Integer.valueOf(planesKilled)));
+                        user.setDraws(String.format("%,d", Integer.valueOf(draws)));
+                        user.setWinRate(String.valueOf(finalWinRate).concat("%"));
+                        user.setShipsDestroyedNumber(String.format("%,d", Integer.valueOf(shipsDestroyedNumber)));
+                        user.setAverageShipsDestroyed(String.format("%.2f", finalKillPer));
+                        user.setDamageDealt(String.format("%,d", Integer.valueOf(damageDealt)));
+                        user.setAverageDamage(String.format("%,d", finalAverageDamage));
+                        user.setDeathKill(String.format("%.2f", deathKill));
+                        user.setMaxDamageShip(max_damage_ship(maxDamageshipId));
+                        user.setMaxDamageShipName(max_frags_ship_name);
+                        user.setMaxXp(max_xp);
+                        user.setMaxXpShipName(max_xp_ship_name);
+
+                        singletonsClass.setUser(user);
+                        singletonsClass.getUser().setObjAchievements(requestAchievementsFromApi(id, country));
+
+
+                      } catch (JSONException | InterruptedException | ExecutionException |
+                            NullPointerException |NumberFormatException |ClassCastException j) {
+                        j.printStackTrace();
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
-                                textViewClan.setTag(clanId);
-                                textViewClan.setText(clanName(id, country));
-                                nickNameView.setText(nickName);
-                                createdAtView.setText(getDate(Long.valueOf(createdAt)));
-                                lastBattleTimeView.setText(getDate(Long.valueOf(lastBattleTime)));
-                                winsView.setText(String.format("%,d", Integer.valueOf(wins)));
-                                battlesView.setText(String.format("%,d", Integer.valueOf(battles)));
-                                maxPlanesKillView.setText(String.format("%,d", Integer.valueOf(maxPlanesKill)));
-                                textViewMaxPlanesKillShipName.setText(max_planes_killed_ship_name);
-                                maxDamageView.setText(String.format("%,d", Integer.valueOf(maxDamage)));
-                                survivedBattlesView.setText(String.format("%,d", Integer.valueOf(survivedBattles)));
-                                survivedWinsView.setText(String.format("%,d", Integer.valueOf(survivedWins)));
-                                maxChipsDestroyerView.setText(maxChipsDestroyer);
-                                defeatView.setText(String.format("%,d", Integer.valueOf(defeat)));
-                                planesKilledView.setText(String.format("%,d", Integer.valueOf(planesKilled)));
-                                drawsView.setText(String.format("%,d", Integer.valueOf(draws)));
-                                textViewWinRate.setText(String.valueOf(finalWinRate).concat("%"));
-                                shipsDestroyed.setText(String.format("%,d", Integer.valueOf(shipsDestroyedNumber)));
-                                averageShipsDestroyed.setText(String.format("%.2f", finalKillPer));
-                                totalDamage.setText(String.format("%,d", Integer.valueOf(damageDealt)));
-                                averageDamageView.setText(String.format("%,d", Integer.valueOf(finalAverageDamage)));
-                                killDeath.setText(String.format("%.2f", finalDeathKill));
-                                maxDamageShipView.setText(max_damage_ship(finalMaxDamageshipId));
-                                textViewMaxDestroyedShipName.setText(max_frags_ship_name);
-                                textViewMaxXp.setText(max_xp);
-                                textViewMaxXpShipName.setText(max_xp_ship_name);
-
-                                if (progressDialog != null)
-                                    progressDialog.dismiss();
+                                Toast.makeText(getActivity(),"This player's stats are not available.",Toast.LENGTH_LONG).show();
                             }
                         });
 
-
-                    } catch (JSONException j) {
-                        j.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
                     }
 
                 }
-            }).start();
 
 
+    private JSONObject requestAchievementsFromApi(final String id, String country) throws ExecutionException, InterruptedException, JSONException {
+
+        final String myUrl = "https://api.worldofwarships" + country + "/wows/account/achievements/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id + "&fields=battle";
+          String result;
+
+                  //  HttpGetRequest getRequest = new HttpGetRequest(getContext());
+
+                   // result = getRequest.execute(myUrl).get();
+
+                    result = requestStats(myUrl);
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    JSONObject objData = (JSONObject) jsonObject.get("data");
+                    JSONObject objId = (JSONObject) objData.get(id);
+
+        return (JSONObject) objId.get("battle");
+
+
+
+    }
+
+    private String requestStats(String stringUrl){
+        String result;
+        String inputLine;
+
+        try {
+            //Create a URL object holding our url
+            URL myUrl = new URL(stringUrl);
+            //Create a connection
+            HttpURLConnection connection = (HttpURLConnection)
+                    myUrl.openConnection();
+            //Set methods and timeouts
+            connection.setRequestMethod(REQUEST_METHOD);
+            connection.setReadTimeout(READ_TIMEOUT);
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.connect();
+            //Create a new InputStreamReader
+            InputStreamReader streamReader = new
+                    InputStreamReader(connection.getInputStream());
+
+            BufferedReader reader = new BufferedReader(streamReader);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((inputLine = reader.readLine()) != null) {
+                stringBuilder.append(inputLine);
+            }
+
+            reader.close();
+            streamReader.close();
+
+            result = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            result = null;
+        }
+
+        return result;
+
+
+    }
+
+    private class TaskSync extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... objects) {
+
+            requestFromApi(id,country);
+
+            return "sucess";
+        }
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            loadPlayerStats();
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (progressDialog != null)
+                        if(progressDialog.isShowing())
+                            progressDialog.dismiss();
+                }
+            });
+
+           ;
+        }
     }
 
 }

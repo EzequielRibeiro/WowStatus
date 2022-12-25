@@ -43,8 +43,8 @@
                            'height':300,
 						   fontSize: 18,
 						   backgroundColor: '#000000',
-						   titleTextStyle: {color: '#fff'},
-						   legendTextStyle: {color:'#fff'},
+						   titleTextStyle: {color: '#FFFFFF'},
+						   legendTextStyle: {color:'#FFFFFF'},
 						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
 						   };
     
@@ -80,8 +80,8 @@
                            'height':300,
 						   fontSize: 18,
 						   backgroundColor: '#000000',
-						   titleTextStyle: {color: '#fff'},
-						   legendTextStyle: {color:'#fff'},
+						   titleTextStyle: {color: '#FFFFFF'},
+						   legendTextStyle: {color:'#FFFFFF'},
 						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
 						   };
 
@@ -97,15 +97,14 @@
         ["I",WebInterface.getTier1(), "#b87333"],
         ["II", WebInterface.getTier2(), "silver"],
         ["III",WebInterface.getTier3(), "gold"],
-        ["IV",WebInterface.getTier4(), "color: #e5e4e2"],
+        ["IV",WebInterface.getTier4(), "#e5e4e2"],
         ["V",WebInterface.getTier5(), "#b87333"],
         ["VI",WebInterface.getTier6(), "pink"],
         ["VII",WebInterface.getTier7(), "blue"],
         ["VIII",WebInterface.getTier8(), "yellow"],
         ["IX", WebInterface.getTier9(), "red"],
-        ["X", WebInterface.getTier10(), "green"]
-
-      ]);
+        ["X", WebInterface.getTier10(), "green"],
+        ["XI", WebInterface.getTier11(), "cyan"]]);
 
       var view = new google.visualization.DataView(data);
       view.setColumns([0, 1,
@@ -121,10 +120,10 @@
         height: 400,
         fontSize: 18,
 		backgroundColor: '#000000',
-		titleTextStyle: {color: '#fff'},
-		legendTextStyle: {color:'#fff'},
+		titleTextStyle: {color: '#FFFFFF'},
+		legendTextStyle: {color:'#FFFFFF'},
         bar: {groupWidth: "65%"},
-        legend: { position: "none" },
+        legend: { position: "none"},
         chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("draw_chart_tier"));
@@ -137,15 +136,15 @@
     <!--Table and divs that hold the pie charts-->
     <table class="columns" >
       <tr>
-        <th><div id="chart_div_type" style="border: 1px solid #ccc"></div></th>
+        <th><div id="chart_div_type" style="border: 1px solid #0FFF00"></div></th>
       </tr>
       <tr>
-        <th><div id="chart_div_nation" style="border: 1px solid #ccc"></div></th>
+        <th><div id="chart_div_nation" style="border: 1px solid #0FFF00"></div></th>
 
       </tr>
 
       <tr>
-        <th><div id="draw_chart_tier" style="border: 1px solid #ccc"></div></th>
+        <th><div id="draw_chart_tier" style="border: 1px solid #0FFF00"></div></th>
 
       </tr>
 

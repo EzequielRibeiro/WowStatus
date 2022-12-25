@@ -1,33 +1,133 @@
 package com.wows.status;
 
+import org.json.JSONObject;
+
 public class User {
 
-    private String userName;
-    private String  userId;
-    private String  role;
-    private String  joined;
+    private String clanName = "";
+    private String clanId = "";
+    private String wins = "";
+    private String battles = "";
+    private String maxPlanesKill = "";
+    private String maxDamage = "";
+    private String maxDamageshipId = "";
+    private String survivedBattles = "";
+    private String survivedWins = "";
+    private String maxChipsDestroyer = "";
+    private String defeat = "";
+    private String planesKilled = "";
+    private String draws = "";
+    private String shipsDestroyedNumber = "";
+    private String damageDealt = "";
+    private String max_planes_killed_ship_name = "";
+    private String max_xp = "";
+    private String max_xp_ship_name = "";
     private String hiddenProfile;
     private String createdAt;
-    private  String lastBattleTime;
-    private  String wins;
-    private  String battles;
-    private  String maxPlanesKill ;
-    private  String maxDamage ;
-    private String maxDamageshipId;
-    private String survivedBattles;
-    private String survivedWins ;
-    private String maxChipsDestroyer ;
-    private String defeat ;
-    private String planesKilled ;
-    private String draws ;
-    private String shipsDestroyedNumber;
-    private String damageDealt;
-    private String max_frags_ship_name ;
-    private String max_planes_killed_ship_name;
-    private String max_xp;
-    private String max_xp_ship_name;
+    private String lastBattleTime;
+    private String userName;
+    private String userId;
+    private String role;
+    private String joined;
+    private String maxDamageShip;
+    private String maxDamageShipName;
+    private String deathKill;
+    private String averageDamage;
+    private String winRate;
+    private JSONObject objAchievements;
+
+    public User() {
+    }
+
+    public User(String userName, String userId) {
+
+        this.userName = userName;
+        this.userId = userId;
+
+    }
+
+    public String getMaxDamageShip() {
+        return maxDamageShip;
+    }
+
+    public void setMaxDamageShip(String maxDamageShip) {
+        this.maxDamageShip = maxDamageShip;
+    }
+
+    public String getMaxDamageShipName() {
+        return maxDamageShipName;
+    }
+
+    public void setMaxDamageShipName(String maxDamageShipName) {
+        this.maxDamageShipName = maxDamageShipName;
+    }
+
+    public String getDeathKill() {
+        return deathKill;
+    }
+
+    public void setDeathKill(String deathKill) {
+        this.deathKill = deathKill;
+    }
+
+    public String getAverageDamage() {
+        return averageDamage;
+    }
+
+    public void setAverageDamage(String averageDamage) {
+        this.averageDamage = averageDamage;
+    }
+
+    public String getAverageShipsDestroyed() {
+        return averageShipsDestroyed;
+    }
+
+    public void setAverageShipsDestroyed(String averageShipsDestroyed) {
+        this.averageShipsDestroyed = averageShipsDestroyed;
+    }
+
+    private String averageShipsDestroyed;
+
+    public String getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(String winRate) {
+        this.winRate = winRate;
+    }
+
+    public String getHiddenProfile() {
+        return hiddenProfile;
+    }
+
+    public void setHiddenProfile(String hiddenProfile) {
+        this.hiddenProfile = hiddenProfile;
+    }
+
+    public String getClanId() {
+        return clanId;
+    }
+
+    public void setClanId(String clanId) {
+        this.clanId = clanId;
+    }
+
+    public String getClanName() {
+        return clanName;
+    }
+
+    public void setClanName(String clanName) {
+        this.clanName = clanName;
+    }
 
 
+    public JSONObject getObjAchievements() {
+        return objAchievements;
+    }
+
+    public void setObjAchievements(JSONObject objAchievements) {
+        this.objAchievements = objAchievements;
+    }
 
     public String getCreatedAt() {
         return createdAt;
@@ -149,15 +249,7 @@ public class User {
         this.damageDealt = damageDealt;
     }
 
-    public String getMax_frags_ship_name() {
-        return max_frags_ship_name;
-    }
-
-    public void setMax_frags_ship_name(String max_frags_ship_name) {
-        this.max_frags_ship_name = max_frags_ship_name;
-    }
-
-    public String getMax_planes_killed_ship_name() {
+    public String getMaxPlanesKilledShipName() {
         return max_planes_killed_ship_name;
     }
 
@@ -169,7 +261,7 @@ public class User {
         return max_xp;
     }
 
-    public void setMax_xp(String max_xp) {
+    public void setMaxXp(String max_xp) {
         this.max_xp = max_xp;
     }
 
@@ -177,11 +269,9 @@ public class User {
         return max_xp_ship_name;
     }
 
-    public void setMax_xp_ship_name(String max_xp_ship_name) {
+    public void setMaxXpShipName(String max_xp_ship_name) {
         this.max_xp_ship_name = max_xp_ship_name;
     }
-
-
 
     public String getRole() {
         return role;
@@ -200,15 +290,7 @@ public class User {
     }
 
 
-    public User(){}
 
-    public User(String userName, String userId){
-
-        this.userName = userName;
-        this.userId   = userId;
-
-
-    }
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -225,4 +307,6 @@ public class User {
     public String getUserId() {
         return userId;
     }
+
+
 }

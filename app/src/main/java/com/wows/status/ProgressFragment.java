@@ -110,7 +110,7 @@ public class ProgressFragment extends Fragment {
         }
         String urlReplaced = url.replace("XXX", stringBuffer);
         requestJSON(seriesData, urlReplaced, id, 10, 0);
-        Log.e("URL1:", urlReplaced);
+      //  Log.e("URL1:", urlReplaced);
         // 10 until 19
         stringBuffer = new StringBuffer();
         for (int i = 10; i <= 19; i++) {
@@ -225,14 +225,12 @@ public class ProgressFragment extends Fragment {
         HttpGetRequest getRequest = new HttpGetRequest(getContext());
         String result;
 
-
         try {
             result = getRequest.execute(url).get();
             JSONObject jsonObject = new JSONObject(result);
             JSONObject objData = (JSONObject) jsonObject.get("data");
             JSONObject objIdPlayer = (JSONObject) objData.get(id);
             JSONObject objPVP = (JSONObject) objIdPlayer.get("pvp");
-            Log.e("result:", result);
 
             for (int i = rangeDateMin; i < rangeDateMax; i++) {
 
@@ -240,21 +238,21 @@ public class ProgressFragment extends Fragment {
                     JSONObject json = objPVP.getJSONObject(arrayDates[i].replace("-", ""));
 
                     if (battles == 0) {
-                        battles = Integer.valueOf(json.getString("battles"));
-                        survived = Integer.valueOf(json.getString("survived_battles"));
-                        wins = Integer.valueOf(json.getString("wins"));
-                        destroyed = Integer.valueOf(json.getString("frags"));
+                        battles = Integer.parseInt(json.getString("battles"));
+                        survived = Integer.parseInt(json.getString("survived_battles"));
+                        wins = Integer.parseInt(json.getString("wins"));
+                        destroyed = Integer.parseInt(json.getString("frags"));
 
                     } else {
                         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                         Date date = dateFormat.parse(arrayDates[i].replace("-", "/"));
                         seriesData.add(new CustomDataEntry(java.text.DateFormat.getDateInstance().format(date), Integer.valueOf(json.getString("battles")) - battles, Integer.valueOf(json.getString("survived_battles")) - survived,
-                                Integer.valueOf(json.getString("wins")) - wins, Integer.valueOf(json.getString("frags")) - destroyed));
+                                Integer.parseInt(json.getString("wins")) - wins, Integer.valueOf(json.getString("frags")) - destroyed));
 
-                        battles = Integer.valueOf(json.getString("battles"));
-                        survived = Integer.valueOf(json.getString("survived_battles"));
-                        wins = Integer.valueOf(json.getString("wins"));
-                        destroyed = Integer.valueOf(json.getString("frags"));
+                        battles = Integer.parseInt(json.getString("battles"));
+                        survived = Integer.parseInt(json.getString("survived_battles"));
+                        wins = Integer.parseInt(json.getString("wins"));
+                        destroyed = Integer.parseInt(json.getString("frags"));
                     }
 
 
@@ -262,23 +260,20 @@ public class ProgressFragment extends Fragment {
             }
 
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (ExecutionException | InterruptedException | ArrayIndexOutOfBoundsException | JSONException | NullPointerException | ParseException e) {
             e.printStackTrace();
         } catch (ClassCastException e) {
-            Toast.makeText(getContext(), dbAdapter.getMensagemTranslated(67), Toast.LENGTH_LONG).show();
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), dbAdapter.getMensagemTranslated(67), Toast.LENGTH_LONG).show();
+                }
+            });
+
             seriesData.add(new CustomDataEntry("", 0.0, 0.0,
                     0.0, 0.0));
             e.printStackTrace();
-        } catch (ParseException exception) {
-            exception.printStackTrace();
         }
     }
 

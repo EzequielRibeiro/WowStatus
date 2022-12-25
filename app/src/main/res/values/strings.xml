@@ -36,7 +36,7 @@
     <string name="average_destroyed_ships" translatable="false">Average Destroyed Ships:</string>
     <string name="survived_battles" translatable="false">Survived Battles:</string>
     <string name="survived_with_wins" translatable="false">Survived with Wins:</string>
-    <string name="progress_dialog_mensagem" translatable="false">" Downloading ..."</string>
+    <string name="progress_dialog_mensagem" translatable="false">"requesting player stats ..."</string>
     <string name="no_connection" translatable="false">No internet connection</string>
     <string name="url_web" tools:ignore="MissingTranslation" translatable="false">https://playtogether.worldofwarships.com/invite/wm2LE6k</string>
     <string name="enter_text" translatable="false">Enter a text</string>

@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class GraphicFragment extends Fragment {
@@ -34,34 +35,24 @@ public class GraphicFragment extends Fragment {
     private ProgressBar progressBarChart;
     int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
     int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0, submarine = 0;
-    int[] tier = new int[10];
-    SingletonsClass singletonsClass = SingletonsClass.getInstance();
-    Map<String, Ship> shipMap;
-    private String planes_killed = "0";
-    private String max_planes_killed = "0";
-    private String max_damage_dealt = "0";
-    private String max_xp = "0";
-    private String total_xp = "0";
-    private String torpedoes_frags = "0";
-    private String torpedoes_hits = "0";
+    private int[] tier;
+    private SingletonsClass singletonsClass;
+    private Map<String, Ship> shipMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setRetainInstance(true);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_graphic, container, false);
-
+        singletonsClass = SingletonsClass.getInstance();
+        tier = new int[11];
         webViewIndex = v.findViewById(R.id.webViewIndex);
         progressBarChart = v.findViewById(R.id.progressBarChart);
-
 
         final String id = getArguments().getString("id");
         final String country = getArguments().getString("country");
@@ -73,6 +64,7 @@ public class GraphicFragment extends Fragment {
                 @Override
                 public void run() {
                     requestShipData(id, country);
+
                 }
             }).start();
 
@@ -80,6 +72,7 @@ public class GraphicFragment extends Fragment {
         }else{
 
             resultToGrafic(singletonsClass.getEntry());
+
 
         }
 
@@ -215,18 +208,10 @@ public class GraphicFragment extends Fragment {
                     singletonsClass.setEntry(shipMap);
 
 
-                } catch (JSONException j) {
+                } catch (JSONException | NullPointerException | InterruptedException |
+                        ExecutionException | ClassCastException j) {
                     j.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
                 }
-
 
 
     }
@@ -238,82 +223,86 @@ public class GraphicFragment extends Fragment {
 
             switch (entry.getValue().getNation()) {
                 case "uk":
-                    uk = uk + Integer.valueOf(entry.getValue().getBattles());
+                    uk = uk + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "japan":
-                    japan = japan + Integer.valueOf(entry.getValue().getBattles());
+                    japan = japan + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "pan_asia":
-                    panAsia = panAsia + Integer.valueOf(entry.getValue().getBattles());
+                    panAsia = panAsia + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "france":
-                    france = france + Integer.valueOf(entry.getValue().getBattles());
+                    france = france + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "germany":
-                    germany = germany + Integer.valueOf(entry.getValue().getBattles());
+                    germany = germany + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "usa":
-                    usa = usa + Integer.valueOf(entry.getValue().getBattles());
+                    usa = usa + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "ussr":
-                    ussr = ussr + Integer.valueOf(entry.getValue().getBattles());
+                    ussr = ussr + Integer.parseInt(entry.getValue().getBattles());
                     break;
             }
 
             switch (entry.getValue().getType()) {
                 case "Cruiser":
-                    cruiser = cruiser + Integer.valueOf(entry.getValue().getBattles());
+                    cruiser = cruiser + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Battleship":
-                    battleship = battleship + Integer.valueOf(entry.getValue().getBattles());
+                    battleship = battleship + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Destroyer":
-                    destroyer = destroyer + Integer.valueOf(entry.getValue().getBattles());
+                    destroyer = destroyer + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "AirCarrier":
-                    carrier = carrier + Integer.valueOf(entry.getValue().getBattles());
+                    carrier = carrier + Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Submarine":
-                    submarine = submarine + Integer.valueOf(entry.getValue().getBattles());
+                    submarine = submarine + Integer.parseInt(entry.getValue().getBattles());
                     break;
-            }
 
+            }
 
             switch (entry.getValue().getTier()) {
                 case "1":
-                    tier[0] = tier[0] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[0] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "2":
-                    tier[1] = tier[1] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[1] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "3":
-                    tier[2] = tier[2] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[2] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "4":
-                    tier[3] = tier[3] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[3] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "5":
-                    tier[4] = tier[4] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[4] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "6":
-                    tier[5] = tier[5] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[5] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "7":
-                    tier[6] = tier[6] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[6] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "8":
-                    tier[7] = tier[7] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[7] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "9":
-                    tier[8] = tier[8] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[8] += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "10":
-                    tier[9] = tier[9] + Integer.valueOf(entry.getValue().getBattles());
+                    tier[9] += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "11":
+                    tier[10] += Integer.parseInt(entry.getValue().getBattles());
                     break;
 
             }
 
         }
+
 
      if(getActivity() != null)
         getActivity().runOnUiThread(new Runnable() {
@@ -370,7 +359,7 @@ public class GraphicFragment extends Fragment {
 
 
                 });
-                webViewIndex.clearCache(true);
+                webViewIndex.clearCache(false);
                 webViewIndex.loadUrl("file:///android_asset/index.html");
 
 
@@ -412,16 +401,16 @@ public class GraphicFragment extends Fragment {
 
 
                     Ship ship = new Ship(id, name, tier, nation, type,
-                            shipMap.get(id).getBattles(),
-                            shipMap.get(id).getWins(),
-                            shipMap.get(id).getKill(),
-                            shipMap.get(id).getPlanes_killed(),
-                            shipMap.get(id).getMax_planes_killed(),
-                            shipMap.get(id).getMax_damage_dealt(),
-                            shipMap.get(id).getMax_xp() ,
-                            shipMap.get(id).getTotal_xp() ,
-                            shipMap.get(id).getTorpedoes_frags(),
-                            shipMap.get(id).getTorpedoes_hits());
+                            Objects.requireNonNull(shipMap.get(id)).getBattles(),
+                            Objects.requireNonNull(shipMap.get(id)).getWins(),
+                            Objects.requireNonNull(shipMap.get(id)).getKill(),
+                            Objects.requireNonNull(shipMap.get(id)).getPlanes_killed(),
+                            Objects.requireNonNull(shipMap.get(id)).getMax_planes_killed(),
+                            Objects.requireNonNull(shipMap.get(id)).getMax_damage_dealt(),
+                            Objects.requireNonNull(shipMap.get(id)).getMax_xp() ,
+                            Objects.requireNonNull(shipMap.get(id)).getTotal_xp() ,
+                            Objects.requireNonNull(shipMap.get(id)).getTorpedoes_frags(),
+                            Objects.requireNonNull(shipMap.get(id)).getTorpedoes_hits());
                     //Log.e("ship",ship.toString());
                     shipMap.put(id,ship);
                     singletonsClass.setAddShipsList(ship);
@@ -429,16 +418,9 @@ public class GraphicFragment extends Fragment {
 
             }
 
-        } catch (JSONException j) {
+        } catch (JSONException | InterruptedException | NullPointerException | ExecutionException |
+                ClassCastException j) {
             j.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
         }
 
     }
@@ -576,6 +558,9 @@ public class GraphicFragment extends Fragment {
         public int getTier10() {
             return tier[9];
         }
+
+        @JavascriptInterface
+        public int getTier11() {return tier[10];}
 
 
     }

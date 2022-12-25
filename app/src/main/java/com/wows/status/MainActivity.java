@@ -44,6 +44,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.play.core.tasks.OnCompleteListener;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import org.json.JSONException;
@@ -141,53 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public static void rateApp(final Activity activity) throws Exception {
-        final ReviewManager reviewManager = ReviewManagerFactory.create(activity);
-        //reviewManager = new FakeReviewManager(this);
-        com.google.android.play.core.tasks.Task<ReviewInfo> request = reviewManager.requestReviewFlow();
-
-        request.addOnCompleteListener(new com.google.android.play.core.tasks.OnCompleteListener<ReviewInfo>() {
-            @Override
-            public void onComplete(com.google.android.play.core.tasks.Task<ReviewInfo> task) {
-                if (task.isSuccessful()) {
-                    Log.e("Rate Task", "Complete");
-                    ReviewInfo reviewInfo = task.getResult();
-                    com.google.android.play.core.tasks.Task<Void> flow = reviewManager.launchReviewFlow(activity, reviewInfo);
-                    flow.addOnCompleteListener(new com.google.android.play.core.tasks.OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(com.google.android.play.core.tasks.Task<Void> task) {
-                            Log.e("Rate Flow", "Complete");
-                        }
-                    });
-
-                    flow.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(Exception e) {
-                            activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
-                            Log.e("Rate Flow", "Fail");
-                            e.printStackTrace();
-                        }
-                    });
-
-                } else {
-                    activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
-                    Log.e("Rate Task", "Fail");
-                }
-            }
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                activity.getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
-                e.printStackTrace();
-                Log.e("Rate Request", "Fail");
-            }
-        });
-
-
-    }
-
-    public static void showRequestRateApp(final Activity activity) {
+    public void showRequestRateApp(final Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Feedback");
         builder.setMessage(activity.getString(R.string.rate_msg));
@@ -195,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 try {
-                    rateApp(activity);
+                    rateApp();
                 } catch (Exception exception) {
                     exception.printStackTrace();
                     FirebaseCrashlytics.getInstance().recordException(exception);
@@ -426,13 +382,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (objectData != null)
                 result = objectData.get("game_version").toString();
 
-        } catch (ExecutionException | NullPointerException e) {
-            e.printStackTrace();
-            return "0.0.0.0";
-        } catch (InterruptedException | JSONException e) {
+        } catch (ExecutionException | NullPointerException | InterruptedException | JSONException e) {
             e.printStackTrace();
             return "0.0.0.0";
         }
+
         return result;
 
 
@@ -635,7 +589,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.action_rate) {
             try {
-                rateApp(MainActivity.this);
+                rateApp();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -644,6 +598,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void rateAppOnPlayStore() {
+        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+
+    private void rateApp() {
+
+        final ReviewManager reviewManager = ReviewManagerFactory.create(MainActivity.this);
+        //reviewManager = new FakeReviewManager(this);
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+
+        request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
+            @Override
+            public void onComplete(@NonNull Task<ReviewInfo> task) {
+
+                if (task.isSuccessful()) {
+                    ReviewInfo reviewInfo = task.getResult();
+                    Task<Void> flow = reviewManager.launchReviewFlow(MainActivity.this, reviewInfo);
+                    flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Log.i("Rate Flow", "Complete");
+                        }
+                    });
+
+                    flow.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            rateAppOnPlayStore();
+                            Log.i("Rate Flow", "Fail");
+                            e.printStackTrace();
+                        }
+                    });
+
+                } else {
+                    try {
+                        String reviewErrorCode = task.getException().getMessage();
+                        Log.d("Rate Task Fail", "cause: " + reviewErrorCode);
+                        rateAppOnPlayStore();
+                    } catch (NullPointerException | ClassCastException e) {
+                        rateAppOnPlayStore();
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                e.printStackTrace();
+                Log.d("Rate Request", "Fail");
+                rateAppOnPlayStore();
+            }
+        });
+
+    }
+
 
     private void restorePrefs() {
 

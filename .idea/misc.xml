@@ -6,9 +6,14 @@
         <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/drawable/border_textinput.xml" value="0.1" />
         <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/drawable/border_view.xml" value="0.1" />
         <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout-land/activity_scrolling.xml" value="0.25364583333333335" />
-        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout-land/content_scrolling.xml" value="0.25364583333333335" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout-land/content_scrolling.xml" value="0.67" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout-land/fragment_details.xml" value="0.1640625" />
         <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/activity_scrolling.xml" value="0.2" />
-        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/content_scrolling.xml" value="0.34823091247672255" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/activity_tab.xml" value="0.2" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/content_scrolling.xml" value="0.9" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/fragment_details.xml" value="0.2" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/fragment_graphic.xml" value="0.48484848484848486" />
+        <entry key="..\:/Projeto-Android/WowStatus/app/src/main/res/layout/fragment_progress.xml" value="0.2" />
       </map>
     </option>
   </component>

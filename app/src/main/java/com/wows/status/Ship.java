@@ -1,5 +1,7 @@
 package com.wows.status;
 
+import android.annotation.SuppressLint;
+
 public class Ship implements  Comparable{
 
     private String id = "empty";
@@ -187,15 +189,15 @@ public class Ship implements  Comparable{
 
     public  String getKill(){ return kill;}
 
+    @SuppressLint("DefaultLocale")
     public String getPorcent(){
 
         SingletonsClass singletonsClass = SingletonsClass.getInstance();
         String battlesTotal = singletonsClass.getBattlesTotal();
 
-
         float t1 = 0;
-        float t2 = (float) Integer.valueOf(battlesTotal);
-        float t3 = (float) Integer.valueOf(battles);
+        float t2 = (float) Integer.parseInt(battlesTotal);
+        float t3 = (float) Integer.parseInt(battles);
 
         if(t2 > 0 && t3 > 0)
             t1 = (t3 * 100) / t2 ;
@@ -205,13 +207,14 @@ public class Ship implements  Comparable{
 
     }
 
+    @SuppressLint("DefaultLocale")
     public String getWinRate(){
 
         float value = 0.0f;
-        float wins_  =  (float) Integer.valueOf(getWins());
-        float battles_ = (float) Integer.valueOf(getBattles());
+        float wins_  =  (float) Integer.parseInt(getWins());
+        float battles_ = (float) Integer.parseInt(getBattles());
 
-        if(Integer.valueOf(getWins()) > 0)
+        if(Integer.parseInt(getWins()) > 0)
              value  =   (wins_ * 100) / battles_ ;
 
         return String.format("%.2f", value)+ "%";
@@ -228,7 +231,7 @@ public class Ship implements  Comparable{
         // return (int) (this.salary - compareSalary);
 
         // descending order
-        return (int) (Integer.valueOf(battlesC) - Integer.valueOf(battles));
+        return Integer.parseInt(battlesC) - Integer.parseInt(battles);
     }
 
     @Override
