@@ -1,17 +1,12 @@
-<html>
+<html style="background-color:black;text-align:center">
   <head>
-	  <style>
-	body{
-	background-color:#000000;
-	height: 100%;
-	width: 100%;
+   <style>
+     </style>
 
-	}
-		</style>
-  
-  
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+   </head>
+  <body>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
 
       // Load Charts and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
@@ -25,7 +20,7 @@
        google.charts.setOnLoadCallback(drawChartTier);
 
       function drawChartType() {
-    
+
             // Create the data table.
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Type');
@@ -34,20 +29,21 @@
               ['Cruiser',WebInterface.getCruiser()],
               ['Battleship',WebInterface.getBattleship()],
               ['Destroyer',WebInterface.getDestroyer()],
-              ['Carrier', WebInterface.getCarrier()]
+              ['Carrier', WebInterface.getCarrier()],
+              ['Submarine',WebInterface.getSubmarine()]
             ]);
-    
+
             // Set chart options
             var options = {'title':'Battle for Types',
-                           'width':600,
+                           'width':400,
                            'height':300,
-						   fontSize: 18,
+						   fontSize: 16,
 						   backgroundColor: '#000000',
 						   titleTextStyle: {color: '#FFFFFF'},
 						   legendTextStyle: {color:'#FFFFFF'},
-						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+						   chartArea:{left:"2%",top:"20%",width:"100%",height:"70%"}
 						   };
-    
+
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart_div_type'));
             chart.draw(data, options);
@@ -76,13 +72,13 @@
 
 			// Set chart options
             var options = {'title':'Battles for Nation',
-                           'width':600,
+                           'width':400,
                            'height':300,
-						   fontSize: 18,
+						   fontSize: 16,
 						   backgroundColor: '#000000',
 						   titleTextStyle: {color: '#FFFFFF'},
 						   legendTextStyle: {color:'#FFFFFF'},
-						   chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+						   chartArea:{left:"2%",top:"20%",width:"100%",height:"70%"}
 						   };
 
         // Instantiate and draw the chart for Anthony's pizza.
@@ -116,35 +112,33 @@
 
       var options = {
         title: "Battle for Tier",
-        width: 600,
-        height: 400,
-        fontSize: 18,
+        width: 400,
+        height: 300,
+        fontSize: 16,
 		backgroundColor: '#000000',
 		titleTextStyle: {color: '#FFFFFF'},
 		legendTextStyle: {color:'#FFFFFF'},
         bar: {groupWidth: "65%"},
         legend: { position: "none"},
-        chartArea:{left:"2%",top:"20%",width:"65%",height:"70%"}
+        chartArea:{left:"2%",top:"20%",width:"100%",height:"70%"}
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("draw_chart_tier"));
       chart.draw(view, options);
 
       }
     </script>
-  </head>
-  <body>
     <!--Table and divs that hold the pie charts-->
-    <table class="columns" >
+    <table class="columns"  >
       <tr>
-        <th><div id="chart_div_type" style="border: 1px solid #0FFF00"></div></th>
+        <th><div id="chart_div_type" style="border:2px solid #0FFF00"></div></th>
       </tr>
       <tr>
-        <th><div id="chart_div_nation" style="border: 1px solid #0FFF00"></div></th>
+        <th><div id="chart_div_nation" style="border:2px solid #0FFF00"></div></th>
 
       </tr>
 
       <tr>
-        <th><div id="draw_chart_tier" style="border: 1px solid #0FFF00"></div></th>
+        <th><div id="draw_chart_tier" style="border:2px solid #0FFF00"></div></th>
 
       </tr>
 

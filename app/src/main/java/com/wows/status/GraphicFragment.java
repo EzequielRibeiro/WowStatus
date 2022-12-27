@@ -414,6 +414,7 @@ public class GraphicFragment extends Fragment {
                     //Log.e("ship",ship.toString());
                     shipMap.put(id,ship);
                     singletonsClass.setAddShipsList(ship);
+
                 }
 
             }
