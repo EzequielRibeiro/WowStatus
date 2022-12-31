@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 try {
-                    rateApp();
+                    rateAppOnPlayStore();
                 } catch (Exception exception) {
                     exception.printStackTrace();
                     FirebaseCrashlytics.getInstance().recordException(exception);

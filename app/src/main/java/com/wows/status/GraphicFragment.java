@@ -33,7 +33,7 @@ public class GraphicFragment extends Fragment {
 
     private WebView webViewIndex;
     private ProgressBar progressBarChart;
-    int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
+    int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0,europe = 0,netherlands = 0,spain = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
     int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0, submarine = 0;
     private int[] tier;
     private SingletonsClass singletonsClass;
@@ -223,26 +223,48 @@ public class GraphicFragment extends Fragment {
 
             switch (entry.getValue().getNation()) {
                 case "uk":
-                    uk = uk + Integer.parseInt(entry.getValue().getBattles());
+                    uk += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "japan":
-                    japan = japan + Integer.parseInt(entry.getValue().getBattles());
+                    japan += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "pan_asia":
-                    panAsia = panAsia + Integer.parseInt(entry.getValue().getBattles());
+                    panAsia += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "pan_america":
+                    panAmerica += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "france":
-                    france = france + Integer.parseInt(entry.getValue().getBattles());
+                    france += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "germany":
-                    germany = germany + Integer.parseInt(entry.getValue().getBattles());
+                    germany += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "usa":
-                    usa = usa + Integer.parseInt(entry.getValue().getBattles());
+                    usa += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "ussr":
-                    ussr = ussr + Integer.parseInt(entry.getValue().getBattles());
+                    ussr += Integer.parseInt(entry.getValue().getBattles());
                     break;
+                case "europe":
+                    europe += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "netherlands":
+                    netherlands += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "spain":
+                    spain += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "commonWealth":
+                    commonWealth += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "poland":
+                    poland += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+                case "italy":
+                    italy += Integer.parseInt(entry.getValue().getBattles());
+                    break;
+
             }
 
             switch (entry.getValue().getType()) {
@@ -454,6 +476,7 @@ public class GraphicFragment extends Fragment {
             return submarine;
         }
 
+       //country
         @JavascriptInterface
         public int getUsa() {
             return usa;
@@ -467,6 +490,11 @@ public class GraphicFragment extends Fragment {
         @JavascriptInterface
         public int getItaly() {
             return italy;
+        }
+
+        @JavascriptInterface
+        public int getEurope() {
+            return europe;
         }
 
         @JavascriptInterface
@@ -508,6 +536,17 @@ public class GraphicFragment extends Fragment {
         public int getPoland() {
             return poland;
         }
+
+        @JavascriptInterface
+        public int getSpain() {
+            return spain;
+        }
+
+        @JavascriptInterface
+        public int getNetherlands() {
+            return netherlands;
+        }
+        //end country
 
 
         @JavascriptInterface
