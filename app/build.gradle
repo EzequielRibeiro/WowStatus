@@ -20,8 +20,8 @@ android {
         applicationId "com.wows.stats"
         minSdkVersion 19
         targetSdkVersion 33
-        versionCode 28
-        versionName "1.28"
+        versionCode 29
+        versionName "1.29"
         multiDexEnabled true
         signingConfig signingConfigs.config
     }

@@ -33,8 +33,8 @@ public class GraphicFragment extends Fragment {
 
     private WebView webViewIndex;
     private ProgressBar progressBarChart;
-    int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0,europe = 0,netherlands = 0,spain = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
-    int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0, submarine = 0;
+    private int usa = 0, japan = 0, ussr = 0, germany = 0, uk = 0, france = 0, italy = 0,europe = 0,netherlands = 0,spain = 0, panAsia = 0, panAmerica = 0, commonWealth = 0, poland = 0;
+    private int cruiser = 0, battleship = 0, destroyer = 0, carrier = 0, submarine = 0;
     private int[] tier;
     private SingletonsClass singletonsClass;
     private Map<String, Ship> shipMap;
@@ -51,6 +51,11 @@ public class GraphicFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_graphic, container, false);
         singletonsClass = SingletonsClass.getInstance();
         tier = new int[11];
+        usa =  japan = ussr = germany =  uk =  france =  italy = europe = netherlands =  spain =  panAsia =
+                panAmerica = commonWealth =  poland = 0;
+        cruiser = battleship =  destroyer =  carrier =  submarine = 0;
+
+
         webViewIndex = v.findViewById(R.id.webViewIndex);
         progressBarChart = v.findViewById(R.id.progressBarChart);
 
@@ -75,7 +80,6 @@ public class GraphicFragment extends Fragment {
 
 
         }
-
         return v;
     }
 
@@ -269,19 +273,19 @@ public class GraphicFragment extends Fragment {
 
             switch (entry.getValue().getType()) {
                 case "Cruiser":
-                    cruiser = cruiser + Integer.parseInt(entry.getValue().getBattles());
+                    cruiser += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Battleship":
-                    battleship = battleship + Integer.parseInt(entry.getValue().getBattles());
+                    battleship += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Destroyer":
-                    destroyer = destroyer + Integer.parseInt(entry.getValue().getBattles());
+                    destroyer += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "AirCarrier":
-                    carrier = carrier + Integer.parseInt(entry.getValue().getBattles());
+                    carrier += Integer.parseInt(entry.getValue().getBattles());
                     break;
                 case "Submarine":
-                    submarine = submarine + Integer.parseInt(entry.getValue().getBattles());
+                    submarine += Integer.parseInt(entry.getValue().getBattles());
                     break;
 
             }

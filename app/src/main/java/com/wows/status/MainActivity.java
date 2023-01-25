@@ -399,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
                 textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40) +
-                        " " + prefs.getString("version", getServeVersion(MainActivity.this))));
+                        ". Server version " + prefs.getString("version", getServeVersion(MainActivity.this))));
                 dbAdapter.close();
 
                 StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
