@@ -4,43 +4,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_scroll"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_gravity="center_horizontal|top"
     android:background="@android:color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.wows.status.MainActivity"
     tools:showIn="@layout/activity_scrolling">
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:padding="5dp"
-        ads:boxCollapsedPaddingTop="5dp"
-        ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        ads:layout_constraintEnd_toEndOf="@+id/radioGroupSearch"
-        ads:layout_constraintStart_toStartOf="@+id/radioGroupSearch"
+        android:layout_marginTop="8dp"
+        ads:layout_constraintEnd_toStartOf="@+id/frameLayoutContent"
+        ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:gravity="bottom|start"
             android:hint="Enter a Nickname"
             android:imeOptions="actionSearch"
             android:inputType="text"
-
             android:textColor="@color/button_pressed"
-
             android:textColorHint="@color/colorPrimaryDark"
-            android:translationY="5dp" />
+            ads:textInputLayoutFocusedRectEnabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarContent"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        ads:layout_constraintEnd_toStartOf="@+id/frameLayoutContent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -49,10 +53,10 @@
         android:background="@color/background"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal"
-        ads:layout_constraintBottom_toTopOf="@+id/radioGroupSearch"
-        ads:layout_constraintEnd_toStartOf="@+id/list_item_content"
+        android:paddingBottom="5dp"
+        ads:layout_constraintEnd_toStartOf="@+id/frameLayoutContent"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        ads:layout_constraintTop_toBottomOf="@+id/progressBarContent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,12 +129,9 @@
         android:id="@+id/radioGroupSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="9dp"
         android:background="@color/button_default"
         android:gravity="center"
         android:orientation="horizontal"
-        ads:layout_constraintBottom_toTopOf="@+id/radioGroupCountry"
         ads:layout_constraintEnd_toEndOf="@+id/radioGroupCountry"
         ads:layout_constraintStart_toStartOf="@+id/radioGroupCountry"
         ads:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -142,7 +143,8 @@
             android:checked="true"
             android:tag="player"
             android:text="PLAYER"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonClan"
@@ -150,7 +152,8 @@
             android:layout_height="wrap_content"
             android:tag="clan"
             android:text="CLAN"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </RadioGroup>
@@ -160,13 +163,10 @@
         android:id="@+id/radioGroupCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@color/button_default"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        ads:layout_constraintBottom_toTopOf="@+id/adView"
-        ads:layout_constraintEnd_toStartOf="@+id/list_item_content"
+        ads:layout_constraintEnd_toStartOf="@+id/frameLayoutContent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/radioGroupSearch">
 
@@ -177,7 +177,8 @@
             android:checked="true"
             android:tag=".com"
             android:text="NA"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonEu"
@@ -185,7 +186,8 @@
             android:layout_height="wrap_content"
             android:tag=".eu"
             android:text="EU"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonRu"
@@ -193,7 +195,8 @@
             android:layout_height="wrap_content"
             android:tag=".ru"
             android:text="RU"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <RadioButton
             android:id="@+id/radioButtonAsia"
@@ -202,63 +205,60 @@
             android:layout_marginRight="5dp"
             android:tag=".asia"
             android:text="ASIA"
-            android:textColor="@color/button_pressed" />
+            android:textColor="@color/button_pressed"
+            tools:ignore="TouchTargetSizeCheck" />
     </RadioGroup>
 
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:minWidth="90dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        ads:layout_constraintEnd_toStartOf="@+id/list_item_content"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry"></com.google.android.gms.ads.AdView>
-
-    <TextView
+    <Button
         android:id="@+id/textViewServerVersion"
+        style="@android:style/Widget.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:text="Game version: 0.0.0.0"
-        android:textColor="@android:color/white"
-        ads:layout_constraintBottom_toTopOf="@+id/list_item_content"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toEndOf="@+id/textInputLayout"
-        ads:layout_constraintStart_toStartOf="@+id/list_item_content"
-        ads:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@color/background"
+        ads:layout_constraintEnd_toEndOf="@+id/radioGroupCountry"
+        ads:layout_constraintStart_toStartOf="@+id/radioGroupCountry"
+        ads:layout_constraintTop_toBottomOf="@+id/radioGroupCountry" />
 
 
-    <ProgressBar
-        android:id="@+id/progressBarContent"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="invisible"
-        ads:layout_constraintBottom_toTopOf="@+id/list_item_content"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="@+id/list_item_content"
-        ads:layout_constraintTop_toBottomOf="@+id/textViewServerVersion" />
-
-    <ListView
-        android:id="@+id/list_item_content"
+    <FrameLayout
+        android:id="@+id/frameLayoutContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bar_color"
-        android:choiceMode="singleChoice"
-        android:dividerHeight="5dp"
+        android:foregroundGravity="center"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toEndOf="@+id/linearLayout"
-        ads:layout_constraintTop_toBottomOf="@+id/progressBarContent" />
+        ads:layout_constraintStart_toEndOf="@+id/textInputLayout"
+        ads:layout_constraintTop_toTopOf="parent">
+
+        <ListView
+            android:id="@+id/list_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bar_color"
+            android:choiceMode="singleChoice"
+            android:dividerHeight="5dp"
+            android:paddingLeft="5dp"
+            tools:visibility="gone" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:foregroundGravity="center"
+            ads:adSize="MEDIUM_RECTANGLE"
+            ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

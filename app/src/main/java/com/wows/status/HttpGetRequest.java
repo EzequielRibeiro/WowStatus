@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +35,9 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
     private String name_, account_id;
     private ArrayList<User> arrayList;
 
-    public HttpGetRequest(ProgressBar progressBar, Context context, ListView listView, UserAdapter userAdapter,ArrayList<User> arrayList) {
+    private AdView adView;
+
+    public HttpGetRequest(ProgressBar progressBar, AdView adView, Context context, ListView listView, UserAdapter userAdapter, ArrayList<User> arrayList) {
 
         this.progressBar = progressBar;
         this.progressBar.setVisibility(View.VISIBLE);
@@ -41,6 +45,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
         this.context = context;
         this.userAdapter = userAdapter;
         this.arrayList = arrayList;
+        this.adView = adView;
       //  name_ = "nickname";
       //  account_id = "account_id";
 
@@ -112,6 +117,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
            arr = jObj.getJSONArray("data");
 
           if (arr.length() > 0) {
+              adView.setVisibility(View.GONE);
                 arrayList.clear();
                  for (int i = 0; i < arr.length(); i++) {
 
@@ -119,6 +125,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
                     arrayList.add(new User(mJsonObject.getString(name_), mJsonObject.getString(account_id)));
                 }
                     userAdapter.notifyDataSetChanged();
+
             }else{
               Toast.makeText(context, dbAdapter.getMensagemTranslated(46), Toast.LENGTH_LONG).show();
               dbAdapter.close();

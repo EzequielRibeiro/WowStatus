@@ -4,6 +4,7 @@ package com.wows.status;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -23,9 +24,8 @@ import static com.wows.status.HttpGetRequest.REQUEST_METHOD;
 
 public class StatusServer extends AsyncTask {
 
-    private HttpGetRequest httpGetRequest;
-    private String na, eu, ru, asia;
-    private String[] listServer = {"com", "eu", "ru", "asia"};
+    private String na = "not found", eu = "not found", ru = "not found", asia = "not found";
+    private String[] listServer = {"com", "eu","asia", "ru"};
     private Context context;
     private String result;
     private TextView textViewNa, textViewEu, textViewRu, textViewAsia;
@@ -49,6 +49,7 @@ public class StatusServer extends AsyncTask {
                 //Create a URL object holding our url
                 URL myUrl = new URL("https://api.worldoftanks." + t + "/wgn/servers/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&game=wows");
                 //Create a connection
+                Log.e("url","https://api.worldoftanks." + t + "/wgn/servers/info/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&game=wows");
                 HttpURLConnection connection = (HttpURLConnection)
                         myUrl.openConnection();
                 //Set methods and timeouts
@@ -81,17 +82,19 @@ public class StatusServer extends AsyncTask {
                 JSONObject objectData = object.getJSONObject("data");
                 JSONArray objArray = objectData.getJSONArray("wows");
 
-                if (t.equals("com")) {
+                if (objArray.getJSONObject(0).get("server").equals("NA")) {
 
                     na = objArray.getJSONObject(0).get("players_online").toString();
 
-                } else if (t.equals("eu")) {
+                } else if (objArray.getJSONObject(0).get("server").equals("EU")) {
 
                     eu = objArray.getJSONObject(0).get("players_online").toString();
-                } else if (t.equals("ru")) {
+
+                } else if (objArray.getJSONObject(0).get("server").equals("RU")) {
 
                     ru = objArray.getJSONObject(0).get("players_online").toString();
-                } else if (t.equals("asia")) {
+
+                } else if (objArray.getJSONObject(0).get("server").equals("ASIA")) {
 
                     asia = objArray.getJSONObject(0).get("players_online").toString();
                 }

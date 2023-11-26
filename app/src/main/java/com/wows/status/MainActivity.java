@@ -5,10 +5,14 @@ package com.wows.status;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -16,8 +20,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -26,6 +32,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -40,6 +48,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.material.snackbar.Snackbar;
@@ -71,6 +80,7 @@ import com.google.android.play.core.tasks.OnFailureListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String CHANNEL_ID = "010101";
     private final static String alertTranslate = "The application will be translated into your language in a few seconds.";
     private final static String[] MENSAGEM_ARRAY = {"Created", "Last Battle", "Win Rate", "Killed / was killed",
             "High Caliber", "Kraken", "Devastating", "Double Kill", "Detonation", "Confederate", "Death by Secondary", "Drying", "Dreadnought",
@@ -101,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<User> arrayList = new ArrayList<>();
     private final String mensagem_to_translate = "Translating application to your language.";
 
+    private AlertDialog alertDialog;
     private String translate(String langFrom, String langTo, String text) {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -231,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        // editText.setFocusableInTouchMode(true);
         editText.requestFocus();
 
-        textViewServerVersion = (TextView) findViewById(R.id.textViewServerVersion);
+        textViewServerVersion = (Button) findViewById(R.id.textViewServerVersion);
 
         textViewServerVersion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,15 +285,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         prefs = getSharedPreferences("info", MODE_PRIVATE);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (!prefs.contains("version"))
-                    prefs.edit().putString("version", getServeVersion(MainActivity.this)).commit();
-                getSharedPreferences("msg", MODE_PRIVATE).edit().putString("text",
-                        Html.fromHtml(translate(LOCALE_DEFAULT, languageCode, mensagem_to_translate)).toString()).apply();
-            }
+        new Thread(() -> {
+            if (!prefs.contains("version"))
+                prefs.edit().putString("version","00.00.00").apply();
+
+            getSharedPreferences("msg", MODE_PRIVATE).edit().putString("text",
+                    Html.fromHtml(translate(LOCALE_DEFAULT, languageCode, mensagem_to_translate)).toString()).apply();
+
         }).start();
+
+
+
+        Intent i = new Intent(MainActivity.this, GameVersion.class);
+        getApplication().sendBroadcast(i);
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -368,6 +383,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         dbAdapter.close();
 
+
+
     }
 
     public static String getServeVersion(Context context) {
@@ -382,14 +399,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (objectData != null)
                 result = objectData.get("game_version").toString();
 
+
         } catch (ExecutionException | NullPointerException | InterruptedException | JSONException e) {
             e.printStackTrace();
-            return "0.0.0.0";
+            return "00.00.00";
         }
 
         return result;
 
 
+    }
+
+    public static void notificationPermission(Context context, boolean isEnabled) {
+
+
+
+        if (!isEnabled) {
+
+            //Unopened Notice
+            AlertDialog alertDialog = new AlertDialog.Builder(context)
+                    .setTitle("Permission to notification")
+                    .setCancelable(false)
+                    .setMessage(context.getString(R.string.notification_ask))
+                    /* .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                             dialog.cancel();
+                         }
+                     })*/
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent intent = new Intent();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                                intent.putExtra("android.provider.extra.APP_PACKAGE", context.getPackageName());
+
+                            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {  //5.0
+                                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                                intent.putExtra("app_package", context.getPackageName());
+                                intent.putExtra("app_uid", context.getApplicationInfo().uid);
+                                context.startActivity(intent);
+
+                            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {  //4.4
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setData(Uri.parse("package:" + context.getPackageName()));
+
+                            } else if (Build.VERSION.SDK_INT >= 15) {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+                            }
+                            context.startActivity(intent);
+                        }
+                    })
+                    .create();
+            alertDialog.show();
+            // alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+
+        }
     }
 
     private void serverStatus() {
@@ -398,8 +470,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-                textViewServerVersion.setText(Html.fromHtml(dbAdapter.getMensagemTranslated(40) +
-                        ". Server version " + prefs.getString("version", getServeVersion(MainActivity.this))));
+                textViewServerVersion.setText(Html.fromHtml("Game version: " + prefs.getString("version", getServeVersion(MainActivity.this))));
                 dbAdapter.close();
 
                 StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
@@ -421,6 +492,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private static void createNotificationChannel(Context context) {
+        Activity activity = (Activity) context;
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = activity.getString(R.string.channel_name);
+            String description = activity.getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system. You can't change the importance
+            // or other notification behaviors after this.
+            NotificationManager notificationManager = activity.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     private void radioButtonSelected() {
 
@@ -464,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        httpGetRequest = new HttpGetRequest(progressBar, MainActivity.this, listView, userAdapter, arrayList);
+        httpGetRequest = new HttpGetRequest(progressBar, mAdView ,MainActivity.this, listView, userAdapter, arrayList);
 
         if (searchSelected.equals("clan")) {
             httpGetRequest.setParams("tag","clan_id");
@@ -482,6 +569,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         restorePrefs();
 
+        createNotificationChannel(MainActivity.this);
+
+        loadAdMobExit();
+
         //clear list of ship to new values
         SingletonsClass singletonsClass = SingletonsClass.getInstance();
         singletonsClass.clear();
@@ -492,6 +583,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (mAdView != null) {
             mAdView.resume();
+
         }
 
 
@@ -589,7 +681,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.action_rate) {
             try {
-                rateApp();
+               // rateApp();
+                rateAppOnPlayStore();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -744,6 +837,84 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+
+            if (alertDialog != null) {
+                try {
+                    alertDialog.show();
+                }catch (IllegalStateException e){
+                    e.printStackTrace();
+                    super.onBackPressed();
+                }
+            }else
+               super.onBackPressed();
+
+    }
+
+    private void loadAdMobExit() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        //builder.setTitle("Confirm exit");
+        builder.setTitle(R.string.app_name);
+        builder.setIcon(R.mipmap.ic_launcher_round);
+        builder.setMessage("Close the application ?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //System.exit(1);
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+            alertDialog = builder.create();
+            alertDialog.getWindow().setGravity(Gravity.CENTER);
+
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+            AdView adView = new AdView(this);
+            adView.setAdUnitId(getString(R.string.banner_id_exit));
+            adView.setAdSize(AdSize.MEDIUM_RECTANGLE);
+            adView.loadAd(adRequest);
+
+            adView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    alertDialog.setView(adView);
+
+                }
+
+                @Override
+                public void onAdFailedToLoad(LoadAdError adError) {
+                    //  loadAdStart();
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when an ad opens an overlay that
+                    // covers the screen.
+                }
+
+                @Override
+                public void onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                @Override
+                public void onAdClosed() {
+                    // Code to be executed when the user is about to return
+                    // to the app after tapping on an ad.
+                }
+            });
+
+    }
+
 
     private class TranslateTopics extends AsyncTask {
 
