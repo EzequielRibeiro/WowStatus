@@ -286,18 +286,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         prefs = getSharedPreferences("info", MODE_PRIVATE);
         new Thread(() -> {
-            if (!prefs.contains("version"))
-                prefs.edit().putString("version","00.00.00").apply();
 
             getSharedPreferences("msg", MODE_PRIVATE).edit().putString("text",
                     Html.fromHtml(translate(LOCALE_DEFAULT, languageCode, mensagem_to_translate)).toString()).apply();
 
         }).start();
 
-
-
-        Intent i = new Intent(MainActivity.this, GameVersion.class);
-        getApplication().sendBroadcast(i);
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -469,9 +463,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                DBAdapter dbAdapter = new DBAdapter(MainActivity.this);
-                textViewServerVersion.setText(Html.fromHtml("Game version: " + prefs.getString("version", getServeVersion(MainActivity.this))));
-                dbAdapter.close();
+
+                textViewServerVersion.setText(Html.fromHtml("Game version: " + getServeVersion(MainActivity.this)));
+
 
                 StatusServer statusServer = new StatusServer(MainActivity.this, textViewNa, textViewEu, textViewRu, textViewAsia);
                 statusServer.execute();
@@ -569,7 +563,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         restorePrefs();
 
-        createNotificationChannel(MainActivity.this);
+     //   createNotificationChannel(MainActivity.this);
 
         loadAdMobExit();
 

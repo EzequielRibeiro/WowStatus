@@ -138,7 +138,7 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
 
         if (progressBar != null)
             if (progressBar.getVisibility() == View.VISIBLE)
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
 
     }
 
