@@ -1,11 +1,13 @@
 package com.wows.status;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,8 +24,8 @@ public class BrowserActivity extends AppCompatActivity {
     private Stack<String> stack;
     private WebView webView;
     private ProgressBar progressBar;
-    private String urlPage = "https://worldofwarships.com/news/?category=game-updates";
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +34,15 @@ public class BrowserActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         stack = new Stack<>();
+        String urlPage = "https://blog.worldofwarships.com";
         stack.push(urlPage);
         progressBar = (ProgressBar) findViewById(R.id.progressBarBrowser);
         webView = (WebView) findViewById(R.id.webViewBrowser);
 
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setSupportZoom(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(true);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(urlPage);
 
