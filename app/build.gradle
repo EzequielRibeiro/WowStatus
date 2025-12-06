@@ -14,16 +14,28 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 35
+
+
+    compileSdkVersion 36
+    buildToolsVersion "33.0.0"
+
     defaultConfig {
-      //  applicationId "com.wows.status"
         applicationId "com.wows.stats"
-        minSdkVersion 21
-        versionCode 31
-        versionName "1.31"
+        versionCode 35
+        minSdk 23
+        //noinspection OldTargetApi
+        targetSdk 35
+        versionName "1.35"
         multiDexEnabled true
         signingConfig signingConfigs.config
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
     }
+
+
+
+
+
     buildTypes {
         release {
             // shrinkResources true
@@ -45,20 +57,20 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'com.google.firebase:firebase-ads:23.6.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.2'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:22.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
-    implementation 'com.google.firebase:firebase-crashlytics:19.4.4'
-    implementation 'com.google.firebase:firebase-analytics:22.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:20.0.3'
+    implementation 'com.google.firebase:firebase-analytics:23.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
-    implementation 'androidx.navigation:navigation-fragment:2.9.1'
-    implementation 'androidx.navigation:navigation-ui:2.9.1'
+    implementation 'androidx.navigation:navigation-fragment:2.9.6'
+    implementation 'androidx.navigation:navigation-ui:2.9.6'
     implementation 'com.google.android.play:review:2.0.2'
 
 }
