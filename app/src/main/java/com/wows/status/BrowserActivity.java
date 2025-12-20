@@ -76,7 +76,6 @@ public class BrowserActivity extends AppCompatActivity {
             return false;
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             Toast.makeText(BrowserActivity.this, "Internet Connection error: " + error.getDescription().toString(), Toast.LENGTH_LONG).show();

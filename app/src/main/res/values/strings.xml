@@ -73,5 +73,7 @@
     <string name="channel_description">WoWs Status</string>
     <string name="notification_ask">The App needs permission to send nofication</string>
     <string name="banner_id_exit">ca-app-pub-0822808376839371/3043244545</string>
+    <string name="translate">Translate</string>
+    <string name="starting">starting</string>
 
 </resources>

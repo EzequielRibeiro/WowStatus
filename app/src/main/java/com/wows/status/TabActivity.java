@@ -25,13 +25,12 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class TabActivity extends AppCompatActivity {
 
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private InterstitialAd mInterstitialAd;
     private AdRequest adRequest;
 
@@ -41,10 +40,10 @@ public class TabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         adRequest = new AdRequest.Builder().build();
@@ -76,7 +75,7 @@ public class TabActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
 
 
-        String id = getIntent().getExtras().getString("id");
+        String id = Objects.requireNonNull(getIntent().getExtras()).getString("id");
         String country = getIntent().getExtras().getString("country");
 
 
@@ -99,7 +98,7 @@ public class TabActivity extends AppCompatActivity {
 
         adapter.addFragment(details, dbAdapter.getMensagemTranslated(42));
         adapter.addFragment(graphic, dbAdapter.getMensagemTranslated(43));
-        adapter.addFragment(progressFragment, dbAdapter.getMensagemTranslated(44));
+       // adapter.addFragment(progressFragment, dbAdapter.getMensagemTranslated(44));
         adapter.addFragment(new ShipsDetailsFragment(), dbAdapter.getMensagemTranslated(45));
 
         viewPager.setAdapter(adapter);

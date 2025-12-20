@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="@string/app_name"
                     android:textColor="@color/button_pressed"
                     android:textSize="18sp"
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Translate"
+            android:text="@string/translate"
             android:textColor="@color/white" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="starting"
+            android:text="@string/starting"
             android:textColor="@color/white" />
     </LinearLayout>
 

@@ -21,11 +21,11 @@ android {
 
     defaultConfig {
         applicationId "com.wows.stats"
-        versionCode 35
+        versionCode 36
         minSdk 23
         //noinspection OldTargetApi
         targetSdk 35
-        versionName "1.35"
+        versionName "1.36"
         multiDexEnabled true
         signingConfig signingConfigs.config
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

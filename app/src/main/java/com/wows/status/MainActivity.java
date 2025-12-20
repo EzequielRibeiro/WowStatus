@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private HttpGetRequest httpGetRequest;
     private ProgressBar progressBar;
     private TextInputEditText editText;
-    private SharedPreferences prefs;
     private Locale locale;
     private String languageCode;
     private ArrayList<User> arrayList = new ArrayList<>();
@@ -283,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        prefs = getSharedPreferences("info", MODE_PRIVATE);
         new Thread(() -> {
 
             getSharedPreferences("msg", MODE_PRIVATE).edit().putString("text",
@@ -322,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", rated + 1).commit();
 
         if (rated == 5) {
-            showRequestRateApp(MainActivity.this);
+         //   showRequestRateApp(MainActivity.this);
         } else if (rated == 40) {
             getSharedPreferences("rated", MODE_PRIVATE).edit().putInt("time", 0).commit();
         }
@@ -375,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         dbAdapter.close();
-
+        rateApp();
 
 
     }

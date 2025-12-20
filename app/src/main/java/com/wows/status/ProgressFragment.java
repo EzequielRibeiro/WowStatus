@@ -92,6 +92,7 @@ public class ProgressFragment extends Fragment {
         final String id = getArguments().getString("id");
         final String country = getArguments().getString("country");
         final String url = "https://api.worldofwarships" + country + "/wows/account/statsbydate/?application_id=4f74e545dc59b664d7ae1f5397eaaf73&account_id=" + id + "&dates=XXX";
+        Log.e("teste",url);
         StringBuffer stringBuffer;
 
         for (int i = 0; i < arrayDates.length; i++) {
